@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favoritos — OBL Prime Imóveis</title>
+  <meta name="description" content="Sus propiedades favoritas guardadas en OBL Prime Imóveis.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" role="navigation" aria-label="Navegación principal">
+    <div class="container">
+      <a href="index.html" class="navbar-brand"><span class="logo-text">OBL <span class="logo-accent">Prime</span> Imóveis</span></a>
+      <ul class="nav-links">
+        <button class="nav-close" aria-label="Cerrar menú"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="propiedades.html">Propiedades</a></li>
+        <li><a href="bombinhas.html">Bombinhas</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contacto.html" class="nav-cta">Contacto</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-overlay"></div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Inicio</a><span>/</span><span>Favoritos</span></nav>
+      <h1>Mis Favoritos</h1>
+      <p>Sus propiedades guardadas para consulta rápida</p>
+    </div>
+  </header>
+
+  <!-- FAVORITES CONTENT -->
+  <section class="section">
+    <div class="container">
+      <div id="favorites-list" class="properties-grid">
+        <!-- Populated by JS -->
+      </div>
+
+      <div id="favorites-empty" class="favorites-empty" style="display:none;">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <h3>No tiene favoritos aún</h3>
+        <p>Explore nuestras propiedades y haga clic en el corazón para guardar sus favoritas.</p>
+        <a href="propiedades.html" class="btn btn-dark">Ver Propiedades</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><span class="logo-text">OBL <span style="color:var(--color-gold);">Prime</span> Imóveis</span><p>Su socio confiable en el mercado inmobiliario de lujo de Bombinhas, Santa Catarina, Brasil.</p></div>
+        <div class="footer-col"><h4>Propiedades</h4><ul><li><a href="propiedades.html">Ver Todas</a></li><li><a href="propiedades.html">Casas de Lujo</a></li><li><a href="propiedades.html">Apartamentos</a></li></ul></div>
+        <div class="footer-col"><h4>Empresa</h4><ul><li><a href="nosotros.html">Nosotros</a></li><li><a href="bombinhas.html">Guía Bombinhas</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+        <div class="footer-col"><h4>Contacto</h4><ul><li>+55 (47) 3369-0000</li><li>info@oblprime.com.br</li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2024 OBL Prime Imóveis. Todos los derechos reservados.</span><span>Bombinhas, SC — Brasil</span></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const properties = {
+        'prop-1': { title: 'Villa Atlântica Premium', location: 'Praia de Bombinhas', price: 'R$ 4.850.000', rooms: '4 Hab.', baths: '3 Baños', area: '380 m²', img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=400&fit=crop', badge: 'Destacada' },
+        'prop-2': { title: 'Penthouse Horizonte Azul', location: 'Praia de Mariscal', price: 'R$ 2.980.000', rooms: '3 Hab.', baths: '2 Baños', area: '240 m²', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop', badge: 'Nueva' },
+        'prop-3': { title: 'Residencia Costa Esmeralda', location: 'Quatro Ilhas', price: 'R$ 6.200.000', rooms: '5 Hab.', baths: '4 Baños', area: '520 m²', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop', badge: 'Exclusiva' },
+        'prop-4': { title: 'Villa Sol Nascente', location: 'Praia da Sepultura', price: 'R$ 3.450.000', rooms: '4 Hab.', baths: '3 Baños', area: '310 m²', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop' },
+        'prop-5': { title: 'Apartamento Vista Mar', location: 'Praia da Lagoinha', price: 'R$ 1.280.000', rooms: '2 Hab.', baths: '2 Baños', area: '145 m²', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop' },
+        'prop-6': { title: 'Terreno Privilegiado Zimbros', location: 'Praia de Zimbros', price: 'R$ 890.000', rooms: '', baths: '', area: '850 m²', img: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=400&fit=crop', badge: 'Terreno' },
+        'prop-7': { title: 'Casa Brisa do Mar', location: 'Praia de Bombinhas', price: 'R$ 2.150.000', rooms: '3 Hab.', baths: '2 Baños', area: '220 m²', img: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&h=400&fit=crop' },
+        'prop-8': { title: 'Penthouse Panorama 360°', location: 'Quatro Ilhas', price: 'R$ 5.600.000', rooms: '4 Hab.', baths: '3 Baños', area: '350 m²', img: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=600&h=400&fit=crop', badge: 'Oportunidad' },
+        'prop-9': { title: 'Loft Moderno Mariscal', location: 'Praia de Mariscal', price: 'R$ 780.000', rooms: '1 Hab.', baths: '1 Baño', area: '85 m²', img: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=400&fit=crop' }
+      };
+
+      const favs = JSON.parse(localStorage.getItem('obl_favorites') || '[]');
+      const list = document.getElementById('favorites-list');
+      const empty = document.getElementById('favorites-empty');
+
+      if (favs.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+
+      favs.forEach(id => {
+        const p = properties[id];
+        if (!p) return;
+
+        const meta = [p.rooms, p.baths, p.area].filter(Boolean).map(m =>
+          `<span class="property-meta-item">${m}</span>`
+        ).join('');
+
+        list.innerHTML += `
+          <a href="propiedad.html" class="property-card reveal">
+            <div class="property-card-img">
+              <img src="${p.img}" alt="${p.title}" width="600" height="400" loading="lazy">
+              ${p.badge ? `<span class="property-badge">${p.badge}</span>` : ''}
+              <button class="property-fav active" data-id="${id}" aria-label="Quitar de favoritos">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+            </div>
+            <div class="property-card-body">
+              <span class="property-location">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${p.location}
+              </span>
+              <h3>${p.title}</h3>
+              <p class="price">${p.price}</p>
+              <div class="property-meta">${meta}</div>
+            </div>
+          </a>
+        `;
+      });
+
+      initScrollReveal();
+    });
+  </script>
+</body>
+</html>

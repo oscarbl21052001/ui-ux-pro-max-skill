@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — OBL Prime Imóveis</title>
+  <meta name="description" content="Contáctenos para encontrar su propiedad ideal en Bombinhas. Asesoría personalizada y atención dedicada.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" role="navigation" aria-label="Navegación principal">
+    <div class="container">
+      <a href="index.html" class="navbar-brand"><span class="logo-text">OBL <span class="logo-accent">Prime</span> Imóveis</span></a>
+      <ul class="nav-links">
+        <button class="nav-close" aria-label="Cerrar menú"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="propiedades.html">Propiedades</a></li>
+        <li><a href="bombinhas.html">Bombinhas</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contacto.html" class="nav-cta active">Contacto</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-overlay"></div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Inicio</a><span>/</span><span>Contacto</span></nav>
+      <h1>Contáctenos</h1>
+      <p>Estamos listos para ayudarle a encontrar su propiedad ideal en Bombinhas</p>
+    </div>
+  </header>
+
+  <!-- CONTACT SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- FORM -->
+        <div class="reveal-left">
+          <h2 style="font-size:1.5rem;margin-bottom:0.5rem;">Envíenos un Mensaje</h2>
+          <p style="color:var(--color-fg-light);margin-bottom:2rem;">Complete el formulario y nuestro equipo le responderá dentro de las 24 horas.</p>
+
+          <form action="#" method="POST" novalidate>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div class="form-group">
+                <label for="name">Nombre *</label>
+                <input type="text" id="name" name="name" required autocomplete="given-name" placeholder="Su nombre">
+              </div>
+              <div class="form-group">
+                <label for="lastname">Apellido *</label>
+                <input type="text" id="lastname" name="lastname" required autocomplete="family-name" placeholder="Su apellido">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Correo Electrónico *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+55 (00) 00000-0000">
+            </div>
+            <div class="form-group">
+              <label for="interest">Interés</label>
+              <select id="interest" name="interest">
+                <option value="">Seleccione una opción</option>
+                <option>Comprar propiedad</option>
+                <option>Vender propiedad</option>
+                <option>Inversión</option>
+                <option>Alquiler vacacional</option>
+                <option>Consulta general</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="budget">Presupuesto Estimado</label>
+              <select id="budget" name="budget">
+                <option value="">Seleccione un rango</option>
+                <option>Hasta R$ 500.000</option>
+                <option>R$ 500.000 — R$ 1.000.000</option>
+                <option>R$ 1.000.000 — R$ 3.000.000</option>
+                <option>R$ 3.000.000 — R$ 5.000.000</option>
+                <option>Más de R$ 5.000.000</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Mensaje *</label>
+              <textarea id="message" name="message" required placeholder="Cuéntenos sobre la propiedad que busca, sus preferencias de ubicación, número de habitaciones, etc."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Enviar Mensaje</button>
+          </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="reveal-right">
+          <div class="contact-info-card">
+            <h3 style="font-size:1.1rem;margin-bottom:1.5rem;">Información de Contacto</h3>
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <h4>Dirección</h4>
+                <p>Av. Leopoldo Zarling, 422<br>Centro, Bombinhas — SC<br>CEP 88215-000, Brasil</p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </div>
+              <div>
+                <h4>Teléfono</h4>
+                <p>+55 (47) 3369-0000<br>+55 (47) 99901-2345 (WhatsApp)</p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <h4>Email</h4>
+                <p>info@oblprime.com.br<br>ventas@oblprime.com.br</p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <h4>Horario de Atención</h4>
+                <p>Lunes a Viernes: 9:00 — 18:00<br>Sábados: 9:00 — 13:00<br>Domingos: Con cita previa</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MAP -->
+          <div class="map-container" style="height:250px;">
+            <div class="map-placeholder">
+              <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" width="36" height="36"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <p style="font-size:0.85rem;">Bombinhas, Santa Catarina</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-alt" style="padding:3rem 0;">
+    <div class="container" style="text-align:center;">
+      <p style="color:var(--color-fg-light);margin-bottom:0.5rem;">¿Prefiere contactarnos directamente?</p>
+      <p style="font-size:1.1rem;font-weight:600;">
+        <a href="tel:+554733690000" style="color:var(--color-primary);">+55 (47) 3369-0000</a>
+        &nbsp;&middot;&nbsp;
+        <a href="mailto:info@oblprime.com.br" style="color:var(--color-primary);">info@oblprime.com.br</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><span class="logo-text">OBL <span style="color:var(--color-gold);">Prime</span> Imóveis</span><p>Su socio confiable en el mercado inmobiliario de lujo de Bombinhas, Santa Catarina, Brasil.</p></div>
+        <div class="footer-col"><h4>Propiedades</h4><ul><li><a href="propiedades.html">Ver Todas</a></li><li><a href="propiedades.html">Casas de Lujo</a></li><li><a href="propiedades.html">Apartamentos</a></li></ul></div>
+        <div class="footer-col"><h4>Empresa</h4><ul><li><a href="nosotros.html">Nosotros</a></li><li><a href="bombinhas.html">Guía Bombinhas</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+        <div class="footer-col"><h4>Contacto</h4><ul><li>+55 (47) 3369-0000</li><li>info@oblprime.com.br</li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2024 OBL Prime Imóveis. Todos los derechos reservados.</span><span>Bombinhas, SC — Brasil</span></div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
