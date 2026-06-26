@@ -12,6 +12,7 @@
   --font-mono: var(--font-geist-mono);
   --font-playfair: var(--font-playfair-display);
   --font-inter: var(--font-inter);
+  --font-jakarta: var(--font-jakarta);
 }
 
 body {
@@ -96,6 +97,17 @@ body {
   transform-origin: left;
 }
 
+/* ═══ SCROLL REVEAL TEXT ═══ */
+.scroll-reveal-text {
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: #fff;
+  max-width: 90vw;
+  margin: 0 auto;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .navbar-reveal,
@@ -103,5 +115,9 @@ body {
     animation: none;
     opacity: 1;
     clip-path: inset(0 0 0 0);
+  }
+
+  .scroll-reveal-text span {
+    opacity: 1 !important;
   }
 }
