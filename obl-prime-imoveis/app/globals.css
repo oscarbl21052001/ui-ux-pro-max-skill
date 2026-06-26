@@ -96,6 +96,14 @@ body {
   transform-origin: left;
 }
 
+/* ═══ SCROLL REVEAL TEXT ═══ */
+.scroll-reveal-text {
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+  color: #fff;
+  max-width: 90vw;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .navbar-reveal,
@@ -103,5 +111,9 @@ body {
     animation: none;
     opacity: 1;
     clip-path: inset(0 0 0 0);
+  }
+
+  .scroll-reveal-text span {
+    opacity: 1 !important;
   }
 }
