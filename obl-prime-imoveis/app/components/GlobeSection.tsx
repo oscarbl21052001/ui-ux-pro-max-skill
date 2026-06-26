@@ -118,7 +118,7 @@ function GlobeCanvas() {
   }, []);
 
   return (
-    <div className="relative aspect-square select-none w-full max-w-[540px]">
+    <div className="relative aspect-square select-none w-full max-w-[540px]" style={{ zIndex: 20 }}>
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
@@ -137,9 +137,52 @@ function GlobeCanvas() {
 }
 
 export default function GlobeSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const text = textRef.current;
+    if (!section || !text) return;
+
+    let rafId: number;
+
+    function tick() {
+      const rect = section!.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      const entryStart = vh;
+      const entryEnd = 0;
+      const raw = 1 - (rect.top - entryEnd) / (entryStart - entryEnd);
+      const p = Math.max(0, Math.min(1, raw));
+
+      const translateY = 250 * (1 - p);
+      const opacity = p;
+
+      text!.style.transform = `translateY(${translateY}px)`;
+      text!.style.opacity = `${opacity}`;
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FAFAFA] px-6 py-24">
-      <div className="mb-12 text-center">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FAFAFA] px-6 py-24"
+    >
+      <div
+        ref={textRef}
+        className="mb-12 text-center"
+        style={{
+          zIndex: 10,
+          willChange: 'transform, opacity',
+          background: 'transparent',
+        }}
+      >
         <h2 className="globe-section-title font-playfair">
           Presencia Global
         </h2>
