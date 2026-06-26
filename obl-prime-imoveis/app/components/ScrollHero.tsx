@@ -2,17 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-function Sparkles() {
+const SPARKLE_POSITIONS = [
+  { top: '-8%', left: '5%', size: 14, delay: 0 },
+  { top: '-5%', right: '8%', size: 11, delay: 0.7 },
+  { top: '35%', left: '-4%', size: 10, delay: 1.4 },
+  { top: '40%', right: '-3%', size: 13, delay: 0.3 },
+  { top: '85%', left: '15%', size: 9, delay: 2.1 },
+  { top: '90%', right: '12%', size: 12, delay: 1.8 },
+];
+
+function InlineSparkles() {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      {[
-        { top: '18%', left: '12%', size: 18, delay: 0 },
-        { top: '25%', right: '15%', size: 14, delay: 0.7 },
-        { top: '70%', left: '20%', size: 12, delay: 1.4 },
-        { top: '60%', right: '10%', size: 16, delay: 0.3 },
-        { top: '40%', left: '5%', size: 10, delay: 2.1 },
-        { top: '30%', right: '25%', size: 11, delay: 1.8 },
-      ].map((s, i) => (
+    <>
+      {SPARKLE_POSITIONS.map((s, i) => (
         <svg
           key={i}
           className="absolute sparkle-pulse"
@@ -26,15 +28,15 @@ function Sparkles() {
           }}
           viewBox="0 0 24 24"
           fill="none"
+          aria-hidden="true"
         >
           <path
             d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
-            fill="currentColor"
-            className="text-amber-400"
+            fill="#FFF099"
           />
         </svg>
       ))}
-    </div>
+    </>
   );
 }
 
@@ -138,13 +140,15 @@ export default function ScrollHero() {
 
         <div
           ref={goldRef}
-          className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none px-6"
+          className="absolute inset-0 flex items-center justify-center pointer-events-none px-6"
           style={{ opacity: 0 }}
         >
-          <Sparkles />
-          <h2 className="hero-gold-headline font-outfit">
-            BIENVENIDO A TU PARAÍSO
-          </h2>
+          <span className="relative inline-block">
+            <InlineSparkles />
+            <h2 className="hero-gold-headline font-outfit">
+              BIENVENIDO A TU PARAÍSO
+            </h2>
+          </span>
         </div>
       </div>
     </div>
