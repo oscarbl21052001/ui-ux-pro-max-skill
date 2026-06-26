@@ -49,21 +49,41 @@ export default function ScrollHero() {
       }
 
       const p = progressRef.current;
-      const textStart = 0.35;
-      const textEnd = 0.85;
-      const textRange = textEnd - textStart;
+      const FADE_IN_START = 0.0;
+      const FADE_IN_END = 0.4;
+      const PLATEAU_END = 0.6;
+      const FADE_OUT_END = 1.0;
       const wordCount = REVEAL_WORDS.length;
+      const MIN_OPACITY = 0.1;
 
       for (let i = 0; i < wordCount; i++) {
         const el = wordRefs.current[i];
         if (!el) continue;
-        const wordStart = textStart + (i / wordCount) * textRange;
-        const wordEnd = wordStart + textRange / wordCount;
-        const wordProgress = Math.min(
-          Math.max((p - wordStart) / (wordEnd - wordStart), 0),
-          1
-        );
-        const opacity = 0.15 + wordProgress * 0.85;
+
+        let opacity: number;
+
+        if (p <= FADE_IN_END) {
+          const range = FADE_IN_END - FADE_IN_START;
+          const wordStart = FADE_IN_START + (i / wordCount) * range;
+          const wordEnd = wordStart + range / wordCount;
+          const wordProgress = Math.min(
+            Math.max((p - wordStart) / (wordEnd - wordStart), 0),
+            1
+          );
+          opacity = MIN_OPACITY + wordProgress * (1 - MIN_OPACITY);
+        } else if (p <= PLATEAU_END) {
+          opacity = 1;
+        } else {
+          const range = FADE_OUT_END - PLATEAU_END;
+          const wordStart = PLATEAU_END + (i / wordCount) * range;
+          const wordEnd = wordStart + range / wordCount;
+          const wordProgress = Math.min(
+            Math.max((p - wordStart) / (wordEnd - wordStart), 0),
+            1
+          );
+          opacity = 1 - wordProgress * (1 - MIN_OPACITY);
+        }
+
         el.style.opacity = String(opacity);
       }
 
@@ -105,7 +125,7 @@ export default function ScrollHero() {
               key={i}
               ref={(el) => { wordRefs.current[i] = el; }}
               className="inline-block mx-[0.3em]"
-              style={{ opacity: reducedMotion ? 1 : 0.15 }}
+              style={{ opacity: reducedMotion ? 1 : 0.1 }}
             >
               {word}
             </span>
