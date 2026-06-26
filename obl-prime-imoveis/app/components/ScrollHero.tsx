@@ -2,10 +2,49 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+const SPARKLE_POSITIONS = [
+  { top: '-8%', left: '5%', size: 14, delay: 0 },
+  { top: '-5%', right: '8%', size: 11, delay: 0.7 },
+  { top: '35%', left: '-4%', size: 10, delay: 1.4 },
+  { top: '40%', right: '-3%', size: 13, delay: 0.3 },
+  { top: '85%', left: '15%', size: 9, delay: 2.1 },
+  { top: '90%', right: '12%', size: 12, delay: 1.8 },
+];
+
+function InlineSparkles() {
+  return (
+    <>
+      {SPARKLE_POSITIONS.map((s, i) => (
+        <svg
+          key={i}
+          className="absolute sparkle-pulse"
+          style={{
+            top: s.top,
+            left: s.left,
+            right: s.right,
+            width: s.size,
+            height: s.size,
+            animationDelay: `${s.delay}s`,
+          }}
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
+            fill="#FFF099"
+          />
+        </svg>
+      ))}
+    </>
+  );
+}
+
 export default function ScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const goldRef = useRef<HTMLDivElement>(null);
   const targetTimeRef = useRef(0);
   const progressRef = useRef(0);
   const rafRef = useRef<number>(0);
@@ -17,7 +56,8 @@ export default function ScrollHero() {
     const video = videoRef.current;
     const container = containerRef.current;
     const textBlock = textRef.current;
-    if (!video || !container || !textBlock) return;
+    const goldBlock = goldRef.current;
+    if (!video || !container || !textBlock || !goldBlock) return;
 
     video.pause();
 
@@ -44,9 +84,16 @@ export default function ScrollHero() {
       }
 
       const p = progressRef.current;
-      const FADE_END = 0.5;
-      const opacity = Math.max(1 - p / FADE_END, 0);
-      textBlock.style.opacity = String(opacity);
+
+      const FADE_OUT_END = 0.5;
+      const textOpacity = Math.max(1 - p / FADE_OUT_END, 0);
+      textBlock.style.opacity = String(textOpacity);
+
+      const FADE_IN_START = 0.5;
+      const goldOpacity = p <= FADE_IN_START
+        ? 0
+        : Math.min((p - FADE_IN_START) / (1 - FADE_IN_START), 1);
+      goldBlock.style.opacity = String(goldOpacity);
 
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -89,6 +136,19 @@ export default function ScrollHero() {
           <p className="hero-subheadline font-inter">
             Accede a oportunidades exclusivas para diversificar y fortalecer tu patrimonio.
           </p>
+        </div>
+
+        <div
+          ref={goldRef}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none px-6"
+          style={{ opacity: 0 }}
+        >
+          <span className="relative inline-block">
+            <InlineSparkles />
+            <h2 className="hero-gold-headline font-playfair">
+              BIENVENIDO A TU PARAÍSO
+            </h2>
+          </span>
         </div>
       </div>
     </div>
