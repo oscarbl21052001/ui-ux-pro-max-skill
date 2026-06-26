@@ -145,7 +145,7 @@ export default function ScrollHero() {
         >
           <span className="relative inline-block">
             <InlineSparkles />
-            <h2 className="hero-gold-headline font-outfit">
+            <h2 className="hero-gold-headline font-playfair">
               BIENVENIDO A TU PARAÍSO
             </h2>
           </span>
