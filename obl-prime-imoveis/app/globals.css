@@ -13,6 +13,7 @@
   --font-playfair: var(--font-playfair-display);
   --font-inter: var(--font-inter);
   --font-jakarta: var(--font-jakarta);
+  --font-outfit: var(--font-outfit);
 }
 
 body {
@@ -97,15 +98,24 @@ body {
   transform-origin: left;
 }
 
-/* ═══ SCROLL REVEAL TEXT ═══ */
-.scroll-reveal-text {
-  font-size: clamp(2rem, 5.5vw, 5rem);
+/* ═══ HERO TEXT ═══ */
+.hero-headline {
+  font-size: clamp(1.25rem, 3vw, 2.5rem);
   font-weight: 800;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
   color: #fff;
   max-width: 90vw;
-  margin: 0 auto;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 32px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subheadline {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 36em;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Reduced motion */
@@ -115,9 +125,5 @@ body {
     animation: none;
     opacity: 1;
     clip-path: inset(0 0 0 0);
-  }
-
-  .scroll-reveal-text span {
-    opacity: 1 !important;
   }
 }
