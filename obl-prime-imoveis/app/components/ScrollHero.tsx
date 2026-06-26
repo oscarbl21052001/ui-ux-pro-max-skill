@@ -95,9 +95,9 @@ export default function ScrollHero() {
         <source src="/hero.webm" type="video/webm" />
       </video>
 
-      <div className="sticky top-0 h-screen pointer-events-none flex items-end justify-center pb-[12vh]">
+      <div className="sticky top-0 h-screen pointer-events-none flex items-center justify-center">
         <p
-          className="scroll-reveal-text font-playfair text-center leading-tight tracking-wide"
+          className="scroll-reveal-text font-jakarta text-center leading-none"
           aria-label="La elegancia de invertir bien"
         >
           {REVEAL_WORDS.map((word, i) => (
