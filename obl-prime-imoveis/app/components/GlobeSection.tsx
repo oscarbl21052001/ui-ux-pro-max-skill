@@ -33,10 +33,10 @@ function projectPoint(
   const y = -sinLat;
   const z = cosLat * Math.cos(lngRad);
 
-  const cp = Math.cos(currentPhi);
-  const sp = Math.sin(currentPhi);
-  const x1 = x * cp + z * sp;
-  const z1 = -x * sp + z * cp;
+  const cp = Math.cos(-currentPhi);
+  const sp = Math.sin(-currentPhi);
+  const x1 = x * cp - z * sp;
+  const z1 = x * sp + z * cp;
 
   const ct = Math.cos(currentTheta);
   const st = Math.sin(currentTheta);
@@ -45,6 +45,8 @@ function projectPoint(
 
   return { x: x1, y: y1, z: z2 };
 }
+
+const GLOBE_RADIUS = 0.44;
 
 function GlobeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -139,8 +141,8 @@ function GlobeCanvas() {
             curTheta,
           );
           if (z > 0) {
-            el.style.left = `${(0.5 + x * 0.5) * 100}%`;
-            el.style.top = `${(0.5 + y * 0.5) * 100}%`;
+            el.style.left = `${(0.5 + x * GLOBE_RADIUS) * 100}%`;
+            el.style.top = `${(0.5 + y * GLOBE_RADIUS) * 100}%`;
             el.style.opacity = String(Math.min(1, z * 3));
           } else {
             el.style.opacity = '0';
