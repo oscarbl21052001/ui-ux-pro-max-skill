@@ -17,36 +17,33 @@ const MARKERS: GlobeMarker[] = [
   { location: [-27.1472, -48.5161], size: 12, color: '#F3C63F', highlight: true },
 ];
 
+const GLOBE_R = 0.8;
+
 function projectPoint(
   lat: number,
   lng: number,
-  currentPhi: number,
-  currentTheta: number,
+  phi: number,
+  theta: number,
 ) {
   const latRad = (lat * Math.PI) / 180;
-  const lngRad = (lng * Math.PI) / 180;
+  const lngRad = (lng * Math.PI) / 180 - Math.PI;
 
   const cosLat = Math.cos(latRad);
-  const sinLat = Math.sin(latRad);
+  const px = -cosLat * Math.cos(lngRad) * GLOBE_R;
+  const py = Math.sin(latRad) * GLOBE_R;
+  const pz = cosLat * Math.sin(lngRad) * GLOBE_R;
 
-  const x = cosLat * Math.sin(lngRad);
-  const y = -sinLat;
-  const z = cosLat * Math.cos(lngRad);
+  const cp = Math.cos(phi);
+  const sp = Math.sin(phi);
+  const ct = Math.cos(theta);
+  const st = Math.sin(theta);
 
-  const cp = Math.cos(-currentPhi);
-  const sp = Math.sin(-currentPhi);
-  const x1 = x * cp - z * sp;
-  const z1 = x * sp + z * cp;
+  const sx = cp * px + sp * pz;
+  const sy = sp * st * px + ct * py - cp * st * pz;
+  const depth = -sp * ct * px + st * py + cp * ct * pz;
 
-  const ct = Math.cos(currentTheta);
-  const st = Math.sin(currentTheta);
-  const y1 = y * ct - z1 * st;
-  const z2 = y * st + z1 * ct;
-
-  return { x: x1, y: y1, z: z2 };
+  return { x: (sx + 1) / 2, y: (-sy + 1) / 2, visible: depth >= 0 };
 }
-
-const GLOBE_RADIUS = 0.44;
 
 function GlobeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -134,16 +131,16 @@ function GlobeCanvas() {
         MARKERS.forEach((m, i) => {
           const el = markerEls.current[i];
           if (!el) return;
-          const { x, y, z } = projectPoint(
+          const { x, y, visible } = projectPoint(
             m.location[0],
             m.location[1],
             curPhi,
             curTheta,
           );
-          if (z > 0) {
-            el.style.left = `${(0.5 + x * GLOBE_RADIUS) * 100}%`;
-            el.style.top = `${(0.5 + y * GLOBE_RADIUS) * 100}%`;
-            el.style.opacity = String(Math.min(1, z * 3));
+          if (visible) {
+            el.style.left = `${x * 100}%`;
+            el.style.top = `${y * 100}%`;
+            el.style.opacity = '1';
           } else {
             el.style.opacity = '0';
           }
