@@ -100,7 +100,7 @@ body {
 
 /* ═══ HERO TEXT ═══ */
 .hero-headline {
-  font-size: clamp(2.25rem, 6vw, 5.5rem);
+  font-size: clamp(2.75rem, 7vw, 7rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.05;
