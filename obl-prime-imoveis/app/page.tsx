@@ -1,8 +1,10 @@
+import Navbar from "./components/Navbar";
 import ScrollHero from "./components/ScrollHero";
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <ScrollHero />
       <section className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-6 text-center">
         <h2 className="max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">

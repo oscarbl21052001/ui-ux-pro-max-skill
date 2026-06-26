@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -10,17 +10,98 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-playfair: var(--font-playfair-display);
+  --font-inter: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ═══ NAVBAR: Clip-path Reveal Animation ═══ */
+.navbar-clip {
+  clip-path: inset(0 50% 0 50%);
+}
+
+.navbar-reveal {
+  animation: clipReveal 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.3s both;
+}
+
+@keyframes clipReveal {
+  from {
+    clip-path: inset(0 50% 0 50%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Navbar gradient overlay for text legibility */
+.navbar-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.50) 0%,
+    rgba(0, 0, 0, 0.12) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Content fade-in after clip reveal */
+.nav-content {
+  opacity: 0;
+}
+
+.nav-content-show {
+  animation: contentFade 0.25s ease 1.1s both;
+}
+
+@keyframes contentFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Logo gold gradient text */
+.logo-obl {
+  background: linear-gradient(135deg, #C9A44A 0%, #E8D48B 40%, #D4A843 70%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Nav link hover underline */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #B8860B;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .navbar-reveal,
+  .nav-content-show {
+    animation: none;
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
