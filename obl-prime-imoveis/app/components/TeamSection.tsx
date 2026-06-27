@@ -129,21 +129,56 @@ export default function TeamSection() {
           </motion.p>
         </div>
 
-        <motion.div
-          className="relative mr-auto ml-[8%] cursor-pointer"
-          style={{ width: 320, height: 420 }}
-          onClick={handleFlick}
-          initial={{ x: -100, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          {renderStack()}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            className="relative mx-auto lg:mx-0 cursor-pointer"
+            style={{ width: 320, height: 420 }}
+            onClick={handleFlick}
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            {renderStack()}
 
-          <p className="absolute -bottom-10 left-0 right-0 text-center text-xs text-zinc-500 font-inter">
-            Click para explorar
-          </p>
-        </motion.div>
+            <p className="absolute -bottom-10 left-0 right-0 text-center text-xs text-zinc-500 font-inter">
+              Click para explorar
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="space-y-6 text-white font-inter text-base leading-relaxed"
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <p>
+              La mayoría de los destinos crecen hasta saturarse. Bombinhas no
+              puede: el 67% de su territorio es inedificable por ley, protegido
+              por cuatro capas legales que ningún desarrollador puede esquivar.
+            </p>
+            <p>
+              Esa escasez no es marketing, es legislación, y es lo que sostiene
+              el valor cuando todo lo demás cambia.
+            </p>
+            <p>
+              Mientras el suelo permanece finito, la demanda crece: cerca de 2
+              millones de turistas por temporada frente a 25.000 residentes, y
+              una población que aumentó un 75% en doce años.
+            </p>
+            <p>
+              Por eso Santa Catarina lidera la valorización inmobiliaria de
+              Brasil, y el metro cuadrado del centro de Bombinhas ya supera al
+              de la capital del estado.
+            </p>
+            <p>
+              Comprar aquí no es apostar a una moda: es adquirir uno de los
+              pocos lugares donde la belleza está legalmente obligada a
+              permanecer intacta.
+            </p>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
