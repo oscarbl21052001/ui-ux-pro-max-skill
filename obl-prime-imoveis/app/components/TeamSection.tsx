@@ -11,23 +11,21 @@ interface PolaroidCard {
 }
 
 const CARDS: PolaroidCard[] = [
-  { id: 1, src: '/team_1.jpg', label: 'Bombinhas View - Core' },
-  { id: 2, src: '/team_2.jpg', label: 'Ribeiro Boardwalk' },
-  { id: 3, src: '/team_3.jpg', label: 'Lagoinha Beach' },
-  { id: 4, src: '/team_4.jpg', label: 'Biguá Aerial' },
-  { id: 5, src: '/team_5.jpg', label: 'Town Architecture' },
-  { id: 6, src: '/team_6.jpg', label: 'Panoramic Lookout' },
-  { id: 7, src: '/team_7.jpg', label: 'Ecological Sanctuary' },
-  { id: 8, src: '/team_8.jpg', label: 'Clear Waters Bay' },
-  { id: 9, src: '/team_9.jpg', label: 'Coastal Peninsula' },
-  { id: 10, src: '/team_10.jpg', label: 'Welcome Sign Area' },
-  { id: 11, src: '/team_11.jpg', label: 'Team Space Alpha' },
-  { id: 12, src: '/team_12.jpg', label: 'Team Space Beta' },
+  { id: 1, src: '/team_10.jpg', label: 'Bombinhas View - Core' },
+  { id: 2, src: '/team_11.jpg', label: 'Ribeiro Boardwalk' },
+  { id: 3, src: '/team_22.jpg', label: 'Lagoinha Beach' },
+  { id: 4, src: '/team_33.jpg', label: 'Biguá Aerial' },
+  { id: 5, src: '/team_44.jpg', label: 'Town Architecture' },
+  { id: 6, src: '/team_55.jpg', label: 'Panoramic Lookout' },
+  { id: 7, src: '/team_66.jpg', label: 'Ecological Sanctuary' },
+  { id: 8, src: '/team_77.jpg', label: 'Clear Waters Bay' },
+  { id: 9, src: '/team_88.jpg', label: 'Coastal Peninsula' },
+  { id: 10, src: '/team_99.jpg', label: 'Welcome Sign Area' },
 ];
 
-const STACK_ROTATIONS = [-3, 2, 4, -2, 3, -4, 1, -1, 5, -5, 2, -3];
-const STACK_OFFSETS_X = [-4, 6, -2, 8, -6, 3, -8, 5, -3, 7, -5, 4];
-const STACK_OFFSETS_Y = [2, -3, 4, -1, 3, -4, 1, -2, 5, -3, 2, -1];
+const STACK_ROTATIONS = [-3, 2, 4, -2, 3, -4, 1, -1, 5, -5];
+const STACK_OFFSETS_X = [-4, 6, -2, 8, -6, 3, -8, 5, -3, 7];
+const STACK_OFFSETS_Y = [2, -3, 4, -1, 3, -4, 1, -2, 5, -3];
 
 const VISIBLE_DEPTH = 4;
 
