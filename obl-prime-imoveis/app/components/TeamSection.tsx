@@ -109,11 +109,24 @@ export default function TeamSection() {
       />
       <div className="mx-auto max-w-5xl">
         <div className="mb-20 text-center">
-          <h2 className="team-section-title font-playfair">Nuestro Equipo</h2>
-          <p className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter">
-            Profesionales comprometidos con transformar cada inversión en una
-            experiencia excepcional.
-          </p>
+          <motion.h2
+            className="team-section-title font-playfair"
+            initial={{ filter: 'blur(12px)', opacity: 0 }}
+            whileInView={{ filter: 'blur(0px)', opacity: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
+            Bombinhas
+          </motion.h2>
+          <motion.p
+            className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter"
+            initial={{ filter: 'blur(12px)', opacity: 0 }}
+            whileInView={{ filter: 'blur(0px)', opacity: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
+          >
+            ¿¿Qué tiene Bombinhas que otros destinos no ofrecen?
+          </motion.p>
         </div>
 
         <motion.div
