@@ -116,17 +116,21 @@ export default function TeamSection() {
           </p>
         </div>
 
-        <div
-          className="relative mx-auto cursor-pointer"
+        <motion.div
+          className="relative mr-auto ml-[8%] cursor-pointer"
           style={{ width: 320, height: 420 }}
           onClick={handleFlick}
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           {renderStack()}
 
           <p className="absolute -bottom-10 left-0 right-0 text-center text-xs text-zinc-500 font-inter">
             Click para explorar
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -136,7 +140,7 @@ function PolaroidFrame({ card }: { card: PolaroidCard }) {
   return (
     <div
       className="h-full w-full rounded-sm bg-white shadow-2xl shadow-black/30"
-      style={{ padding: '12px 12px 48px 12px' }}
+      style={{ padding: '12px' }}
     >
       <div className="relative h-full w-full overflow-hidden rounded-sm bg-zinc-100">
         <Image
@@ -148,9 +152,6 @@ function PolaroidFrame({ card }: { card: PolaroidCard }) {
           loading="lazy"
         />
       </div>
-      <p className="absolute bottom-3 left-0 right-0 text-center text-sm font-medium text-slate-700 font-inter">
-        {card.label}
-      </p>
     </div>
   );
 }
