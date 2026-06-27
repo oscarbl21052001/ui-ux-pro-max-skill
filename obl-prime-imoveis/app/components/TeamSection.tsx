@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 interface PolaroidCard {
   id: number;
@@ -183,6 +184,27 @@ export default function TeamSection() {
               obligada a permanecer intacta</span>.
             </p>
           </motion.div>
+        </div>
+
+        <div className="w-full flex justify-center mt-12">
+          <motion.button
+            className="relative overflow-hidden rounded-full px-8 py-3 font-inter font-semibold text-white cursor-pointer"
+            style={{ background: 'linear-gradient(to right, #C9A24B, #E3C174)' }}
+            whileHover={{ y: -3 }}
+            whileTap={{ scale: 0.93 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              initial={{ x: '-100%' }}
+              whileHover={{ x: '100%' }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+            />
+            <span className="relative flex items-center gap-2">
+              Más info
+              <ArrowRight size={18} />
+            </span>
+          </motion.button>
         </div>
       </div>
     </section>
