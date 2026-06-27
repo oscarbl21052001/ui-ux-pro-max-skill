@@ -119,7 +119,7 @@ export default function TeamSection() {
             BOMBINHAS
           </motion.h2>
           <motion.p
-            className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter"
+            className="mx-auto mt-4 max-w-lg text-xl text-zinc-400 font-inter"
             initial={{ filter: 'blur(12px)', opacity: 0 }}
             whileInView={{ filter: 'blur(0px)', opacity: 1 }}
             viewport={{ once: true, amount: 0.5 }}
