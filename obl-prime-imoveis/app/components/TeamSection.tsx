@@ -43,11 +43,15 @@ function AvatarPlaceholder({ initials }: { initials: string }) {
 
 export default function TeamSection() {
   return (
-    <section className="bg-[#FAFAFA] px-6 py-24">
+    <section className="relative bg-[#22201E] px-6 py-24">
+      <div
+        className="absolute bottom-0 left-0 w-full h-[30%] pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, transparent, #FAFAFA)' }}
+      />
       <div className="mx-auto max-w-5xl">
         <div className="mb-16 text-center">
           <h2 className="team-section-title font-playfair">Nuestro Equipo</h2>
-          <p className="mx-auto mt-4 max-w-lg text-base text-neutral-500 font-inter">
+          <p className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter">
             Profesionales comprometidos con transformar cada inversión en una
             experiencia excepcional.
           </p>
@@ -59,7 +63,7 @@ export default function TeamSection() {
               key={member.name}
               className="group flex flex-col items-center text-center"
             >
-              <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-full ring-2 ring-[#E8D48B]/40 transition-shadow duration-300 group-hover:ring-[#C9A44A]/60 group-hover:shadow-lg">
+              <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-full ring-2 ring-[#E8D48B]/30 transition-shadow duration-300 group-hover:ring-[#C9A44A]/50 group-hover:shadow-[0_0_20px_rgba(201,164,74,0.2)]">
                 {member.image ? (
                   <Image
                     src={member.image}
@@ -74,13 +78,13 @@ export default function TeamSection() {
                 )}
               </div>
 
-              <h3 className="text-lg font-semibold text-neutral-900 font-inter">
+              <h3 className="text-lg font-semibold text-white font-inter">
                 {member.name}
               </h3>
               <p className="mt-1 text-sm font-medium text-[#C7941D] font-inter">
                 {member.role}
               </p>
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-neutral-500 font-inter">
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-zinc-400 font-inter">
                 {member.bio}
               </p>
             </div>
