@@ -116,17 +116,8 @@ export default function TeamSection() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            BOMBINHAS
-          </motion.h2>
-          <motion.p
-            className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter"
-            initial={{ filter: 'blur(12px)', opacity: 0 }}
-            whileInView={{ filter: 'blur(0px)', opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
-          >
             ¿Qué tiene Bombinhas que otros destinos no ofrecen?
-          </motion.p>
+          </motion.h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -147,7 +138,8 @@ export default function TeamSection() {
           </motion.div>
 
           <motion.div
-            className="space-y-6 text-white font-inter text-base leading-relaxed"
+            className="space-y-6 font-inter text-base leading-relaxed"
+            style={{ color: 'rgba(255, 255, 255, 0.85)' }}
             initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -155,27 +147,31 @@ export default function TeamSection() {
           >
             <p>
               La mayoría de los destinos crecen hasta saturarse. Bombinhas no
-              puede: el 67% de su territorio es inedificable por ley, protegido
-              por cuatro capas legales que ningún desarrollador puede esquivar.
+              puede: el <span className="font-bold text-accent">{' '}67%{' '}</span> de
+              su territorio es <span className="font-bold text-accent">inedificable por ley</span>,
+              protegido por <span className="font-bold text-white">cuatro capas legales</span> que
+              ningún desarrollador puede esquivar.
             </p>
             <p>
-              Esa escasez no es marketing, es legislación, y es lo que sostiene
-              el valor cuando todo lo demás cambia.
+              Esa escasez <span className="font-bold text-accent">no es marketing, es legislación</span>,
+              y es lo que sostiene el valor cuando todo lo demás cambia.
             </p>
             <p>
-              Mientras el suelo permanece finito, la demanda crece: cerca de 2
-              millones de turistas por temporada frente a 25.000 residentes, y
-              una población que aumentó un 75% en doce años.
+              Mientras el suelo permanece finito, la demanda crece: cerca
+              de <span className="font-bold text-accent">2 millones</span> de
+              turistas por temporada frente
+              a <span className="font-bold text-accent">25.000 residentes</span>,
+              y una población que aumentó <span className="font-bold text-white">un 75% en doce años</span>.
             </p>
             <p>
-              Por eso Santa Catarina lidera la valorización inmobiliaria de
-              Brasil, y el metro cuadrado del centro de Bombinhas ya supera al
-              de la capital del estado.
+              Por eso <span className="font-bold text-white">Santa Catarina lidera la valorización
+              inmobiliaria de Brasil</span>, y el metro cuadrado del centro de
+              Bombinhas <span className="font-bold text-accent">ya supera al de la capital del estado</span>.
             </p>
             <p>
               Comprar aquí no es apostar a una moda: es adquirir uno de los
-              pocos lugares donde la belleza está legalmente obligada a
-              permanecer intacta.
+              pocos lugares donde la belleza está <span className="font-bold text-accent">legalmente
+              obligada a permanecer intacta</span>.
             </p>
           </motion.div>
         </div>
