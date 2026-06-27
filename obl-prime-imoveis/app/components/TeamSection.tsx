@@ -1,47 +1,101 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-interface TeamMember {
-  name: string;
-  role: string;
-  bio: string;
-  image?: string;
-  initials: string;
+interface PolaroidCard {
+  id: number;
+  src: string;
+  label: string;
 }
 
-const TEAM: TeamMember[] = [
-  {
-    name: 'Oscar Bello',
-    role: 'CEO & Fundador',
-    bio: 'Visionario del mercado inmobiliario de Bombinhas con más de una década de experiencia en inversiones internacionales.',
-    initials: 'OB',
-  },
-  {
-    name: 'Ana Costa',
-    role: 'Directora Comercial',
-    bio: 'Especialista en relaciones con inversores globales y estrategia de ventas de propiedades premium.',
-    initials: 'AC',
-  },
-  {
-    name: 'Lucas Ferreira',
-    role: 'Director de Operaciones',
-    bio: 'Responsable de la gestión integral de proyectos y la excelencia operativa en cada desarrollo.',
-    initials: 'LF',
-  },
+const CARDS: PolaroidCard[] = [
+  { id: 1, src: '/perro_marron.jpg', label: 'Team Member 1' },
+  { id: 2, src: '/perro_blanco.jpg', label: 'Team Member 2' },
+  { id: 3, src: '/gato.jpg', label: 'Team Member 3' },
+  { id: 4, src: '/paisaje.jpg', label: 'Team Member 4' },
+  { id: 5, src: '/team_asset_5.jpg', label: 'Team Member 5' },
 ];
 
-function AvatarPlaceholder({ initials }: { initials: string }) {
-  return (
-    <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-[#F3C63F] to-[#C7941D]">
-      <span className="text-2xl font-semibold tracking-wide text-white font-inter">
-        {initials}
-      </span>
-    </div>
-  );
-}
+const STACK_ROTATIONS = [-3, 2, 4, -2, 3, -4, 1, -1, 5, -5, 2, -3];
+const STACK_OFFSETS_X = [-4, 6, -2, 8, -6, 3, -8, 5, -3, 7, -5, 4];
+const STACK_OFFSETS_Y = [2, -3, 4, -1, 3, -4, 1, -2, 5, -3, 2, -1];
+
+const VISIBLE_DEPTH = 4;
 
 export default function TeamSection() {
+  const [topIndex, setTopIndex] = useState(0);
+  const [flickState, setFlickState] = useState<'idle' | 'flicking'>('idle');
+
+  const handleFlick = useCallback(() => {
+    if (flickState !== 'idle') return;
+    setFlickState('flicking');
+  }, [flickState]);
+
+  const handleFlickDone = useCallback(() => {
+    setTopIndex((prev) => (prev + 1) % CARDS.length);
+    setFlickState('idle');
+  }, []);
+
+  const flickDir = topIndex % 2 === 0 ? 1 : -1;
+
+  const renderStack = () => {
+    const elements: React.ReactNode[] = [];
+
+    for (let d = VISIBLE_DEPTH - 1; d >= 0; d--) {
+      const idx = (topIndex + d) % CARDS.length;
+      const card = CARDS[idx];
+
+      if (d === 0) {
+        elements.push(
+          <motion.div
+            key={`card-${card.id}-${topIndex}`}
+            className="absolute inset-0"
+            animate={
+              flickState === 'flicking'
+                ? { x: flickDir * 600, rotate: flickDir * 25, opacity: 0 }
+                : { x: 0, y: 0, rotate: 0, scale: 1 }
+            }
+            transition={
+              flickState === 'flicking'
+                ? { duration: 0.5, ease: [0.32, 0, 0.67, 0] }
+                : { duration: 0.4, ease: 'easeOut' }
+            }
+            onAnimationComplete={() => {
+              if (flickState === 'flicking') handleFlickDone();
+            }}
+            style={{ zIndex: VISIBLE_DEPTH }}
+          >
+            <PolaroidFrame card={card} />
+          </motion.div>,
+        );
+      } else {
+        const rot = STACK_ROTATIONS[idx % STACK_ROTATIONS.length];
+        const ox = STACK_OFFSETS_X[idx % STACK_OFFSETS_X.length];
+        const oy = STACK_OFFSETS_Y[idx % STACK_OFFSETS_Y.length];
+
+        elements.push(
+          <motion.div
+            key={`card-${card.id}`}
+            className="absolute inset-0"
+            animate={{
+              x: ox,
+              y: oy,
+              rotate: rot,
+              scale: 1 - d * 0.03,
+            }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            style={{ zIndex: VISIBLE_DEPTH - d }}
+          >
+            <PolaroidFrame card={card} />
+          </motion.div>,
+        );
+      }
+    }
+    return elements;
+  };
+
   return (
     <section className="relative bg-[#22201E] px-6 py-24">
       <div
@@ -49,7 +103,7 @@ export default function TeamSection() {
         style={{ background: 'linear-gradient(to bottom, transparent, #FAFAFA)' }}
       />
       <div className="mx-auto max-w-5xl">
-        <div className="mb-16 text-center">
+        <div className="mb-20 text-center">
           <h2 className="team-section-title font-playfair">Nuestro Equipo</h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter">
             Profesionales comprometidos con transformar cada inversión en una
@@ -57,40 +111,41 @@ export default function TeamSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {TEAM.map((member) => (
-            <div
-              key={member.name}
-              className="group flex flex-col items-center text-center"
-            >
-              <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-full ring-2 ring-[#E8D48B]/30 transition-shadow duration-300 group-hover:ring-[#C9A44A]/50 group-hover:shadow-[0_0_20px_rgba(201,164,74,0.2)]">
-                {member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    width={112}
-                    height={112}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <AvatarPlaceholder initials={member.initials} />
-                )}
-              </div>
+        <div
+          className="relative mx-auto cursor-pointer"
+          style={{ width: 320, height: 420 }}
+          onClick={handleFlick}
+        >
+          {renderStack()}
 
-              <h3 className="text-lg font-semibold text-white font-inter">
-                {member.name}
-              </h3>
-              <p className="mt-1 text-sm font-medium text-[#C7941D] font-inter">
-                {member.role}
-              </p>
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-zinc-400 font-inter">
-                {member.bio}
-              </p>
-            </div>
-          ))}
+          <p className="absolute -bottom-10 left-0 right-0 text-center text-xs text-zinc-500 font-inter">
+            Click para explorar
+          </p>
         </div>
       </div>
     </section>
+  );
+}
+
+function PolaroidFrame({ card }: { card: PolaroidCard }) {
+  return (
+    <div
+      className="h-full w-full rounded-sm bg-white shadow-2xl shadow-black/30"
+      style={{ padding: '12px 12px 48px 12px' }}
+    >
+      <div className="relative h-full w-full overflow-hidden rounded-sm bg-zinc-100">
+        <Image
+          src={card.src}
+          alt={card.label}
+          fill
+          sizes="296px"
+          className="object-cover"
+          loading="lazy"
+        />
+      </div>
+      <p className="absolute bottom-3 left-0 right-0 text-center text-sm font-medium text-slate-700 font-inter">
+        {card.label}
+      </p>
+    </div>
   );
 }
