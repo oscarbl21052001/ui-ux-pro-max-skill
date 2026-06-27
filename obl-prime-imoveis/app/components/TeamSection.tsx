@@ -116,8 +116,17 @@ export default function TeamSection() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            ¿Qué tiene Bombinhas que otros destinos no ofrecen?
+            BOMBINHAS
           </motion.h2>
+          <motion.p
+            className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter"
+            initial={{ filter: 'blur(12px)', opacity: 0 }}
+            whileInView={{ filter: 'blur(0px)', opacity: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
+          >
+            ¿Qué tiene Bombinhas que otros destinos no ofrecen?
+          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
