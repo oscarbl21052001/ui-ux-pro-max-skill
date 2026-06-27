@@ -116,7 +116,7 @@ export default function TeamSection() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            Bombinhas
+            BOMBINHAS
           </motion.h2>
           <motion.p
             className="mx-auto mt-4 max-w-lg text-base text-zinc-400 font-inter"
@@ -125,7 +125,7 @@ export default function TeamSection() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
           >
-            ¿¿Qué tiene Bombinhas que otros destinos no ofrecen?
+            ¿Qué tiene Bombinhas que otros destinos no ofrecen?
           </motion.p>
         </div>
 
