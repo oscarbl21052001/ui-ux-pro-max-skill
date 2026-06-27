@@ -103,11 +103,7 @@ export default function TeamSection() {
   };
 
   return (
-    <section className="relative px-6 pt-24 pb-28" style={{ background: 'linear-gradient(to bottom, #0E1418 85%, #050709)' }}>
-      <div
-        className="absolute bottom-0 left-0 w-full h-[30%] pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent, #FAFAFA)' }}
-      />
+    <section className="relative px-6 pt-24 pb-0 bg-[#0E1418]">
       <div className="mx-auto max-w-5xl">
         <div className="mb-20 text-center">
           <motion.h2
@@ -207,6 +203,10 @@ export default function TeamSection() {
           </motion.button>
         </div>
       </div>
+      <div
+        className="h-28 w-full"
+        style={{ background: 'linear-gradient(to bottom, #0E1418, #FAFAFA)' }}
+      />
     </section>
   );
 }
