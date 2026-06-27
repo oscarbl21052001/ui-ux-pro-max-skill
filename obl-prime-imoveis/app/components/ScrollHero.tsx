@@ -153,7 +153,7 @@ export default function ScrollHero() {
 
         <div
           className="absolute bottom-0 left-0 w-full h-[30%] pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, transparent, #22201E)', zIndex: 30 }}
+          style={{ background: 'linear-gradient(to bottom, transparent, #0E1418)', zIndex: 30 }}
         />
       </div>
     </div>
