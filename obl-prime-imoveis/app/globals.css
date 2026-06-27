@@ -139,6 +139,18 @@ body {
   animation: sparklePulse 2.8s ease-in-out infinite;
 }
 
+/* ═══ TEAM SECTION ═══ */
+.team-section-title {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #FFF4D0 0%, #F3C63F 40%, #C7941D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ═══ GLOBE SECTION ═══ */
 .globe-section-title {
   font-size: clamp(1.75rem, 4vw, 3rem);
