@@ -242,7 +242,7 @@ export default function BombinhasInfoPage() {
                 Un Destino Exclusivo con Restricción Estructural de Oferta
               </motion.h1>
               <motion.p
-                className="text-base md:text-lg text-neutral-200 leading-relaxed max-w-3xl mx-auto font-inter"
+                className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
@@ -250,15 +250,15 @@ export default function BombinhasInfoPage() {
                 Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
                 centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
                 Atlántico, con solo 35,9 km² de superficie total, de los cuales
-                el <strong className="font-semibold text-white">67% está bajo protección ambiental</strong>.
+                el <strong className="text-[#E3C174]">67% está bajo protección ambiental</strong>.
                 Esta limitación geográfica y legal genera
-                una <strong className="font-semibold text-white">escasez real y permanente de suelo edificable</strong>,
+                una <strong className="text-[#E3C174]">escasez real y permanente de suelo edificable</strong>,
                 lo que sostiene la valorización a largo plazo. La ciudad cuenta con 39 playas,
                 5 de ellas con la certificación
-                internacional <strong className="font-semibold text-white">Bandeira Azul</strong> (un
+                internacional <strong className="text-[#E3C174]">Bandeira Azul</strong> (un
                 sello de calidad que garantiza aguas limpias, gestión ambiental excelente,
                 seguridad y servicios sostenibles). Además, implementa desde 2013
-                la <strong className="font-semibold text-white">Taxa de Preservación Ambiental (TPA)</strong>,
+                la <strong className="text-[#E3C174]">Taxa de Preservación Ambiental (TPA)</strong>,
                 que regula el acceso vehicular en temporada alta para preservar el entorno.
               </motion.p>
             </div>
