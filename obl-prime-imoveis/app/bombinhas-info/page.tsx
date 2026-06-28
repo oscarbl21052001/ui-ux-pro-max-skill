@@ -46,6 +46,8 @@ function createBeam(width: number, height: number): Beam {
 export default function BombinhasInfoPage() {
   const heroContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const block1Ref = useRef<HTMLDivElement>(null);
+  const block2Ref = useRef<HTMLDivElement>(null);
   const targetTimeRef = useRef(0);
   const progressRef = useRef(0);
   const heroRafRef = useRef<number>(0);
@@ -60,7 +62,9 @@ export default function BombinhasInfoPage() {
 
     const video = videoRef.current;
     const heroContainer = heroContainerRef.current;
-    if (!video || !heroContainer) return;
+    const b1 = block1Ref.current;
+    const b2 = block2Ref.current;
+    if (!video || !heroContainer || !b1 || !b2) return;
 
     video.pause();
 
@@ -76,6 +80,8 @@ export default function BombinhasInfoPage() {
     const LERP_FACTOR = 0.22;
     let currentTime = 0;
 
+    const clamp = (v: number) => Math.min(Math.max(v, 0), 1);
+
     const tick = () => {
       const target = targetTimeRef.current;
       currentTime += (target - currentTime) * LERP_FACTOR;
@@ -85,6 +91,21 @@ export default function BombinhasInfoPage() {
       ) {
         video.currentTime = currentTime;
       }
+
+      const p = progressRef.current;
+
+      const b1Opacity = p <= 0.45 ? 1 : clamp(1 - (p - 0.45) / 0.05);
+      const b1Blur = p <= 0.45 ? 0 : (1 - b1Opacity) * 12;
+      b1.style.opacity = String(b1Opacity);
+      b1.style.filter = `blur(${b1Blur}px)`;
+
+      const b2Raw = p <= 0.55 ? 0 : clamp((p - 0.55) / 0.1);
+      const b2Blur = (1 - b2Raw) * 12;
+      const b2Y = (1 - b2Raw) * 20;
+      b2.style.opacity = String(b2Raw);
+      b2.style.filter = `blur(${b2Blur}px)`;
+      b2.style.transform = `translateY(${b2Y}px)`;
+
       heroRafRef.current = requestAnimationFrame(tick);
     };
 
@@ -231,22 +252,15 @@ export default function BombinhasInfoPage() {
             }}
           />
 
-          <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none">
+          <div
+            ref={block1Ref}
+            className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none"
+          >
             <div className="mx-auto max-w-4xl">
-              <motion.h1
-                className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Un Destino Exclusivo con Restricción Estructural de Oferta
-              </motion.h1>
-              <motion.p
-                className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              >
+              </h1>
+              <p className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter">
                 Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
                 centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
                 Atlántico, con solo 35,9 km² de superficie total, de los cuales
@@ -260,7 +274,30 @@ export default function BombinhasInfoPage() {
                 seguridad y servicios sostenibles). Además, implementa desde 2013
                 la <strong className="text-[#E3C174]">Taxa de Preservación Ambiental (TPA)</strong>,
                 que regula el acceso vehicular en temporada alta para preservar el entorno.
-              </motion.p>
+              </p>
+            </div>
+          </div>
+
+          <div
+            ref={block2Ref}
+            className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none"
+            style={{ opacity: 0 }}
+          >
+            <div className="mx-auto max-w-4xl">
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+                Turismo Potente y Demanda Constante
+              </h2>
+              <p className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter">
+                Según datos del IBGE (Instituto Brasileño de Geografía y Estadística),
+                Bombinhas tiene
+                aproximadamente <strong className="text-[#E3C174]">25.058 habitantes permanentes</strong>.
+                Sin embargo, recibe
+                entre <strong className="text-[#E3C174]">1,9 y 2,3 millones de turistas</strong> por
+                temporada de verano, <strong className="text-[#E3C174]">multiplicando su población
+                hasta 92 veces</strong> en los meses pico. Es reconocida como
+                la <strong className="text-[#E3C174]">Capital Nacional del Buceo Ecológico</strong> y
+                atrae turismo nacional e internacional de nivel medio-alto.
+              </p>
             </div>
           </div>
 
