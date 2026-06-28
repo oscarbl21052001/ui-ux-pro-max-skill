@@ -32,7 +32,7 @@ function createBeam(width: number, height: number): Beam {
     width: 40 + Math.random() * 50,
     length: height * 2.5,
     angle: angleVariations[Math.floor(Math.random() * angleVariations.length)],
-    speed: 0.15 + Math.random() * 0.25,
+    speed: 0.4 + Math.random() * 0.6,
     opacity: 0.05 + Math.random() * 0.07,
     hue: CONFIG.hueBase + Math.random() * CONFIG.hueRange,
     pulse: Math.random() * Math.PI * 2,
@@ -81,7 +81,7 @@ export default function BombinhasInfoPage() {
         spacing / 2 +
         (Math.random() - 0.5) * spacing * 0.5;
       beam.width = 80 + Math.random() * 80;
-      beam.speed = 0.12 + Math.random() * 0.2;
+      beam.speed = 0.35 + Math.random() * 0.5;
       beam.hue = CONFIG.hueBase + (index * CONFIG.hueRange) / CONFIG.beamCount;
       beam.opacity = 0.04 + Math.random() * 0.06;
       return beam;
