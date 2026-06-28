@@ -224,10 +224,51 @@ export default function BombinhasInfoPage() {
           <div className="absolute inset-0 bg-black/20 pointer-events-none" />
 
           <div
+            className="absolute inset-0 z-10 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 60%, transparent 100%)",
+              backdropFilter: "blur(2px)",
+            }}
+          />
+
+          <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none">
+            <div className="mx-auto max-w-4xl">
+              <motion.h1
+                className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Un Destino Exclusivo con Restricción Estructural de Oferta
+              </motion.h1>
+              <motion.p
+                className="text-base md:text-lg text-neutral-200 leading-relaxed max-w-3xl mx-auto font-inter"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              >
+                Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
+                centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
+                Atlántico, con solo 35,9 km² de superficie total, de los cuales
+                el <strong className="font-semibold text-white">67% está bajo protección ambiental</strong>.
+                Esta limitación geográfica y legal genera
+                una <strong className="font-semibold text-white">escasez real y permanente de suelo edificable</strong>,
+                lo que sostiene la valorización a largo plazo. La ciudad cuenta con 39 playas,
+                5 de ellas con la certificación
+                internacional <strong className="font-semibold text-white">Bandeira Azul</strong> (un
+                sello de calidad que garantiza aguas limpias, gestión ambiental excelente,
+                seguridad y servicios sostenibles). Además, implementa desde 2013
+                la <strong className="font-semibold text-white">Taxa de Preservación Ambiental (TPA)</strong>,
+                que regula el acceso vehicular en temporada alta para preservar el entorno.
+              </motion.p>
+            </div>
+          </div>
+
+          <div
             className="absolute bottom-0 left-0 w-full h-[40%] pointer-events-none"
             style={{
               background: `linear-gradient(to bottom, transparent, ${CONFIG.bgColor})`,
-              zIndex: 10,
+              zIndex: 30,
             }}
           />
         </div>
