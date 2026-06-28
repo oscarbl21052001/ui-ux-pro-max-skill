@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+
+const HIGGSFIELD_VIDEO_URL =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260628_114621_a95448e0-4fdc-465b-9bb7-c5688f4fd3b4.mp4";
 
 interface Beam {
   x: number;
@@ -21,7 +24,7 @@ const CONFIG = {
   blur: 45,
   hueBase: 35,
   hueRange: 20,
-  bgColor: "bg-[#0E1418]",
+  bgColor: "#0E1418",
 };
 
 function createBeam(width: number, height: number): Beam {
@@ -41,9 +44,59 @@ function createBeam(width: number, height: number): Beam {
 }
 
 export default function BombinhasInfoPage() {
+  const heroContainerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const targetTimeRef = useRef(0);
+  const progressRef = useRef(0);
+  const heroRafRef = useRef<number>(0);
+  const [mounted, setMounted] = useState(false);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const beamsRef = useRef<Beam[]>([]);
-  const animationFrameRef = useRef<number>(0);
+  const beamRafRef = useRef<number>(0);
+
+  useEffect(() => {
+    setMounted(true);
+
+    const video = videoRef.current;
+    const heroContainer = heroContainerRef.current;
+    if (!video || !heroContainer) return;
+
+    video.pause();
+
+    const onScroll = () => {
+      const rect = heroContainer.getBoundingClientRect();
+      const scrollableHeight = rect.height - window.innerHeight;
+      if (scrollableHeight <= 0) return;
+      const progress = Math.min(Math.max(-rect.top / scrollableHeight, 0), 1);
+      progressRef.current = progress;
+      targetTimeRef.current = progress * (video.duration || 0);
+    };
+
+    const LERP_FACTOR = 0.22;
+    let currentTime = 0;
+
+    const tick = () => {
+      const target = targetTimeRef.current;
+      currentTime += (target - currentTime) * LERP_FACTOR;
+      if (
+        video.readyState >= 2 &&
+        Math.abs(currentTime - video.currentTime) > 0.01
+      ) {
+        video.currentTime = currentTime;
+      }
+      heroRafRef.current = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    heroRafRef.current = requestAnimationFrame(tick);
+    onScroll();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(heroRafRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -137,41 +190,70 @@ export default function BombinhasInfoPage() {
         drawBeam(ctx, beam);
       });
 
-      animationFrameRef.current = requestAnimationFrame(animate);
+      beamRafRef.current = requestAnimationFrame(animate);
     }
 
     animate();
 
     return () => {
       window.removeEventListener("resize", updateCanvasSize);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (beamRafRef.current) {
+        cancelAnimationFrame(beamRafRef.current);
       }
     };
   }, []);
 
   return (
-    <div
-      className={`relative w-full h-screen overflow-hidden ${CONFIG.bgColor}`}
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-0"
-        style={{ filter: "blur(12px)" }}
-      />
+    <div style={{ background: CONFIG.bgColor }}>
+      {/* ── SECTION 1: Scroll-Driven Video Header ── */}
+      <div ref={heroContainerRef} className="relative h-[300vh]">
+        <div className="sticky top-0 h-screen overflow-hidden">
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            preload="auto"
+            crossOrigin="anonymous"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              mounted ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <source src={HIGGSFIELD_VIDEO_URL} type="video/mp4" />
+          </video>
 
-      <motion.div
-        className="absolute inset-0 bg-neutral-950/10 z-10 pointer-events-none"
-        animate={{ opacity: [0.03, 0.08, 0.03] }}
-        transition={{
-          duration: 12,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
-        style={{ backdropFilter: "blur(40px)" }}
-      />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
 
-      <div className="relative z-20 flex flex-col items-center justify-center h-full text-white px-6 text-center">
+          <div
+            className="absolute bottom-0 left-0 w-full h-[40%] pointer-events-none"
+            style={{
+              background: `linear-gradient(to bottom, transparent, ${CONFIG.bgColor})`,
+              zIndex: 10,
+            }}
+          />
+        </div>
+      </div>
+
+      {/* ── SECTION 2: Golden Beam Canvas ── */}
+      <div className="relative w-full h-screen overflow-hidden">
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 z-0"
+          style={{ filter: "blur(12px)" }}
+        />
+
+        <motion.div
+          className="absolute inset-0 bg-neutral-950/10 z-10 pointer-events-none"
+          animate={{ opacity: [0.03, 0.08, 0.03] }}
+          transition={{
+            duration: 12,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+          style={{ backdropFilter: "blur(40px)" }}
+        />
+
+        <div className="relative z-20 flex flex-col items-center justify-center h-full text-white px-6 text-center">
+        </div>
       </div>
     </div>
   );
