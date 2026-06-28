@@ -8,6 +8,9 @@ const HIGGSFIELD_VIDEO_URL =
 
 const BG_COLOR = "#0E1418";
 
+const HIGGSFIELD_IMAGE_URL =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260628_221735_efacfff4-2258-4a66-b71e-1fcd47fb9493.png";
+
 export default function BombinhasInfoPage() {
   const heroContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -207,6 +210,89 @@ export default function BombinhasInfoPage() {
             proyectos se encuentran precisamente en estas zonas premium</strong>, lo que permite
             capturar un potencial de revalorización superior al promedio del municipio.
           </motion.p>
+        </div>
+      </section>
+
+      {/* ── SECTION 3: Parallax Window — Etapas de Construcción ── */}
+      <section className="relative min-h-[80vh] md:min-h-screen overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${HIGGSFIELD_IMAGE_URL})`,
+            backgroundAttachment: "fixed",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] md:min-h-screen py-20 md:py-28 px-6">
+          <div className="mx-auto max-w-5xl text-center">
+            <motion.h2
+              className="text-4xl md:text-5xl font-extrabold tracking-tight mb-12 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              Etapas de Construcción y sus Ventajas
+            </motion.h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+              <motion.div
+                className="text-left md:text-center"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+              >
+                <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
+                  <strong className="text-[#C9A24B]">Pre-lanzamiento / Lanzamiento:
+                  Precio más bajo del ciclo</strong>. Mayor potencial de revalorización
+                  durante la obra y mejores condiciones de pago (generalmente con cuotas
+                  ajustadas por INCC, índice que protege contra la inflación de la
+                  construcción). Requiere mayor tolerancia al tiempo de espera.
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="text-left md:text-center"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
+              >
+                <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
+                  <strong className="text-[#C9A24B]">En obra: Precio
+                  intermedio</strong>. Ya se puede visualizar mejor el proyecto y hay
+                  más información disponible. Sigue ofreciendo buen margen de apreciación
+                  hasta la entrega.
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="text-left md:text-center"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              >
+                <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
+                  <strong className="text-[#C9A24B]">Entregado / Listo para habitar:
+                  entrega inmediata</strong>. Es el momento ideal si buscas comenzar a
+                  generar renta por alquiler de forma inmediata o disfrutar la propiedad
+                  como segunda residencia. Además, representa
+                  una <strong className="text-[#C9A24B]">excelente oportunidad de
+                  flip</strong>: muchos inversores venden la unidad recién entregada,
+                  capitalizando la revalorización acumulada durante la obra y obteniendo
+                  una <strong className="text-[#C9A24B]">rentabilidad muy llamativa en
+                  un plazo relativamente corto</strong>.
+                </p>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
