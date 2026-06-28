@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const HIGGSFIELD_VIDEO_URL =
   "https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260628_114621_a95448e0-4fdc-465b-9bb7-c5688f4fd3b4.mp4";
@@ -177,11 +178,37 @@ export default function BombinhasInfoPage() {
         </div>
       </div>
 
-      {/* ── SECTION 2: Solid Dark Background ── */}
-      <div className="relative w-full h-screen -mt-1">
-        <div className="relative z-20 flex flex-col items-center justify-center h-full text-white px-6 text-center">
+      {/* ── SECTION 2: Valorización Inmobiliaria ── */}
+      <section className="relative -mt-1 py-24 md:py-32 px-6">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.h2
+            className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            Valorización Inmobiliaria
+          </motion.h2>
+          <motion.p
+            className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+            Santa Catarina es uno de los estados líderes en valorización residencial según
+            el <strong className="text-[#C9A24B]">FipeZAP</strong> (el indicador más respetado
+            del mercado inmobiliario brasileño, que mide la evolución de precios de venta y
+            alquiler en decenas de ciudades). En Bombinhas,
+            la <strong className="text-[#C9A24B]">valorización anual histórica se sitúa entre
+            12% y 14%</strong> en años típicos, con <strong className="text-[#C9A24B]">picos
+            de hasta 25% en zonas premium</strong>. <strong className="text-[#C9A24B]">Nuestros
+            proyectos se encuentran precisamente en estas zonas premium</strong>, lo que permite
+            capturar un potencial de revalorización superior al promedio del municipio.
+          </motion.p>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
