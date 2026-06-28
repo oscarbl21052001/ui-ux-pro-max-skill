@@ -249,8 +249,9 @@ export default function BombinhasInfoPage() {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
               >
                 <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
-                  <strong className="text-[#C9A24B]">Pre-lanzamiento / Lanzamiento:
-                  Precio más bajo del ciclo</strong>. Mayor potencial de revalorización
+                  <strong className="text-[#F3E5AB] uppercase tracking-wide">Pre-lanzamiento
+                  / Lanzamiento</strong>: <strong className="text-[#C9A24B]">Precio
+                  más bajo del ciclo</strong>. Mayor potencial de revalorización
                   durante la obra y mejores condiciones de pago (generalmente con cuotas
                   ajustadas por INCC, índice que protege contra la inflación de la
                   construcción). Requiere mayor tolerancia al tiempo de espera.
@@ -265,7 +266,8 @@ export default function BombinhasInfoPage() {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
               >
                 <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
-                  <strong className="text-[#C9A24B]">En obra: Precio
+                  <strong className="text-[#F3E5AB] uppercase tracking-wide">En
+                  obra</strong>: <strong className="text-[#C9A24B]">Precio
                   intermedio</strong>. Ya se puede visualizar mejor el proyecto y hay
                   más información disponible. Sigue ofreciendo buen margen de apreciación
                   hasta la entrega.
@@ -280,8 +282,9 @@ export default function BombinhasInfoPage() {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
               >
                 <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
-                  <strong className="text-[#C9A24B]">Entregado / Listo para habitar:
-                  entrega inmediata</strong>. Es el momento ideal si buscas comenzar a
+                  <strong className="text-[#F3E5AB] uppercase tracking-wide">Entregado
+                  / Listo para habitar</strong>: <strong className="text-[#C9A24B]">entrega
+                  inmediata</strong>. Es el momento ideal si buscas comenzar a
                   generar renta por alquiler de forma inmediata o disfrutar la propiedad
                   como segunda residencia. Además, representa
                   una <strong className="text-[#C9A24B]">excelente oportunidad de
