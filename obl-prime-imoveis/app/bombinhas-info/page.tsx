@@ -302,17 +302,28 @@ export default function BombinhasInfoPage() {
           </div>
 
           <div
-            className="absolute bottom-0 left-0 w-full h-[40%] pointer-events-none"
+            className="absolute bottom-0 left-0 w-full h-[50%] pointer-events-none"
             style={{
-              background: `linear-gradient(to bottom, transparent, ${CONFIG.bgColor})`,
-              zIndex: 30,
+              background: `linear-gradient(to bottom, transparent 0%, ${CONFIG.bgColor}33 30%, ${CONFIG.bgColor}99 60%, ${CONFIG.bgColor} 100%)`,
+              zIndex: 25,
+            }}
+          />
+
+          <div
+            className="absolute bottom-0 left-0 w-full h-[30%] pointer-events-none"
+            style={{
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              maskImage: "linear-gradient(to bottom, transparent, black)",
+              WebkitMaskImage: "linear-gradient(to bottom, transparent, black)",
+              zIndex: 26,
             }}
           />
         </div>
       </div>
 
       {/* ── SECTION 2: Golden Beam Canvas ── */}
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-screen overflow-hidden -mt-1">
         <canvas
           ref={canvasRef}
           className="absolute inset-0 z-0"
