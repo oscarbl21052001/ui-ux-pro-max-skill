@@ -248,13 +248,15 @@ export default function BombinhasInfoPage() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
               >
+                <div className="text-[#F3E5AB] uppercase tracking-wide font-bold text-base md:text-lg font-inter mb-3">
+                  Pre-lanzamiento / Lanzamiento
+                </div>
                 <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
-                  <strong className="text-[#F3E5AB] uppercase tracking-wide">Pre-lanzamiento
-                  / Lanzamiento</strong>: <strong className="text-[#C9A24B]">Precio
-                  más bajo del ciclo</strong>. Mayor potencial de revalorización
-                  durante la obra y mejores condiciones de pago (generalmente con cuotas
-                  ajustadas por INCC, índice que protege contra la inflación de la
-                  construcción). Requiere mayor tolerancia al tiempo de espera.
+                  <strong className="text-[#C9A24B]">Precio más bajo del ciclo</strong>.
+                  Mayor potencial de revalorización durante la obra y mejores condiciones
+                  de pago (generalmente con cuotas ajustadas por INCC, índice que protege
+                  contra la inflación de la construcción). Requiere mayor tolerancia al
+                  tiempo de espera.
                 </p>
               </motion.div>
 
@@ -265,12 +267,13 @@ export default function BombinhasInfoPage() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.25 }}
               >
+                <div className="text-[#F3E5AB] uppercase tracking-wide font-bold text-base md:text-lg font-inter mb-3">
+                  En obra
+                </div>
                 <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
-                  <strong className="text-[#F3E5AB] uppercase tracking-wide">En
-                  obra</strong>: <strong className="text-[#C9A24B]">Precio
-                  intermedio</strong>. Ya se puede visualizar mejor el proyecto y hay
-                  más información disponible. Sigue ofreciendo buen margen de apreciación
-                  hasta la entrega.
+                  <strong className="text-[#C9A24B]">Precio intermedio</strong>. Ya se
+                  puede visualizar mejor el proyecto y hay más información disponible.
+                  Sigue ofreciendo buen margen de apreciación hasta la entrega.
                 </p>
               </motion.div>
 
@@ -281,14 +284,15 @@ export default function BombinhasInfoPage() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
               >
+                <div className="text-[#F3E5AB] uppercase tracking-wide font-bold text-base md:text-lg font-inter mb-3">
+                  Entregado / Listo para habitar
+                </div>
                 <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
-                  <strong className="text-[#F3E5AB] uppercase tracking-wide">Entregado
-                  / Listo para habitar</strong>: <strong className="text-[#C9A24B]">entrega
-                  inmediata</strong>. Es el momento ideal si buscas comenzar a
-                  generar renta por alquiler de forma inmediata o disfrutar la propiedad
-                  como segunda residencia. Además, representa
-                  una <strong className="text-[#C9A24B]">excelente oportunidad de
-                  flip</strong>: muchos inversores venden la unidad recién entregada,
+                  <strong className="text-[#C9A24B]">Entrega inmediata</strong>. Es el
+                  momento ideal si buscas comenzar a generar renta por alquiler de forma
+                  inmediata o disfrutar la propiedad como segunda residencia. Además,
+                  representa una <strong className="text-[#C9A24B]">excelente oportunidad
+                  de flip</strong>: muchos inversores venden la unidad recién entregada,
                   capitalizando la revalorización acumulada durante la obra y obteniendo
                   una <strong className="text-[#C9A24B]">rentabilidad muy llamativa en
                   un plazo relativamente corto</strong>.
