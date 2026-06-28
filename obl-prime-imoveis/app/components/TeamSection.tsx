@@ -183,8 +183,11 @@ export default function TeamSection() {
         </div>
 
         <div className="w-full flex justify-center mt-12">
-          <motion.button
-            className="relative overflow-hidden rounded-full px-8 py-3 font-inter font-semibold text-white cursor-pointer"
+          <motion.a
+            href="/bombinhas-info"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative overflow-hidden rounded-full px-8 py-3 font-inter font-semibold text-white cursor-pointer inline-block"
             style={{ background: 'linear-gradient(to right, #C9A24B, #E3C174)' }}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.93 }}
@@ -200,7 +203,7 @@ export default function TeamSection() {
               Más info
               <ArrowRight size={18} />
             </span>
-          </motion.button>
+          </motion.a>
         </div>
       </div>
       <div
