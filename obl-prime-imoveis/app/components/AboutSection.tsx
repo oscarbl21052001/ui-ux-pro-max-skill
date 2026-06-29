@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 interface ServiceCard {
@@ -125,10 +124,23 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
   );
 }
 
-const MANSION_IMAGE =
-  'http://googleusercontent.com/image_collection/image_retrieval/8241874817432333854_0';
+const PORTFOLIO_VIDEO = '/portfolio-preview.mp4';
 
 export default function AboutSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    try {
+      videoRef.current?.play().catch(() => {});
+    } catch {}
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, []);
   return (
     <section id="nosotros" className="relative bg-[#0E1418] w-full pt-20 pb-20">
       <motion.h2
@@ -185,13 +197,19 @@ export default function AboutSection() {
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
         >
-          <div className="group relative w-full max-w-[280px] aspect-[3/4] overflow-hidden rounded-2xl border-2 border-[#C9A24B]/20 shadow-2xl">
-            <Image
-              src={MANSION_IMAGE}
-              alt="Luxury mansion showcase"
-              fill
-              sizes="280px"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          <div
+            className="group relative w-full max-w-[280px] aspect-[3/4] overflow-hidden rounded-2xl border-2 border-[#C9A24B]/20 shadow-2xl"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <video
+              ref={videoRef}
+              src={PORTFOLIO_VIDEO}
+              muted
+              playsInline
+              loop
+              preload="auto"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 flex items-center justify-center">
               <span className="font-inter text-sm font-semibold text-white opacity-0 translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 border border-white/30 rounded-full px-5 py-2">
