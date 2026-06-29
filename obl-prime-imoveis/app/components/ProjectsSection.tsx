@@ -90,7 +90,9 @@ export default function ProjectsSection() {
         PROYECTOS
       </motion.h2>
 
-      <div className="w-full max-w-7xl mx-auto px-4 pt-8 pb-12">
+      <div className="min-h-[30vh] md:min-h-[40vh] w-full max-w-7xl mx-auto px-6 mb-16" />
+
+      <div className="w-full max-w-7xl mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {STATS.map((stat, i) => (
             <motion.div
