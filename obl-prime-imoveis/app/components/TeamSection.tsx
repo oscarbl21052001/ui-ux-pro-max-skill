@@ -103,7 +103,7 @@ export default function TeamSection() {
   };
 
   return (
-    <section className="relative px-6 pt-24 pb-0 bg-[#0E1418]">
+    <section id="bombinhas" className="relative px-6 pt-24 pb-0 bg-[#0E1418]">
       <div className="mx-auto max-w-5xl">
         <div className="mb-20 text-center">
           <motion.h2
