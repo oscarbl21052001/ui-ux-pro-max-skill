@@ -2,6 +2,81 @@
 
 import { motion } from 'framer-motion';
 
+const STATS = [
+  {
+    value: '150+',
+    label: 'Projects Completed',
+    icon: (
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10 mx-auto mb-4">
+        <circle cx="20" cy="20" r="18" stroke="#C9A24B" strokeWidth="1.5" opacity="0.3" />
+        <path
+          d="M20 10l2.5 5.5H28l-4.5 3.5 1.5 5.5L20 21l-5 3.5 1.5-5.5L12 15.5h5.5L20 10z"
+          fill="#C9A24B"
+          opacity="0.85"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: '1200+',
+    label: 'Happy Clients',
+    icon: (
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10 mx-auto mb-4">
+        <circle cx="20" cy="20" r="18" stroke="#C9A24B" strokeWidth="1.5" opacity="0.3" />
+        <circle cx="15" cy="16" r="3" fill="#C9A24B" opacity="0.85" />
+        <circle cx="25" cy="16" r="3" fill="#C9A24B" opacity="0.85" />
+        <path
+          d="M10 26c0-3.3 4.5-5 10-5s10 1.7 10 5"
+          stroke="#C9A24B"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          opacity="0.85"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: '12',
+    label: 'Years Experience',
+    icon: (
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10 mx-auto mb-4">
+        <circle cx="20" cy="20" r="18" stroke="#C9A24B" strokeWidth="1.5" opacity="0.3" />
+        <rect x="12" y="12" width="16" height="16" rx="2" stroke="#C9A24B" strokeWidth="1.5" opacity="0.85" />
+        <line x1="12" y1="17" x2="28" y2="17" stroke="#C9A24B" strokeWidth="1.5" opacity="0.85" />
+        <line x1="17" y1="12" x2="17" y2="14" stroke="#C9A24B" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
+        <line x1="23" y1="12" x2="23" y2="14" stroke="#C9A24B" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
+      </svg>
+    ),
+  },
+  {
+    value: '98%',
+    label: 'Satisfaction Rate',
+    icon: (
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10 mx-auto mb-4">
+        <circle cx="20" cy="20" r="18" stroke="#C9A24B" strokeWidth="1.5" opacity="0.3" />
+        <polyline
+          points="12,26 18,20 22,23 28,14"
+          stroke="#C9A24B"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity="0.85"
+        />
+        <polyline
+          points="24,14 28,14 28,18"
+          stroke="#C9A24B"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity="0.85"
+        />
+      </svg>
+    ),
+  },
+];
+
 export default function ProjectsSection() {
   return (
     <section id="proyectos" className="relative bg-[#0E1418] w-full pt-20 pb-8">
@@ -15,7 +90,35 @@ export default function ProjectsSection() {
         PROYECTOS
       </motion.h2>
 
-      <div className="min-h-[40vh] md:min-h-[50vh] w-full max-w-7xl mx-auto px-6">
+      <div className="w-full max-w-7xl mx-auto px-4 pt-8 pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {STATS.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-8 text-center cursor-default"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: i * 0.12 }}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                boxShadow: '0 20px 40px -15px rgba(201, 162, 75, 0.18)',
+              }}
+              whileTap={{ scale: 0.98 }}
+              style={{ transition: 'box-shadow 0.3s ease' }}
+            >
+              {stat.icon}
+              <p className="font-extrabold text-4xl text-white font-inter mb-2">
+                {stat.value}
+              </p>
+              <p className="text-neutral-400 text-sm tracking-wide font-inter uppercase">
+                {stat.label}
+              </p>
+              <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-[#C9A24B]/40 to-transparent" />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
