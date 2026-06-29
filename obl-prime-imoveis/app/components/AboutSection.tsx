@@ -214,11 +214,7 @@ export default function AboutSection() {
             >
               <source src={PORTFOLIO_VIDEO} type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 flex items-center justify-center pointer-events-none">
-              <span className="font-inter text-sm font-semibold text-white opacity-0 translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 border border-white/30 rounded-full px-5 py-2">
-                Our Portfolio
-              </span>
-            </div>
+            <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 pointer-events-none" />
           </div>
         </motion.div>
 
