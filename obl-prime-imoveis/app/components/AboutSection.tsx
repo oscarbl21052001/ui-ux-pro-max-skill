@@ -124,8 +124,7 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
   );
 }
 
-const PORTFOLIO_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260629_105959_16a94429-793d-464a-9578-bafcc415386b.mp4';
+const PORTFOLIO_VIDEO = '/portfolio-preview.mp4';
 
 export default function AboutSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
