@@ -206,10 +206,6 @@ export default function TeamSection() {
           </motion.a>
         </div>
       </div>
-      <div
-        className="h-28 w-full"
-        style={{ background: 'linear-gradient(to bottom, #0E1418, #FAFAFA)' }}
-      />
     </section>
   );
 }
