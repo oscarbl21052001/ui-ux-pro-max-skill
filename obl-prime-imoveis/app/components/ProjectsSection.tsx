@@ -92,16 +92,16 @@ export default function ProjectsSection() {
 
       <div className="min-h-[30vh] md:min-h-[40vh] w-full max-w-7xl mx-auto px-6 mb-16" />
 
-      <div className="w-full max-w-7xl mx-auto px-4 pb-12">
+      <div className="w-full max-w-7xl mx-auto px-4 pb-12 overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
               className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-8 text-center cursor-default"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: i * 0.12 }}
+              initial={{ opacity: 0, x: i < 2 ? -100 : 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
               whileHover={{
                 y: -8,
                 scale: 1.02,
