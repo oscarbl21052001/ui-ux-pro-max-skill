@@ -302,6 +302,52 @@ export default function BombinhasInfoPage() {
           </div>
         </div>
       </section>
+
+      {/* ── SECTION 4: Tabla Comparativa de Rentabilidad ── */}
+      <section className="relative py-24 md:py-32 px-6">
+        <motion.div
+          className="mx-auto max-w-5xl"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-12 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+            Rentabilidad por Alquiler Vacacional
+          </h2>
+
+          <div className="overflow-x-auto w-full px-0 md:px-4">
+            <table className="w-full border-collapse font-inter">
+              <thead>
+                <tr className="border-b border-neutral-700">
+                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B]">Aspecto</th>
+                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B]">España 🇪🇸</th>
+                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B]">Bombinhas 🇧🇷</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Regulación", "Restricciones crecientes y licencias limitadas", "Marco favorable para el alquiler vacacional"],
+                  ["Alquiler vacacional", "Cada vez más condicionado", "Totalmente consolidado"],
+                  ["Rentabilidad", "Buena, pero con mayor presión regulatoria", "Alto potencial de ingresos por alquiler"],
+                  ["Ocupación", "Dependiente de la ubicación y la temporada", "Elevada en zonas premium durante gran parte del año"],
+                  ["Demanda turística", "Alta, con fuerte competencia", "Constante y en crecimiento"],
+                  ["Revalorización", "Mercado maduro", "Mercado con potencial de crecimiento"],
+                  ["Competencia", "Muy elevada", "Menor oferta de propiedades exclusivas"],
+                  ["Perfil del inversor", "Búsqueda de estabilidad", "Diversificación y crecimiento patrimonial"],
+                  ["Perspectiva de futuro", "Mayor regulación e incertidumbre", "Expansión del turismo y oportunidades de inversión"],
+                ].map(([aspect, spain, bombinhas], i) => (
+                  <tr key={i} className="border-b border-neutral-800">
+                    <td className="p-4 text-sm md:text-base font-bold text-[#C9A24B]">{aspect}</td>
+                    <td className="p-4 text-sm md:text-base font-bold text-white">{spain}</td>
+                    <td className="p-4 text-sm md:text-base font-bold text-white">{bombinhas}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+      </section>
     </div>
   );
 }
