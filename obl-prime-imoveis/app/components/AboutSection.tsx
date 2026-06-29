@@ -148,7 +148,7 @@ export default function AboutSection() {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
       >
-        Our Vision &amp; Values
+        Nuestra visión y valores
       </motion.p>
 
       <motion.p
@@ -158,9 +158,11 @@ export default function AboutSection() {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
       >
-        Fusionamos arquitectura de autor, materiales nobles y tecnología de vanguardia
-        para crear residencias que trascienden lo convencional. Cada proyecto es una
-        declaración de intenciones donde el lujo se vive, no solo se observa.
+        Combinamos experiencia en el mercado inmobiliario español con un análisis riguroso
+        del litoral brasileño para estructurar inversiones seguras y de alto potencial.
+        Nuestro compromiso es guiar cada paso con transparencia, asegurando no solo una
+        excelente rentabilidad, sino también la tranquilidad y el estilo de vida excepcional
+        que mereces en Bombinhas
       </motion.p>
 
       <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 max-w-7xl mx-auto w-full px-6 mt-12 items-center overflow-hidden">
