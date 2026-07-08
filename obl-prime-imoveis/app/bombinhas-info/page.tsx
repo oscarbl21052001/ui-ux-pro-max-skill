@@ -320,9 +320,9 @@ export default function BombinhasInfoPage() {
             <table className="w-full border-collapse font-inter">
               <thead>
                 <tr className="border-b border-neutral-700">
-                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B]">Aspecto</th>
-                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B]">España 🇪🇸</th>
-                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B]">Bombinhas 🇧🇷</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B]">Aspecto</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B]">España 🇪🇸</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B]">Bombinhas 🇧🇷</th>
                 </tr>
               </thead>
               <tbody>
@@ -338,9 +338,9 @@ export default function BombinhasInfoPage() {
                   ["Perspectiva de futuro", "Mayor regulación e incertidumbre", "Expansión del turismo y oportunidades de inversión"],
                 ].map(([aspect, spain, bombinhas], i) => (
                   <tr key={i} className="border-b border-neutral-800">
-                    <td className="p-4 text-sm md:text-base font-bold text-[#C9A24B]">{aspect}</td>
-                    <td className="p-4 text-sm md:text-base font-bold text-white">{spain}</td>
-                    <td className="p-4 text-sm md:text-base font-bold text-white">{bombinhas}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B]">{aspect}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-bold text-white">{spain}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-bold text-white">{bombinhas}</td>
                   </tr>
                 ))}
               </tbody>
