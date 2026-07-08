@@ -312,7 +312,7 @@ export default function BombinhasInfoPage() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-12 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-12 pb-2 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
             Rentabilidad por Alquiler Vacacional
           </h2>
 
