@@ -331,7 +331,7 @@ export default function BombinhasInfoPage() {
                   ["Alquiler vacacional", "Cada vez más condicionado", "Totalmente consolidado"],
                   ["Rentabilidad", "Buena, pero con mayor presión regulatoria", "Alto potencial de ingresos por alquiler"],
                   ["Ocupación", "Dependiente de la ubicación y la temporada", "Alta ocupación en las zonas premium que comercializamos durante gran parte del año"],
-                  ["Demanda turística", "Alta, con fuerte competencia", "Alta, constante y en crecimiento"],
+                  ["Demanda turística", "Alta", "Muy alta, constante y en crecimiento"],
                   ["Revalorización", "Mercado maduro", "Mercado con potencial de crecimiento"],
                   ["Competencia", "Muy elevada", "Menor oferta de propiedades exclusivas"],
                   ["Perfil del inversor", "Búsqueda de estabilidad", "Diversificación, seguridad y crecimiento patrimonial"],
