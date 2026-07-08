@@ -116,7 +116,7 @@ export default function BombinhasInfoPage() {
             className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none"
           >
             <div className="mx-auto max-w-4xl">
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Un Destino Exclusivo con Restricción Estructural de Oferta
               </h1>
               <p className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter">
@@ -143,7 +143,7 @@ export default function BombinhasInfoPage() {
             style={{ opacity: 0 }}
           >
             <div className="mx-auto max-w-4xl">
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Turismo Potente y Demanda Constante
               </h2>
               <p className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter">
@@ -185,7 +185,7 @@ export default function BombinhasInfoPage() {
       <section className="relative -mt-1 py-24 md:py-32 px-6">
         <div className="mx-auto max-w-4xl text-center">
           <motion.h2
-            className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -231,7 +231,7 @@ export default function BombinhasInfoPage() {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] md:min-h-screen py-20 md:py-28 px-6">
           <div className="mx-auto max-w-5xl text-center">
             <motion.h2
-              className="text-4xl md:text-5xl font-extrabold tracking-tight mb-12 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+              className="text-4xl md:text-5xl font-extrabold tracking-tight mb-12 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
