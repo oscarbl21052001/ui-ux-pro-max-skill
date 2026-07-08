@@ -327,14 +327,14 @@ export default function BombinhasInfoPage() {
               </thead>
               <tbody>
                 {[
-                  ["Regulación", "Restricciones crecientes y licencias limitadas", "Marco favorable para el alquiler vacacional"],
+                  ["Regulación", "Restricciones crecientes y licencias limitadas", "Entorno favorable al alquiler vacacional"],
                   ["Alquiler vacacional", "Cada vez más condicionado", "Totalmente consolidado"],
                   ["Rentabilidad", "Buena, pero con mayor presión regulatoria", "Alto potencial de ingresos por alquiler"],
-                  ["Ocupación", "Dependiente de la ubicación y la temporada", "Elevada en zonas premium durante gran parte del año"],
-                  ["Demanda turística", "Alta, con fuerte competencia", "Constante y en crecimiento"],
+                  ["Ocupación", "Dependiente de la ubicación y la temporada", "Alta ocupación en las zonas premium que comercializamos durante gran parte del año"],
+                  ["Demanda turística", "Alta, con fuerte competencia", "Alta, constante y en crecimiento"],
                   ["Revalorización", "Mercado maduro", "Mercado con potencial de crecimiento"],
                   ["Competencia", "Muy elevada", "Menor oferta de propiedades exclusivas"],
-                  ["Perfil del inversor", "Búsqueda de estabilidad", "Diversificación y crecimiento patrimonial"],
+                  ["Perfil del inversor", "Búsqueda de estabilidad", "Diversificación, seguridad y crecimiento patrimonial"],
                   ["Perspectiva de futuro", "Mayor regulación e incertidumbre", "Expansión del turismo y oportunidades de inversión"],
                 ].map(([aspect, spain, bombinhas], i) => (
                   <tr key={i} className="border-b border-neutral-800">
