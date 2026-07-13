@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 interface PolaroidCard {
@@ -33,6 +33,41 @@ const VISIBLE_DEPTH = 4;
 export default function TeamSection() {
   const [topIndex, setTopIndex] = useState(0);
   const [flickState, setFlickState] = useState<'idle' | 'flicking'>('idle');
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // ── Scroll-linked animation ──────────────────────────────────────────────
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'center center'],
+  });
+
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 55,
+    damping: 22,
+    restDelta: 0.001,
+  });
+
+  // Title — leads everything
+  const titleScale   = useTransform(smooth, [0, 1], [2.0, 1]);
+  const titleZ       = useTransform(smooth, [0, 1], [380, 0]);
+  const titleOpacity = useTransform(smooth, [0, 0.25], [0, 1]);
+  const titleBlurN   = useTransform(smooth, [0, 0.4], [8, 0]);
+  const titleFilter  = useTransform(titleBlurN, (v) => `blur(${v}px)`);
+
+  // Polaroid — heavier, slight beat behind title
+  const polaroidScale   = useTransform(smooth, [0.05, 1], [2.6, 1]);
+  const polaroidZ       = useTransform(smooth, [0.05, 1], [420, 0]);
+  const polaroidOpacity = useTransform(smooth, [0.05, 0.3], [0, 1]);
+  const polaroidBlurN   = useTransform(smooth, [0.05, 0.45], [6, 0]);
+  const polaroidFilter  = useTransform(polaroidBlurN, (v) => `blur(${v}px)`);
+
+  // Text block — subtlest depth, two beats behind
+  const textScale   = useTransform(smooth, [0.1, 1], [1.5, 1]);
+  const textZ       = useTransform(smooth, [0.1, 1], [260, 0]);
+  const textOpacity = useTransform(smooth, [0.1, 0.4], [0, 1]);
+  const textBlurN   = useTransform(smooth, [0.1, 0.5], [5, 0]);
+  const textFilter  = useTransform(textBlurN, (v) => `blur(${v}px)`);
+  // ─────────────────────────────────────────────────────────────────────────
 
   const handleFlick = useCallback(() => {
     if (flickState !== 'idle') return;
@@ -103,38 +138,46 @@ export default function TeamSection() {
   };
 
   return (
-    <section id="bombinhas" className="relative px-6 pt-24 pb-0 bg-[#0E1418]">
+    <section
+      ref={sectionRef}
+      id="bombinhas"
+      className="relative px-6 pt-24 pb-0 bg-[#0E1418]"
+      style={{ perspective: '1200px' }}
+    >
       <div className="mx-auto max-w-5xl">
-        <div className="mb-20 text-center">
-          <motion.h2
-            className="team-section-title font-playfair"
-            initial={{ filter: 'blur(12px)', opacity: 0 }}
-            whileInView={{ filter: 'blur(0px)', opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
+        {/* Title block */}
+        <motion.div
+          className="mb-20 text-center"
+          style={{
+            scale: titleScale,
+            z: titleZ,
+            opacity: titleOpacity,
+            filter: titleFilter,
+            willChange: 'transform, opacity, filter',
+          }}
+        >
+          <h2 className="team-section-title font-playfair pb-2">
             BOMBINHAS
-          </motion.h2>
-          <motion.p
-            className="mx-auto mt-4 max-w-lg text-xl text-zinc-400 font-inter"
-            initial={{ filter: 'blur(12px)', opacity: 0 }}
-            whileInView={{ filter: 'blur(0px)', opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
-          >
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-xl text-zinc-400 font-inter">
             ¿Qué tiene Bombinhas que otros destinos no ofrecen?
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Polaroid stack */}
           <motion.div
             className="relative mx-auto lg:mx-0 cursor-pointer"
-            style={{ width: 320, height: 420 }}
+            style={{
+              width: 320,
+              height: 420,
+              scale: polaroidScale,
+              z: polaroidZ,
+              opacity: polaroidOpacity,
+              filter: polaroidFilter,
+              willChange: 'transform, opacity, filter',
+            }}
             onClick={handleFlick}
-            initial={{ x: -100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {renderStack()}
 
@@ -143,17 +186,21 @@ export default function TeamSection() {
             </p>
           </motion.div>
 
+          {/* Text block */}
           <motion.div
             className="space-y-6 font-inter text-base leading-relaxed"
-            style={{ color: 'rgba(255, 255, 255, 0.85)' }}
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              color: 'rgba(255, 255, 255, 0.85)',
+              scale: textScale,
+              z: textZ,
+              opacity: textOpacity,
+              filter: textFilter,
+              willChange: 'transform, opacity, filter',
+            }}
           >
             <p>
               La mayoría de los destinos crecen hasta saturarse. Bombinhas no
-              puede: el <span className="font-bold text-accent">{' '}67%{' '}</span> de
+              puede: el <span className="font-bold text-accent">{' '}67%{' '}</span> de
               su territorio es <span className="font-bold text-accent">inedificable por ley</span>,
               protegido por <span className="font-bold text-white">cuatro capas legales</span> que
               ningún desarrollador puede esquivar.
