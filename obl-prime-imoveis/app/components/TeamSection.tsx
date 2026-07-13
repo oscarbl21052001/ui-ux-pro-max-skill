@@ -38,34 +38,34 @@ export default function TeamSection() {
   // ── Scroll-linked animation ──────────────────────────────────────────────
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'start 85%'],
+    offset: ['start end', 'center center'],
   });
 
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
+    stiffness: 80,
+    damping: 24,
     restDelta: 0.001,
   });
 
-  // Title — leads everything, fully landed by 15% scroll
-  const titleScale   = useTransform(smooth, [0, 0.15], [2.0, 1]);
-  const titleZ       = useTransform(smooth, [0, 0.15], [380, 0]);
-  const titleOpacity = useTransform(smooth, [0, 0.08], [0, 1]);
-  const titleBlurN   = useTransform(smooth, [0, 0.13], [8, 0]);
+  // Title — leads everything, fully landed at scroll end
+  const titleScale   = useTransform(smooth, [0, 1], [2.0, 1]);
+  const titleZ       = useTransform(smooth, [0, 1], [380, 0]);
+  const titleOpacity = useTransform(smooth, [0, 0.5], [0, 1]);
+  const titleBlurN   = useTransform(smooth, [0, 0.6], [8, 0]);
   const titleFilter  = useTransform(titleBlurN, (v) => `blur(${v}px)`);
 
-  // Polaroid — one beat behind title, landed by 20%
-  const polaroidScale   = useTransform(smooth, [0.05, 0.2], [2.6, 1]);
-  const polaroidZ       = useTransform(smooth, [0.05, 0.2], [420, 0]);
-  const polaroidOpacity = useTransform(smooth, [0.05, 0.13], [0, 1]);
-  const polaroidBlurN   = useTransform(smooth, [0.05, 0.18], [6, 0]);
+  // Polaroid — one beat behind title
+  const polaroidScale   = useTransform(smooth, [0.05, 1], [2.6, 1]);
+  const polaroidZ       = useTransform(smooth, [0.05, 1], [420, 0]);
+  const polaroidOpacity = useTransform(smooth, [0.05, 0.55], [0, 1]);
+  const polaroidBlurN   = useTransform(smooth, [0.05, 0.65], [6, 0]);
   const polaroidFilter  = useTransform(polaroidBlurN, (v) => `blur(${v}px)`);
 
-  // Text block — subtlest depth, two beats behind, landed by 25%
-  const textScale   = useTransform(smooth, [0.1, 0.25], [1.5, 1]);
-  const textZ       = useTransform(smooth, [0.1, 0.25], [260, 0]);
-  const textOpacity = useTransform(smooth, [0.1, 0.2], [0, 1]);
-  const textBlurN   = useTransform(smooth, [0.1, 0.23], [5, 0]);
+  // Text block — subtlest depth, two beats behind
+  const textScale   = useTransform(smooth, [0.1, 1], [1.5, 1]);
+  const textZ       = useTransform(smooth, [0.1, 1], [260, 0]);
+  const textOpacity = useTransform(smooth, [0.1, 0.6], [0, 1]);
+  const textBlurN   = useTransform(smooth, [0.1, 0.7], [5, 0]);
   const textFilter  = useTransform(textBlurN, (v) => `blur(${v}px)`);
   // ─────────────────────────────────────────────────────────────────────────
 
