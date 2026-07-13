@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useCallback } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import createGlobe from 'cobe';
 
 interface GlobeMarker {
@@ -214,48 +215,48 @@ function GlobeCanvas() {
 
 export default function GlobeSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const text = textRef.current;
-    if (!section || !text) return;
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'center center'],
+  });
 
-    let rafId: number;
+  // Spring smoothing — soft landing, no rigid snapping
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 55,
+    damping: 22,
+    restDelta: 0.001,
+  });
 
-    function tick() {
-      const rect = section!.getBoundingClientRect();
-      const vh = window.innerHeight;
+  // Text — leads the globe slightly (lands first)
+  const textScale  = useTransform(smooth, [0, 1], [2.2, 1]);
+  const textZ      = useTransform(smooth, [0, 1], [420, 0]);
+  const textOpacity = useTransform(smooth, [0, 0.25], [0, 1]);
+  const textBlurN  = useTransform(smooth, [0, 0.4], [8, 0]);
+  const textFilter = useTransform(textBlurN, (v) => `blur(${v}px)`);
 
-      const entryStart = vh;
-      const entryEnd = 0;
-      const raw = 1 - (rect.top - entryEnd) / (entryStart - entryEnd);
-      const p = Math.max(0, Math.min(1, raw));
-
-      const translateY = 250 * (1 - p);
-      const opacity = p;
-
-      text!.style.transform = `translateY(${translateY}px)`;
-      text!.style.opacity = `${opacity}`;
-
-      rafId = requestAnimationFrame(tick);
-    }
-
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
+  // Globe — heavier, arrives a beat after the text
+  const globeScale  = useTransform(smooth, [0.05, 1], [2.8, 1]);
+  const globeZ      = useTransform(smooth, [0.05, 1], [500, 0]);
+  const globeOpacity = useTransform(smooth, [0.05, 0.35], [0, 1]);
+  const globeBlurN  = useTransform(smooth, [0.05, 0.5], [10, 0]);
+  const globeFilter = useTransform(globeBlurN, (v) => `blur(${v}px)`);
 
   return (
     <section
       ref={sectionRef}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FAFAFA] px-6 py-24"
+      style={{ perspective: '1200px' }}
     >
-      <div
-        ref={textRef}
+      <motion.div
         className="mb-12 text-center"
         style={{
           zIndex: 10,
-          willChange: 'transform, opacity',
+          scale: textScale,
+          z: textZ,
+          opacity: textOpacity,
+          filter: textFilter,
+          willChange: 'transform, opacity, filter',
           background: 'transparent',
         }}
       >
@@ -265,9 +266,19 @@ export default function GlobeSection() {
         <p className="mt-4 max-w-lg mx-auto text-base text-neutral-600 font-inter">
           Inversores de todo el mundo confían en OBL Prime para acceder al mercado inmobiliario de Bombinhas.
         </p>
-      </div>
+      </motion.div>
 
-      <GlobeCanvas />
+      <motion.div
+        style={{
+          scale: globeScale,
+          z: globeZ,
+          opacity: globeOpacity,
+          filter: globeFilter,
+          willChange: 'transform, opacity, filter',
+        }}
+      >
+        <GlobeCanvas />
+      </motion.div>
     </section>
   );
 }
