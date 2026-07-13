@@ -218,7 +218,7 @@ export default function GlobeSection() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'center center'],
+    offset: ['start end', 'start 40%'],
   });
 
   // Spring smoothing — balanced landing

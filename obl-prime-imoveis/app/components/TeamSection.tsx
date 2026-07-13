@@ -38,7 +38,7 @@ export default function TeamSection() {
   // ── Scroll-linked animation ──────────────────────────────────────────────
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'center center'],
+    offset: ['start end', 'start 40%'],
   });
 
   const smooth = useSpring(scrollYProgress, {
