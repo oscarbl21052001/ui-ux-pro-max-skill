@@ -218,28 +218,28 @@ export default function GlobeSection() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'start 85%'],
+    offset: ['start end', 'center center'],
   });
 
-  // Spring smoothing — soft landing, no rigid snapping
+  // Spring smoothing — balanced landing
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
+    stiffness: 80,
+    damping: 24,
     restDelta: 0.001,
   });
 
-  // Text — leads the globe slightly, landed by 15%
-  const textScale  = useTransform(smooth, [0, 0.15], [2.2, 1]);
-  const textZ      = useTransform(smooth, [0, 0.15], [420, 0]);
-  const textOpacity = useTransform(smooth, [0, 0.1], [0, 1]);
-  const textBlurN  = useTransform(smooth, [0, 0.18], [8, 0]);
+  // Text — leads the globe slightly, fully landed at scroll end
+  const textScale  = useTransform(smooth, [0, 1], [2.2, 1]);
+  const textZ      = useTransform(smooth, [0, 1], [420, 0]);
+  const textOpacity = useTransform(smooth, [0, 0.5], [0, 1]);
+  const textBlurN  = useTransform(smooth, [0, 0.6], [8, 0]);
   const textFilter = useTransform(textBlurN, (v) => `blur(${v}px)`);
 
-  // Globe — heavier, arrives a beat after the text, landed by 20%
-  const globeScale  = useTransform(smooth, [0.05, 0.2], [2.8, 1]);
-  const globeZ      = useTransform(smooth, [0.05, 0.2], [500, 0]);
-  const globeOpacity = useTransform(smooth, [0.05, 0.15], [0, 1]);
-  const globeBlurN  = useTransform(smooth, [0.05, 0.22], [10, 0]);
+  // Globe — heavier, arrives a beat after the text
+  const globeScale  = useTransform(smooth, [0.05, 1], [2.8, 1]);
+  const globeZ      = useTransform(smooth, [0.05, 1], [500, 0]);
+  const globeOpacity = useTransform(smooth, [0.05, 0.55], [0, 1]);
+  const globeBlurN  = useTransform(smooth, [0.05, 0.65], [10, 0]);
   const globeFilter = useTransform(globeBlurN, (v) => `blur(${v}px)`);
 
   return (
