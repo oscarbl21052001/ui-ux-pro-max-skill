@@ -21,6 +21,7 @@ html {
   --font-inter: var(--font-inter);
   --font-jakarta: var(--font-jakarta);
   --font-outfit: var(--font-outfit);
+  --font-dmsans: var(--font-dm-sans);
 }
 
 body {
@@ -108,8 +109,8 @@ body {
 /* ═══ HERO TEXT ═══ */
 .hero-headline {
   font-size: clamp(1.25rem, 3vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.05;
   color: #fff;
   max-width: 90vw;

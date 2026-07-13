@@ -130,10 +130,10 @@ export default function ScrollHero() {
           ref={textRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center gap-5 pointer-events-none px-6"
         >
-          <h1 className="hero-headline font-outfit">
+          <h1 className="hero-headline font-playfair">
             LA ELEGANCIA DE INVERTIR BIEN
           </h1>
-          <p className="hero-subheadline font-inter">
+          <p className="hero-subheadline font-dmsans">
             Accede a oportunidades exclusivas para diversificar y fortalecer tu patrimonio.
           </p>
         </div>
