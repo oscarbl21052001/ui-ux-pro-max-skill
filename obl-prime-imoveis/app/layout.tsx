@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Playfair_Display, Inter, Plus_Jakarta_Sans, Outfit, DM_Sans } from "next/font/google";
+import { Playfair_Display, Inter, Plus_Jakarta_Sans, Outfit, DM_Sans, Cardo } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -43,6 +43,12 @@ const dmSans = DM_Sans({
   weight: ["400", "500"],
 });
 
+const cardo = Cardo({
+  variable: "--font-cardo",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
   title: "OBL Prime Imóveis — Bombinhas, SC",
   description:
@@ -57,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${jakarta.variable} ${outfit.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${jakarta.variable} ${outfit.variable} ${dmSans.variable} ${cardo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
