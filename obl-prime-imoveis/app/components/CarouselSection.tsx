@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 const CARDS = [
   { id: 1, title: 'Valorización Anual',  value: '+18%',   sub: 'Promedio histórico en SC',    chart: 'bars-up'    },
   { id: 2, title: 'Ocupación Turística', value: '87%',    sub: 'En temporada alta',           chart: 'arc'        },
-  { id: 3, title: 'Rentabilidad Bruta',  value: '8–12%',  sub: 'Por alquiler vacacional',     chart: 'line-up'    },
+  { id: 3, title: 'Rentabilidad Bruta',  value: '8–25%',  sub: 'Por alquiler vacacional',     chart: 'line-up'    },
   { id: 4, title: 'Turistas / Año',      value: '2M+',    sub: 'Demanda creciente',           chart: 'bars-grow'  },
   { id: 5, title: 'Valor m² Centro',     value: 'R$12k',  sub: 'Supera Florianópolis',        chart: 'arrow-up'   },
   { id: 6, title: 'Crecimiento Pob.',    value: '+75%',   sub: 'En 12 años',                  chart: 'area'       },
