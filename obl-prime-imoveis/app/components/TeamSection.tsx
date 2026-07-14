@@ -141,7 +141,7 @@ export default function TeamSection() {
     <section
       ref={sectionRef}
       id="bombinhas"
-      className="relative px-6 pt-24 pb-0 bg-[#0E1418]"
+      className="relative px-6 pt-24 pb-8 md:pb-16 lg:pb-24 bg-[#0E1418]"
       style={{ perspective: '1200px' }}
     >
       <div className="mx-auto max-w-5xl">

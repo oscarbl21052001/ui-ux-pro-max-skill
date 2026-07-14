@@ -133,7 +133,7 @@ export default function ScrollHero() {
           <h1 className="hero-headline font-playfair">
             LA ELEGANCIA DE INVERTIR BIEN
           </h1>
-          <p className="hero-subheadline font-dmsans">
+          <p className="hero-subheadline font-cardo">
             Accede a oportunidades exclusivas para diversificar y fortalecer tu patrimonio.
           </p>
         </div>
