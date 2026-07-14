@@ -4,6 +4,7 @@ import TeamSection from "./components/TeamSection";
 import ProjectsSection from "./components/ProjectsSection";
 import AboutSection from "./components/AboutSection";
 import GlobeSection from "./components/GlobeSection";
+import CarouselSection from "./components/CarouselSection";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <ProjectsSection />
       <AboutSection />
       <GlobeSection />
+      <CarouselSection />
     </>
   );
 }
