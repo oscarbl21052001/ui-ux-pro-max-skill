@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 const CARDS = [
   { id: 1, title: 'Valorización Anual',  value: '+18%',   sub: 'Promedio histórico en SC',    chart: 'bars-up'    },
@@ -15,8 +14,8 @@ const CARDS = [
 ];
 
 const N      = CARDS.length;
-const ANGLE  = 360 / N;   // 45 °
-const RADIUS = 440;        // px — virtual cylinder radius
+const ANGLE  = 360 / N;  // 45 °
+const RADIUS = 440;      // virtual cylinder radius in px
 const CARD_W = 200;
 const CARD_H = 260;
 
@@ -46,8 +45,8 @@ function MiniChart({ type }: { type: string }) {
     case 'line-up':
       return (
         <svg viewBox="0 0 80 40" width="100%" height="36" aria-hidden>
-          <polygon points="0,38 20,30 40,22 60,12 80,5 80,40"   fill="#C9A24B" fillOpacity="0.1" />
-          <polyline points="0,38 20,30 40,22 60,12 80,5" fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <polygon  points="0,38 20,30 40,22 60,12 80,5 80,40"  fill="#C9A24B" fillOpacity="0.1" />
+          <polyline points="0,38 20,30 40,22 60,12 80,5"        fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
     case 'bars-grow':
@@ -106,6 +105,7 @@ function Card({ card, index }: { card: typeof CARDS[0]; index: number }) {
         position: 'absolute',
         left: 0,
         top: 0,
+        // Each card orbits at equal angular spacing and identical radius → perfect cylinder
         transform: `rotateY(${index * ANGLE}deg) translateZ(${RADIUS}px)`,
       }}
     >
@@ -127,59 +127,30 @@ function Card({ card, index }: { card: typeof CARDS[0]; index: number }) {
           gap: 6,
         }}
       >
-        {/* Chip label */}
-        <span
-          style={{
-            fontSize: 9,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'rgba(201,162,75,0.72)',
-            fontFamily: 'var(--font-inter)',
-          }}
-        >
+        <span style={{ fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(201,162,75,0.72)', fontFamily: 'var(--font-inter)' }}>
           {card.title}
         </span>
 
-        {/* Big value */}
-        <p
-          style={{
-            fontSize: '2rem',
-            fontWeight: 800,
-            fontFamily: 'var(--font-playfair-display)',
-            background: 'linear-gradient(135deg, #FFF4D0 0%, #F3C63F 55%, #C7941D 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            lineHeight: 1.05,
-            margin: 0,
-          }}
-        >
+        <p style={{
+          fontSize: '2rem',
+          fontWeight: 800,
+          fontFamily: 'var(--font-playfair-display)',
+          background: 'linear-gradient(135deg, #FFF4D0 0%, #F3C63F 55%, #C7941D 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          lineHeight: 1.05,
+          margin: 0,
+        }}>
           {card.value}
         </p>
 
-        {/* Sub-label */}
-        <p
-          style={{
-            fontSize: 11,
-            color: 'rgba(255,255,255,0.38)',
-            fontFamily: 'var(--font-inter)',
-            lineHeight: 1.3,
-            margin: 0,
-          }}
-        >
+        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.38)', fontFamily: 'var(--font-inter)', lineHeight: 1.3, margin: 0 }}>
           {card.sub}
         </p>
 
-        {/* Divider */}
-        <div
-          style={{
-            height: 1,
-            background: 'linear-gradient(to right, transparent, rgba(201,162,75,0.32), transparent)',
-            margin: '4px 0',
-          }}
-        />
+        <div style={{ height: 1, background: 'linear-gradient(to right, transparent, rgba(201,162,75,0.32), transparent)', margin: '4px 0' }} />
 
-        {/* Mini chart */}
         <div style={{ flex: 1 }}>
           <MiniChart type={card.chart} />
         </div>
@@ -193,6 +164,7 @@ const BG = '#06090B';
 
 export default function CarouselSection() {
   const [scale, setScale] = useState(1);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const update = () => {
@@ -203,6 +175,10 @@ export default function CarouselSection() {
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
+
+  // CSS animationPlayState: instant pause/resume at the exact current angle — no jump
+  const pause  = useCallback(() => { if (ringRef.current) ringRef.current.style.animationPlayState = 'paused';  }, []);
+  const resume = useCallback(() => { if (ringRef.current) ringRef.current.style.animationPlayState = 'running'; }, []);
 
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
@@ -231,10 +207,15 @@ export default function CarouselSection() {
         </p>
       </div>
 
-      {/* 3D stage — height collapses on small screens */}
-      <div style={{ height: visualH, position: 'relative' }}>
-
-        {/* Left / right fade masks */}
+      {/* Stage — collapse height on mobile; events trigger pause/resume */}
+      <div
+        style={{ height: visualH, position: 'relative' }}
+        onMouseEnter={pause}
+        onMouseLeave={resume}
+        onTouchStart={pause}
+        onTouchEnd={resume}
+      >
+        {/* Left / right fade masks — simulates cylindrical edge darkening */}
         <div
           aria-hidden
           style={{
@@ -243,36 +224,67 @@ export default function CarouselSection() {
           }}
         />
 
-        {/* Scaled + centered perspective container */}
+        {/*
+          3D scene:
+          · perspective on a full-inset div → vanishing point = exact center of stage
+          · scale wrapper (0×0, centered by flex) → responsive sizing without distorting VP
+          · tilt wrapper  (0×0) → rotateX cinematic angle
+          · ring          (0×0) → CSS carouselSpin, perfect concentric Y-axis orbit
+          · cards         (absolute, rotateY + translateZ) → equidistant on cylinder
+        */}
         <div
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: `translate(-50%, -50%) scale(${scale})`,
-            width: '100%',
-            height: stageH,
-            perspective: '1200px',
-            perspectiveOrigin: '50% 50%',
+            inset: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            perspective: '1500px',
+            perspectiveOrigin: 'center center',
+            overflow: 'visible',
           }}
         >
-          {/* X-tilt — gives the top-down cinematic angle */}
-          <div style={{ transform: 'rotateX(-12deg)', transformStyle: 'preserve-3d', width: 0, height: 0 }}>
-
-            {/* Infinite Y-rotation ring */}
-            <motion.div
-              style={{ transformStyle: 'preserve-3d', width: 0, height: 0, willChange: 'transform' }}
-              animate={{ rotateY: 360 }}
-              transition={{ ease: 'linear', duration: 18, repeat: Infinity }}
+          {/* Responsive scale — applied inside perspective so VP stays unaffected */}
+          <div
+            style={{
+              transform: `scale(${scale})`,
+              transformStyle: 'preserve-3d',
+              transformOrigin: 'center center',
+              width: 0,
+              height: 0,
+            }}
+          >
+            {/* X-tilt — cinematic top-down angle */}
+            <div
+              style={{
+                transform: 'rotateX(-12deg)',
+                transformStyle: 'preserve-3d',
+                transformOrigin: 'center center',
+                width: 0,
+                height: 0,
+              }}
             >
-              {CARDS.map((card, i) => (
-                <Card key={card.id} card={card} index={i} />
-              ))}
-            </motion.div>
-
+              {/*
+                Ring: CSS animation (not Framer Motion) so animationPlayState
+                instantly freezes/resumes at the current angle with 0ms latency.
+              */}
+              <div
+                ref={ringRef}
+                className="carousel-ring"
+                style={{
+                  transformStyle: 'preserve-3d',
+                  transformOrigin: 'center center',
+                  width: 0,
+                  height: 0,
+                  willChange: 'transform',
+                  animation: 'carouselSpin 18s linear infinite',
+                }}
+              >
+                {CARDS.map((card, i) => (
+                  <Card key={card.id} card={card} index={i} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
