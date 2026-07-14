@@ -5,7 +5,6 @@ import ProjectsSection from "./components/ProjectsSection";
 import AboutSection from "./components/AboutSection";
 import GlobeSection from "./components/GlobeSection";
 import CarouselSection from "./components/CarouselSection";
-import PortalTransition from "./components/PortalTransition";
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
       <Navbar />
       <ScrollHero />
       <TeamSection />
-      <PortalTransition />
       <ProjectsSection />
       <AboutSection />
       <GlobeSection />
