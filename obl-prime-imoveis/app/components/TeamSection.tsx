@@ -159,7 +159,7 @@ export default function TeamSection() {
           <h2 className="team-section-title font-playfair pb-2">
             BOMBINHAS
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-xl text-zinc-400 font-inter">
+          <p className="mx-auto mt-4 max-w-lg text-xl text-zinc-300 font-cardo italic tracking-wide">
             ¿Qué tiene Bombinhas que otros destinos no ofrecen?
           </p>
         </motion.div>
