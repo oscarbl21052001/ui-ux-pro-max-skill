@@ -1,135 +1,102 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 
-// Higgsfield background-removed output (VP codec, dark bg extracted)
-const VIDEO_SRC =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260714_090040_cc06ad8b-6dbd-4988-b7f2-c0c880af4070.mp4';
-
-// Timing (video = 4.04 s, rings fill screen ~2.8 s in)
-const T_SCROLL   = 2800; // ms — instant-scroll to #proyectos beneath overlay
-const T_FADE_OUT = 3200; // ms — begin overlay fade-out
-const T_UNLOCK   = 3900; // ms — restore interaction
+// Higgsfield: background-removed gyroscope (dark bg extracted, mix-blend handles the rest)
+const VIDEO_SRC      = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260714_090040_cc06ad8b-6dbd-4988-b7f2-c0c880af4070.mp4';
+const VIDEO_DURATION = 4.04; // seconds
 
 export default function PortalTransition() {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const videoRef   = useRef<HTMLVideoElement>(null);
-  const firedRef   = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef     = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    const sentinel = document.getElementById('portal-trigger');
-    if (!sentinel) return;
+  // scrollYProgress: 0 when container-top hits viewport-top, 1 when container-bottom hits viewport-bottom
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
 
-    const timers: ReturnType<typeof setTimeout>[] = [];
+  // ── Video scrubbing ───────────────────────────────────────────────────────
+  // Map scroll 0→80% to video 0→duration; clamp at 80% so the last frame holds
+  const videoTime = useTransform(scrollYProgress, [0, 0.8], [0, VIDEO_DURATION]);
 
-    const blockScroll = (e: Event) => e.preventDefault();
+  useMotionValueEvent(videoTime, 'change', (t) => {
+    const v = videoRef.current;
+    if (v && v.readyState >= 1) v.currentTime = t;
+  });
 
-    const runPortal = async () => {
-      if (firedRef.current) return;
-      firedRef.current = true;
+  // ── Scale ─────────────────────────────────────────────────────────────────
+  // Exponential-feeling growth: tiny dot → ring fills & bursts the viewport
+  const scale = useTransform(
+    scrollYProgress,
+    [0,    0.10, 0.22, 0.38, 0.54, 0.68, 0.80],
+    [0.10, 0.10, 0.17, 0.35, 0.72, 1.70, 3.50],
+  );
 
-      const overlay = overlayRef.current;
-      const video   = videoRef.current;
-      if (!overlay || !video) return;
-
-      // Block wheel / touch / keyboard scroll for duration of sequence
-      window.addEventListener('wheel',     blockScroll, { passive: false });
-      window.addEventListener('touchmove', blockScroll, { passive: false });
-      window.addEventListener('keydown',   blockScroll);
-
-      // Fade in overlay
-      overlay.style.opacity       = '1';
-      overlay.style.pointerEvents = 'auto';
-
-      // Play video
-      video.currentTime = 0;
-      try { await video.play(); } catch (_) { /* autoplay blocked — overlay still shows */ }
-
-      // Instant-scroll to Proyectos under the overlay cover
-      timers.push(
-        setTimeout(() => {
-          document.documentElement.style.scrollBehavior = 'auto';
-          document.getElementById('proyectos')?.scrollIntoView();
-          // Restore smooth-scroll after one tick so the rest of the page keeps it
-          requestAnimationFrame(() => {
-            document.documentElement.style.scrollBehavior = '';
-          });
-        }, T_SCROLL),
-      );
-
-      // Start fade-out
-      timers.push(
-        setTimeout(() => {
-          overlay.style.opacity = '0';
-        }, T_FADE_OUT),
-      );
-
-      // Fully restore interaction
-      timers.push(
-        setTimeout(() => {
-          window.removeEventListener('wheel',     blockScroll);
-          window.removeEventListener('touchmove', blockScroll);
-          window.removeEventListener('keydown',   blockScroll);
-          overlay.style.pointerEvents = 'none';
-        }, T_UNLOCK),
-      );
-    };
-
-    // Trigger when sentinel enters viewport from below (user approaching boundary)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) runPortal();
-        }
-      },
-      // Fire 150 px before the sentinel reaches the bottom of the viewport
-      { threshold: 0, rootMargin: '0px 0px -150px 0px' },
-    );
-
-    observer.observe(sentinel);
-
-    return () => {
-      observer.disconnect();
-      timers.forEach(clearTimeout);
-      window.removeEventListener('wheel',     blockScroll);
-      window.removeEventListener('touchmove', blockScroll);
-      window.removeEventListener('keydown',   blockScroll);
-    };
-  }, []);
+  // ── Opacity ───────────────────────────────────────────────────────────────
+  // 0% → 10%: invisible (stays at frame 0)
+  // 10% → 78%: fully visible while scrubbing
+  // 78% → 100%: ultra-smooth fade → reveals ProjectsSection below
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.10, 0.78, 1.0],
+    [0, 1,    1,    0  ],
+  );
 
   return (
+    /*
+      300 vh tall container → 200 vh of actual scroll drives the animation.
+      The inner sticky 100 vh panel stays on screen throughout.
+      ProjectsSection naturally appears when this section scrolls out.
+    */
     <div
-      ref={overlayRef}
-      aria-hidden
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 9999,
-        opacity: 0,
-        pointerEvents: 'none',
-        backgroundColor: '#0E1418',
-        transition: 'opacity 0.5s ease',
-        overflow: 'hidden',
-      }}
+      ref={containerRef}
+      style={{ height: '300vh', position: 'relative', backgroundColor: '#0E1418' }}
     >
-      <video
-        ref={videoRef}
-        muted
-        playsInline
-        preload="auto"
-        crossOrigin="anonymous"
+      <div
         style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          // screen blend: dark bg pixels disappear, bright gold rings stay vivid
-          mixBlendMode: 'screen',
+          position: 'sticky',
+          top: 0,
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          backgroundColor: '#0E1418',
         }}
       >
-        <source src={VIDEO_SRC} type="video/mp4" />
-      </video>
+        {/* motion.div carries the scale + opacity transforms on the GPU compositor */}
+        <motion.div
+          style={{
+            scale,
+            opacity,
+            width: '100vw',
+            height: '100vh',
+            willChange: 'transform, opacity',
+            translateZ: 0,           // force GPU layer
+          }}
+        >
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            preload="auto"
+            crossOrigin="anonymous"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              // screen blend: dark pixels vanish, gold rings blaze
+              mixBlendMode: 'screen',
+              display: 'block',
+              transform: 'translateZ(0)',   // own compositor layer for the video
+            }}
+          >
+            <source src={VIDEO_SRC} type="video/mp4" />
+          </video>
+        </motion.div>
+      </div>
     </div>
   );
 }
