@@ -13,14 +13,11 @@ export default function Home() {
       <Navbar />
       <ScrollHero />
       <TeamSection />
-      {/* Sentinel: fires PortalTransition when user reaches the Bombinhas/Proyectos boundary */}
-      <div id="portal-trigger" aria-hidden style={{ height: 1 }} />
+      <PortalTransition />
       <ProjectsSection />
       <AboutSection />
       <GlobeSection />
       <CarouselSection />
-      {/* Fixed overlay — rendered outside the scroll flow */}
-      <PortalTransition />
     </>
   );
 }
