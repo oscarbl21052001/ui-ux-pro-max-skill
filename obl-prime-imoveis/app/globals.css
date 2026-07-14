@@ -184,6 +184,12 @@ body {
   0%, 100% { opacity: 0.3; transform: scale(1); }
   50% { opacity: 0.8; transform: scale(1.8); }
 }
+/* ═══ CAROUSEL SECTION ═══ */
+@keyframes carouselSpin {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .navbar-reveal,
@@ -192,7 +198,8 @@ body {
     opacity: 1;
     clip-path: inset(0 0 0 0);
   }
-  .globe-marker-ring {
-    animation: none;
+  .globe-marker-ring,
+  .carousel-ring {
+    animation: none !important;
   }
 }
