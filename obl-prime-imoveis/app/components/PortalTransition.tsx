@@ -47,7 +47,7 @@ export default function PortalTransition() {
       }
       // Scale + blend: transform directly on video preserves mix-blend-mode
       // against the overlay's #0E1418 background (no intermediate transform wrapper)
-      video.style.transform = `scale(${getScale(p)}) translateZ(0)`;
+      video.style.transform = `translate3d(0,0,0) scale(${getScale(p)})`;
       // Fade the overlay div — this composites (bg + video) together over the page
       overlay.style.opacity = String(getOpacity(p));
     };
@@ -141,8 +141,8 @@ export default function PortalTransition() {
           if (entry.isIntersecting && !active && !cooldown) pin();
         }
       },
-      // Fire when the 1 px trigger enters the viewport (from below)
-      { threshold: 0, rootMargin: '0px 0px -10px 0px' },
+      // Fire when the trigger is ~200 px below the viewport bottom (anticipate entry)
+      { threshold: 0, rootMargin: '0px 0px 200px 0px' },
     );
     observer.observe(trigger);
 
@@ -161,6 +161,9 @@ export default function PortalTransition() {
 
   return (
     <>
+      {/* Webkit crisp-edges — not expressible as a React inline style */}
+      <style>{`#portal-video { -webkit-image-rendering: -webkit-optimize-contrast; }`}</style>
+
       {/* 1 px sentinel: entering viewport triggers pin() */}
       <div ref={triggerRef} style={{ height: 1 }} aria-hidden />
 
@@ -195,6 +198,7 @@ export default function PortalTransition() {
           overlay's #0E1418 background → removed-bg pixels (≈ black) become invisible.
         */}
         <video
+          id="portal-video"
           ref={videoRef}
           muted
           playsInline
@@ -208,8 +212,9 @@ export default function PortalTransition() {
             objectFit: 'cover',
             display: 'block',
             transformOrigin: 'center center',
-            transform: 'scale(0.1) translateZ(0)',
+            transform: 'translate3d(0,0,0) scale(0.1)',
             willChange: 'transform',
+            imageRendering: 'crisp-edges',
             mixBlendMode: 'screen',
           }}
         >
