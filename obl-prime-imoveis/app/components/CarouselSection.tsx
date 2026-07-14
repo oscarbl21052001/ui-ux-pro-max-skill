@@ -97,7 +97,19 @@ function MiniChart({ type }: { type: string }) {
 }
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
-function Card({ card, index }: { card: typeof CARDS[0]; index: number }) {
+function Card({
+  card,
+  index,
+  isActive,
+  onPress,
+  onRelease,
+}: {
+  card: typeof CARDS[0];
+  index: number;
+  isActive: boolean;
+  onPress: () => void;
+  onRelease: () => void;
+}) {
   return (
     <div
       aria-hidden
@@ -105,9 +117,22 @@ function Card({ card, index }: { card: typeof CARDS[0]; index: number }) {
         position: 'absolute',
         left: 0,
         top: 0,
-        // Each card orbits at equal angular spacing and identical radius → perfect cylinder
         transform: `rotateY(${index * ANGLE}deg) translateZ(${RADIUS}px)`,
+        cursor: 'pointer',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
       }}
+      onPointerDown={(e) => {
+        e.preventDefault();
+        e.currentTarget.setPointerCapture(e.pointerId);
+        onPress();
+      }}
+      onPointerUp={(e) => {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+        onRelease();
+      }}
+      onPointerCancel={onRelease}
+      onDragStart={(e) => e.preventDefault()}
     >
       <div
         style={{
@@ -125,6 +150,8 @@ function Card({ card, index }: { card: typeof CARDS[0]; index: number }) {
           display: 'flex',
           flexDirection: 'column',
           gap: 6,
+          filter: isActive ? 'invert(1)' : 'invert(0)',
+          transition: 'filter 220ms ease',
         }}
       >
         <span style={{ fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(201,162,75,0.72)', fontFamily: 'var(--font-inter)' }}>
@@ -163,7 +190,8 @@ function Card({ card, index }: { card: typeof CARDS[0]; index: number }) {
 const BG = '#06090B';
 
 export default function CarouselSection() {
-  const [scale, setScale] = useState(1);
+  const [scale, setScale]           = useState(1);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -176,9 +204,11 @@ export default function CarouselSection() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // CSS animationPlayState: instant pause/resume at the exact current angle — no jump
   const pause  = useCallback(() => { if (ringRef.current) ringRef.current.style.animationPlayState = 'paused';  }, []);
   const resume = useCallback(() => { if (ringRef.current) ringRef.current.style.animationPlayState = 'running'; }, []);
+
+  const handlePress   = useCallback((id: number) => { setActiveCard(id); pause();  }, [pause]);
+  const handleRelease = useCallback(() =>           { setActiveCard(null); resume(); }, [resume]);
 
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
@@ -207,14 +237,8 @@ export default function CarouselSection() {
         </p>
       </div>
 
-      {/* Stage — collapse height on mobile; events trigger pause/resume */}
-      <div
-        style={{ height: visualH, position: 'relative' }}
-        onMouseEnter={pause}
-        onMouseLeave={resume}
-        onTouchStart={pause}
-        onTouchEnd={resume}
-      >
+      {/* Stage — interaction is click-and-hold per card, not hover */}
+      <div style={{ height: visualH, position: 'relative' }}>
         {/* Left / right fade masks — simulates cylindrical edge darkening */}
         <div
           aria-hidden
@@ -281,7 +305,14 @@ export default function CarouselSection() {
                 }}
               >
                 {CARDS.map((card, i) => (
-                  <Card key={card.id} card={card} index={i} />
+                  <Card
+                    key={card.id}
+                    card={card}
+                    index={i}
+                    isActive={activeCard === card.id}
+                    onPress={() => handlePress(card.id)}
+                    onRelease={handleRelease}
+                  />
                 ))}
               </div>
             </div>
