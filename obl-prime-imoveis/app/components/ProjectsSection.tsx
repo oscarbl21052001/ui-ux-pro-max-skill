@@ -79,47 +79,60 @@ const STATS = [
 
 export default function ProjectsSection() {
   return (
-    <section id="proyectos" className="relative bg-[#0E1418] w-full pt-20 pb-8">
-      <motion.h2
-        className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-8"
-        initial={{ filter: 'blur(12px)', opacity: 0 }}
-        whileInView={{ filter: 'blur(0px)', opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        PROYECTOS
-      </motion.h2>
+    <section id="proyectos" className="relative w-full pt-20 pb-8">
+      {/* Legibility overlay — video bleeds through from the fixed canvas */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(14,20,24,0.60) 0%, rgba(14,20,24,0.50) 50%, rgba(14,20,24,0.72) 100%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+      <div className="relative" style={{ zIndex: 1 }}>
+        <motion.h2
+          className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-8"
+          initial={{ filter: 'blur(12px)', opacity: 0 }}
+          whileInView={{ filter: 'blur(0px)', opacity: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          PROYECTOS
+        </motion.h2>
 
-      <div className="min-h-[30vh] md:min-h-[40vh] w-full max-w-7xl mx-auto px-6 mb-16" />
+        <div className="min-h-[30vh] md:min-h-[40vh] w-full max-w-7xl mx-auto px-6 mb-16" />
 
-      <div className="w-full max-w-7xl mx-auto px-4 pb-12 overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STATS.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-8 text-center cursor-default"
-              initial={{ opacity: 0, x: i < 2 ? -100 : 100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              whileHover={{
-                y: -8,
-                scale: 1.02,
-                boxShadow: '0 20px 40px -15px rgba(201, 162, 75, 0.18)',
-              }}
-              whileTap={{ scale: 0.98 }}
-              style={{ transition: 'box-shadow 0.3s ease' }}
-            >
-              {stat.icon}
-              <p className="font-extrabold text-4xl text-white font-inter mb-2">
-                {stat.value}
-              </p>
-              <p className="text-neutral-400 text-sm tracking-wide font-inter uppercase">
-                {stat.label}
-              </p>
-              <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-[#C9A24B]/40 to-transparent" />
-            </motion.div>
-          ))}
+        <div className="w-full max-w-7xl mx-auto px-4 pb-12 overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {STATS.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-8 text-center cursor-default"
+                initial={{ opacity: 0, x: i < 2 ? -100 : 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                  boxShadow: '0 20px 40px -15px rgba(201, 162, 75, 0.18)',
+                }}
+                whileTap={{ scale: 0.98 }}
+                style={{ transition: 'box-shadow 0.3s ease' }}
+              >
+                {stat.icon}
+                <p className="font-extrabold text-4xl text-white font-inter mb-2">
+                  {stat.value}
+                </p>
+                <p className="text-neutral-400 text-sm tracking-wide font-inter uppercase">
+                  {stat.label}
+                </p>
+                <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-[#C9A24B]/40 to-transparent" />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

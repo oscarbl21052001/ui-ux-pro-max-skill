@@ -54,31 +54,41 @@ export default function SectionBackground() {
       const bombT    = 1 - Math.pow(1 - rawBombT, 2);   // power2.out
       bombVid.style.opacity = String(bombT);
 
-      // ── Bombinhas video scrub ─────────────────────────────────────────────
+      // ── Bombinhas + Proyectos combined video scrub ───────────────────────
       // Pre-scrub: advance bomb video as soon as it starts fading in (CF_IN_START)
       // so it never shows a frozen frame-0 while becoming visible.
       const preScrubP = Math.min(Math.max((heroProgress - CF_IN_START) / (CF_IN_END - CF_IN_START), 0), 1);
       bombTarget = preScrubP * 1.5; // covers first 1.5 s during the crossfade window
 
-      // Section-based scrub takes over (and extends further) once #bombinhas is in view
+      // Combined scrub: #bombinhas top entering viewport → #proyectos bottom exiting viewport
       const bombEl = document.getElementById('bombinhas');
-      if (bombEl) {
-        const rect     = bombEl.getBoundingClientRect();
-        const total    = bombEl.offsetHeight + vH;
-        const scrolled = vH - rect.top;
-        const bombP    = Math.min(Math.max(scrolled / total, 0), 1);
-        const rectTarget = bombP * BOMB_DURATION;
+      const proyEl = document.getElementById('proyectos');
+      if (bombEl && proyEl) {
+        const bombRect  = bombEl.getBoundingClientRect();
+        // Total scroll distance = both sections + one viewport height of entry travel
+        const totalRange = bombEl.offsetHeight + proyEl.offsetHeight + vH;
+        const scrolled   = vH - bombRect.top;      // px scrolled since bombinhas entered from bottom
+        const combinedP  = Math.min(Math.max(scrolled / totalRange, 0), 1);
+        const rectTarget = combinedP * BOMB_DURATION;
         if (rectTarget > bombTarget) bombTarget = rectTarget; // never wind back
+      } else if (bombEl) {
+        // Fallback: scrub only against bombinhas if proyectos not found
+        const rect       = bombEl.getBoundingClientRect();
+        const total      = bombEl.offsetHeight + vH;
+        const scrolled   = vH - rect.top;
+        const bombP      = Math.min(Math.max(scrolled / total, 0), 1);
+        const rectTarget = bombP * BOMB_DURATION;
+        if (rectTarget > bombTarget) bombTarget = rectTarget;
       }
 
-      // ── Phase C: fade canvas out as Proyectos enters ──────────────────────
-      const proyEl = document.getElementById('proyectos');
+      // ── Phase C: fade canvas as Proyectos EXITS (bottom leaves viewport) ──
+      // This keeps the video visible through all of Proyectos and fades after.
       if (proyEl) {
         const rect      = proyEl.getBoundingClientRect();
-        // Fade over the first 25vh of Proyectos entering from the bottom
-        const fadeRange = vH * 0.25;
-        const entered   = vH - rect.top;           // px above viewport bottom
-        const t         = Math.min(Math.max(entered / fadeRange, 0), 1);
+        // Fade over the last 40vh before proyectos bottom clears the top of viewport
+        const fadeRange = vH * 0.40;
+        const exiting   = fadeRange - rect.bottom;  // positive when bottom < fadeRange
+        const t         = Math.min(Math.max(exiting / fadeRange, 0), 1);
         container.style.opacity = String(1 - t);
       } else {
         container.style.opacity = '1';
