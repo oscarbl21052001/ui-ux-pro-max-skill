@@ -31,28 +31,38 @@ export default function SectionBackground() {
       const scrollY = window.scrollY;
       const vH     = window.innerHeight;
 
-      // ── Hero progress (0 → 1 as user scrolls through 300vh hero) ──────────
-      const heroScrollMax = (HERO_VH / 100 - 1) * vH;  // = 200vh
+      // ── Hero progress 0→1 across its 200vh scroll budget ─────────────────
+      const heroScrollMax = (HERO_VH / 100 - 1) * vH;   // = 200vh
       const heroProgress  = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
-      heroTarget = heroProgress * (heroVid.duration || 30);
 
-      // ── Cross-fade window: hero 65%→100% → bomb 0%→100% ──────────────────
-      const CF_START = 0.65;
-      const cfT      = Math.min(Math.max((heroProgress - CF_START) / (1 - CF_START), 0), 1);
-      heroVid.style.opacity = String(1 - cfT);
-      bombVid.style.opacity = String(cfT);
+      // Hero video frozen at its CF_OUT frame once fade starts (no ghosting)
+      const CF_OUT_START = 0.60;   // hero begins fading out
+      const CF_OUT_END   = 0.78;   // hero fully gone → pure #0E1418 bg
+      const CF_IN_START  = 0.80;   // bomb begins fading in (brief black gap)
+      const CF_IN_END    = 1.00;   // bomb fully opaque
 
-      // ── Bombinhas scrub ───────────────────────────────────────────────────
+      heroTarget = Math.min(heroProgress, CF_OUT_START) * (heroVid.duration || 30);
+
+      // Hero opacity: 1→0 in [CF_OUT_START, CF_OUT_END]
+      const heroT = Math.min(Math.max((heroProgress - CF_OUT_START) / (CF_OUT_END - CF_OUT_START), 0), 1);
+      heroVid.style.opacity = String(1 - heroT);
+
+      // Bomb opacity: 0→1 in [CF_IN_START, CF_IN_END] with power2.out easing
+      const rawBombT = Math.min(Math.max((heroProgress - CF_IN_START) / (CF_IN_END - CF_IN_START), 0), 1);
+      const bombT    = 1 - Math.pow(1 - rawBombT, 2);   // power2.out
+      bombVid.style.opacity = String(bombT);
+
+      // ── Bombinhas video scrub ─────────────────────────────────────────────
       const bombEl = document.getElementById('bombinhas');
       if (bombEl) {
-        const rect      = bombEl.getBoundingClientRect();
-        const total     = bombEl.offsetHeight + vH;
-        const scrolled  = vH - rect.top;
-        const bombP     = Math.min(Math.max(scrolled / total, 0), 1);
+        const rect     = bombEl.getBoundingClientRect();
+        const total    = bombEl.offsetHeight + vH;
+        const scrolled = vH - rect.top;
+        const bombP    = Math.min(Math.max(scrolled / total, 0), 1);
         bombTarget = bombP * BOMB_DURATION;
       }
 
-      // ── LERP scrub ────────────────────────────────────────────────────────
+      // ── LERP scrub — identical LERP keeps both videos in sync ─────────────
       heroCurrent += (heroTarget - heroCurrent) * LERP;
       bombCurrent += (bombTarget - bombCurrent) * LERP;
 
