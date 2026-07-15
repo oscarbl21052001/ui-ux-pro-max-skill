@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 const SPARKLE_POSITIONS = [
   { top: '-8%', left: '5%', size: 14, delay: 0 },
@@ -42,57 +42,30 @@ function InlineSparkles() {
 
 export default function ScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const goldRef = useRef<HTMLDivElement>(null);
-  const targetTimeRef = useRef(0);
-  const progressRef = useRef(0);
-  const rafRef = useRef<number>(0);
-  const [mounted, setMounted] = useState(false);
+  const textRef      = useRef<HTMLDivElement>(null);
+  const goldRef      = useRef<HTMLDivElement>(null);
+  const progressRef  = useRef(0);
+  const rafRef       = useRef<number>(0);
 
   useEffect(() => {
-    setMounted(true);
-
-    const video = videoRef.current;
     const container = containerRef.current;
     const textBlock = textRef.current;
     const goldBlock = goldRef.current;
-    if (!video || !container || !textBlock || !goldBlock) return;
-
-    video.pause();
+    if (!container || !textBlock || !goldBlock) return;
 
     const onScroll = () => {
-      const rect = container.getBoundingClientRect();
-      const scrollableHeight = rect.height - window.innerHeight;
-      if (scrollableHeight <= 0) return;
-      const progress = Math.min(Math.max(-rect.top / scrollableHeight, 0), 1);
-      progressRef.current = progress;
-      targetTimeRef.current = progress * (video.duration || 0);
+      const rect           = container.getBoundingClientRect();
+      const scrollableH    = rect.height - window.innerHeight;
+      if (scrollableH <= 0) return;
+      progressRef.current  = Math.min(Math.max(-rect.top / scrollableH, 0), 1);
     };
 
-    const LERP_FACTOR = 0.22;
-    let currentTime = 0;
-
     const tick = () => {
-      const target = targetTimeRef.current;
-      currentTime += (target - currentTime) * LERP_FACTOR;
-      if (
-        video.readyState >= 2 &&
-        Math.abs(currentTime - video.currentTime) > 0.01
-      ) {
-        video.currentTime = currentTime;
-      }
-
       const p = progressRef.current;
 
-      const FADE_OUT_END = 0.5;
-      const textOpacity = Math.max(1 - p / FADE_OUT_END, 0);
-      textBlock.style.opacity = String(textOpacity);
+      textBlock.style.opacity = String(Math.max(1 - p / 0.5, 0));
 
-      const FADE_IN_START = 0.5;
-      const goldOpacity = p <= FADE_IN_START
-        ? 0
-        : Math.min((p - FADE_IN_START) / (1 - FADE_IN_START), 1);
+      const goldOpacity = p <= 0.5 ? 0 : Math.min((p - 0.5) / 0.5, 1);
       goldBlock.style.opacity = String(goldOpacity);
 
       rafRef.current = requestAnimationFrame(tick);
@@ -109,26 +82,14 @@ export default function ScrollHero() {
   }, []);
 
   return (
+    // h-[300vh] reserves scroll budget; sticky keeps content pinned to top
     <div ref={containerRef} className="relative h-[300vh]">
       <div className="sticky top-0 h-screen">
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          preload="auto"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ${
-            mounted ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <source src="/hero.mp4" type="video/mp4" />
-          <source src="/hero.webm" type="video/webm" />
-        </video>
-
-        <div className="absolute inset-0 bg-black/30 pointer-events-none" />
-
+        {/* Content layers — background comes from the fixed SectionBackground */}
         <div
           ref={textRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center gap-5 pointer-events-none px-6"
+          style={{ zIndex: 10 }}
         >
           <h1 className="hero-headline font-playfair">
             LA ELEGANCIA DE INVERTIR BIEN
@@ -141,7 +102,7 @@ export default function ScrollHero() {
         <div
           ref={goldRef}
           className="absolute inset-0 flex items-center justify-center pointer-events-none px-6"
-          style={{ opacity: 0 }}
+          style={{ opacity: 0, zIndex: 10 }}
         >
           <span className="relative inline-block">
             <InlineSparkles />
@@ -150,11 +111,6 @@ export default function ScrollHero() {
             </h2>
           </span>
         </div>
-
-        <div
-          className="absolute bottom-0 left-0 w-full h-[50%] pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, transparent 0%, #0E141880 60%, #0E1418 100%)', zIndex: 30 }}
-        />
       </div>
     </div>
   );
