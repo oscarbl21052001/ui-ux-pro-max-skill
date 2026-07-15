@@ -91,7 +91,7 @@ export default function TeamSection() {
               style={{
                 fontFamily: 'var(--font-perandory)',
                 fontSize: 'clamp(2rem, 4.5vw, 3.75rem)',
-                lineHeight: 1.15,
+                lineHeight: 1.14,
               }}
             >
               <span className="block">Un inversor</span>
