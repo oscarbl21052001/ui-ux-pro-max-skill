@@ -54,19 +54,38 @@ export default function ScrollHero() {
     if (!container || !textBlock || !goldBlock) return;
 
     const onScroll = () => {
-      const rect           = container.getBoundingClientRect();
-      const scrollableH    = rect.height - window.innerHeight;
+      const rect        = container.getBoundingClientRect();
+      const scrollableH = rect.height - window.innerHeight;
       if (scrollableH <= 0) return;
-      progressRef.current  = Math.min(Math.max(-rect.top / scrollableH, 0), 1);
+      // No upper clamp — rawP > 1 tracks post-sticky exit travel
+      progressRef.current = Math.max(-rect.top / scrollableH, 0);
     };
 
     const tick = () => {
-      const p = progressRef.current;
+      const rawP = progressRef.current;
+      const p    = Math.min(rawP, 1);
 
+      // Hero headline: fades out in first half
       textBlock.style.opacity = String(Math.max(1 - p / 0.5, 0));
 
-      const goldOpacity = p <= 0.5 ? 0 : Math.min((p - 0.5) / 0.5, 1);
-      goldBlock.style.opacity = String(goldOpacity);
+      if (rawP <= 0.5) {
+        // Before gold text appears — reset any leftover styles
+        goldBlock.style.opacity   = '0';
+        goldBlock.style.filter    = '';
+        goldBlock.style.transform = 'translateZ(0)';
+      } else if (rawP <= 1.0) {
+        // Fade IN: opacity 0→1 over [0.5, 1.0]
+        goldBlock.style.opacity   = String(Math.min((rawP - 0.5) / 0.5, 1));
+        goldBlock.style.filter    = '';
+        goldBlock.style.transform = 'translateZ(0)';
+      } else {
+        // Blur-OUT: sticky released, element drifting off the top
+        // rawP 1.0→1.3 maps to a full exit (opacity 1→0, blur 0→12px, y 0→-20px)
+        const exitP = Math.min((rawP - 1.0) / 0.3, 1);
+        goldBlock.style.opacity   = String((1 - exitP).toFixed(3));
+        goldBlock.style.filter    = `blur(${(exitP * 12).toFixed(1)}px)`;
+        goldBlock.style.transform = `translateZ(0) translateY(${(-exitP * 20).toFixed(1)}px)`;
+      }
 
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -102,7 +121,13 @@ export default function ScrollHero() {
         <div
           ref={goldRef}
           className="absolute inset-0 flex items-center justify-center pointer-events-none px-6"
-          style={{ opacity: 0, zIndex: 10 }}
+          style={{
+            opacity: 0,
+            zIndex: 10,
+            willChange: 'filter, opacity, transform',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)',
+          }}
         >
           <span className="relative inline-block">
             <InlineSparkles />
