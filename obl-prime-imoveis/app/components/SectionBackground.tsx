@@ -132,6 +132,8 @@ export default function SectionBackground() {
         zIndex: -1,
         backgroundColor: '#0E1418',
         overflow: 'hidden',
+        willChange: 'opacity',
+        transform: 'translateZ(0)',
       }}
     >
       {/* Hero video — full-screen, scrubbed by scroll */}
