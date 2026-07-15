@@ -24,7 +24,7 @@ export default function SectionBackground() {
     heroVid.pause();
     bombVid.pause();
 
-    const LERP = 0.15;
+    const LERP = 0.28;
     let heroTarget = 0, heroCurrent = 0;
     let bombTarget = 0, bombCurrent = 0;
     let raf: number;
@@ -55,13 +55,20 @@ export default function SectionBackground() {
       bombVid.style.opacity = String(bombT);
 
       // ── Bombinhas video scrub ─────────────────────────────────────────────
+      // Pre-scrub: advance bomb video as soon as it starts fading in (CF_IN_START)
+      // so it never shows a frozen frame-0 while becoming visible.
+      const preScrubP = Math.min(Math.max((heroProgress - CF_IN_START) / (CF_IN_END - CF_IN_START), 0), 1);
+      bombTarget = preScrubP * 1.5; // covers first 1.5 s during the crossfade window
+
+      // Section-based scrub takes over (and extends further) once #bombinhas is in view
       const bombEl = document.getElementById('bombinhas');
       if (bombEl) {
         const rect     = bombEl.getBoundingClientRect();
         const total    = bombEl.offsetHeight + vH;
         const scrolled = vH - rect.top;
         const bombP    = Math.min(Math.max(scrolled / total, 0), 1);
-        bombTarget = bombP * BOMB_DURATION;
+        const rectTarget = bombP * BOMB_DURATION;
+        if (rectTarget > bombTarget) bombTarget = rectTarget; // never wind back
       }
 
       // ── Phase C: fade canvas out as Proyectos enters ──────────────────────
