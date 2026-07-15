@@ -87,19 +87,19 @@ export default function TeamSection() {
 
             {/* Title */}
             <h2
-              className="font-playfair font-bold leading-[1.07] text-white"
-              style={{ fontSize: 'clamp(2rem, 4.5vw, 3.75rem)' }}
+              className="font-bold text-white"
+              style={{
+                fontFamily: 'var(--font-perandory)',
+                fontSize: 'clamp(2rem, 4.5vw, 3.75rem)',
+                lineHeight: 1.15,
+              }}
             >
-              Un inversor{' '}
-              <span
-                className="font-playfair font-normal not-italic"
-                style={{ color: 'rgba(201,162,75,0.78)' }}
-              >
+              <span className="block">Un inversor</span>
+              <span className="block" style={{ color: 'rgba(201,162,75,0.78)' }}>
                 no busca promesas.
               </span>
-              <br />
-              Busca garantías legales{' '}
-              <em className="italic font-light">— como esta.</em>
+              <span className="block">Busca garantías legales</span>
+              <span className="block italic font-light">— como esta.</span>
             </h2>
           </motion.div>
 
