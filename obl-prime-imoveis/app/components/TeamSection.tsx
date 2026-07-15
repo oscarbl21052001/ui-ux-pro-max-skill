@@ -142,21 +142,8 @@ export default function TeamSection() {
       ref={sectionRef}
       id="bombinhas"
       className="relative px-6 pt-24 pb-8 md:pb-16 lg:pb-24"
-      style={{ perspective: '1200px' }}
     >
-      {/* Legibility overlay over the fixed canvas — no solid bg so the video bleeds through */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to bottom, rgba(14,20,24,0.55) 0%, rgba(14,20,24,0.35) 40%, rgba(14,20,24,0.35) 60%, rgba(14,20,24,0.75) 100%)',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      />
-
-      <div className="relative mx-auto max-w-5xl" style={{ zIndex: 1 }}>
+      <div className="relative mx-auto max-w-5xl" style={{ zIndex: 1, perspective: '1200px' }}>
         {/* Title block */}
         <motion.div
           className="mb-20 text-center"

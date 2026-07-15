@@ -11,13 +11,15 @@ const BOMB_DURATION   = 8;
 const HERO_VH = 300;
 
 export default function SectionBackground() {
-  const heroRef = useRef<HTMLVideoElement>(null);
-  const bombRef = useRef<HTMLVideoElement>(null);
+  const heroRef      = useRef<HTMLVideoElement>(null);
+  const bombRef      = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const heroVid = heroRef.current;
-    const bombVid = bombRef.current;
-    if (!heroVid || !bombVid) return;
+    const heroVid  = heroRef.current;
+    const bombVid  = bombRef.current;
+    const container = containerRef.current;
+    if (!heroVid || !bombVid || !container) return;
 
     heroVid.pause();
     bombVid.pause();
@@ -62,6 +64,19 @@ export default function SectionBackground() {
         bombTarget = bombP * BOMB_DURATION;
       }
 
+      // ── Phase C: fade canvas out as Proyectos enters ──────────────────────
+      const proyEl = document.getElementById('proyectos');
+      if (proyEl) {
+        const rect      = proyEl.getBoundingClientRect();
+        // Fade over the first 25vh of Proyectos entering from the bottom
+        const fadeRange = vH * 0.25;
+        const entered   = vH - rect.top;           // px above viewport bottom
+        const t         = Math.min(Math.max(entered / fadeRange, 0), 1);
+        container.style.opacity = String(1 - t);
+      } else {
+        container.style.opacity = '1';
+      }
+
       // ── LERP scrub — identical LERP keeps both videos in sync ─────────────
       heroCurrent += (heroTarget - heroCurrent) * LERP;
       bombCurrent += (bombTarget - bombCurrent) * LERP;
@@ -92,6 +107,7 @@ export default function SectionBackground() {
 
   return (
     <div
+      ref={containerRef}
       aria-hidden
       style={{
         position: 'fixed',
