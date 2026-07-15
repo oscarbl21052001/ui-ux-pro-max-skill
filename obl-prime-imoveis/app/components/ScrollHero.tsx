@@ -69,22 +69,19 @@ export default function ScrollHero() {
       textBlock.style.opacity = String(Math.max(1 - p / 0.5, 0));
 
       if (rawP <= 0.5) {
-        // Before gold text appears — reset any leftover styles
-        goldBlock.style.opacity   = '0';
-        goldBlock.style.filter    = '';
-        goldBlock.style.transform = 'translateZ(0)';
+        // Before gold text appears
+        goldBlock.style.opacity = '0';
+        goldBlock.style.filter  = '';
       } else if (rawP <= 1.0) {
         // Fade IN: opacity 0→1 over [0.5, 1.0]
-        goldBlock.style.opacity   = String(Math.min((rawP - 0.5) / 0.5, 1));
-        goldBlock.style.filter    = '';
-        goldBlock.style.transform = 'translateZ(0)';
+        goldBlock.style.opacity = String(Math.min((rawP - 0.5) / 0.5, 1));
+        goldBlock.style.filter  = '';
       } else {
-        // Blur-OUT: sticky released, element drifting off the top
-        // rawP 1.0→1.3 maps to a full exit (opacity 1→0, blur 0→12px, y 0→-20px)
+        // Blur-OUT: pure opacity+blur, text stays pinned (position: fixed)
+        // rawP 1.0→1.3 → full exit
         const exitP = Math.min((rawP - 1.0) / 0.3, 1);
-        goldBlock.style.opacity   = String((1 - exitP).toFixed(3));
-        goldBlock.style.filter    = `blur(${(exitP * 12).toFixed(1)}px)`;
-        goldBlock.style.transform = 'translateZ(0)';
+        goldBlock.style.opacity = String((1 - exitP).toFixed(3));
+        goldBlock.style.filter  = `blur(${(exitP * 12).toFixed(1)}px)`;
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -120,13 +117,12 @@ export default function ScrollHero() {
 
         <div
           ref={goldRef}
-          className="absolute inset-0 flex items-center justify-center pointer-events-none px-6"
+          className="fixed inset-0 flex items-center justify-center pointer-events-none px-6"
           style={{
             opacity: 0,
             zIndex: 10,
-            willChange: 'filter, opacity, transform',
+            willChange: 'filter, opacity',
             backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)',
           }}
         >
           <span className="relative inline-block">
