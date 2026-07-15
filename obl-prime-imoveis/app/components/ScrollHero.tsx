@@ -72,17 +72,21 @@ export default function ScrollHero() {
         // Before gold text appears
         goldBlock.style.opacity = '0';
         goldBlock.style.filter  = '';
-      } else if (rawP <= 0.62) {
-        // Fade IN: 0.50 → 0.62
-        goldBlock.style.opacity = String(Math.min((rawP - 0.50) / 0.12, 1));
+      } else if (rawP <= 0.56) {
+        // Fade IN: quick appearance 0.50→0.56
+        goldBlock.style.opacity = String(Math.min((rawP - 0.50) / 0.06, 1));
         goldBlock.style.filter  = '';
-      } else if (rawP <= 0.75) {
-        // Blur-OUT: 0.62 → 0.75 — completes well before sticky releases at rawP=1.0
-        const exitP = Math.min((rawP - 0.62) / 0.13, 1);
+      } else if (rawP <= 0.70) {
+        // READING PLATEAU: full opacity, no blur — user has time to read
+        goldBlock.style.opacity = '1';
+        goldBlock.style.filter  = '';
+      } else if (rawP <= 0.825) {
+        // BLUR-OUT: 0.70→0.825 — fast but smooth exit, done before sticky releases
+        const exitP = Math.min((rawP - 0.70) / 0.125, 1);
         goldBlock.style.opacity = String((1 - exitP).toFixed(3));
         goldBlock.style.filter  = `blur(${(exitP * 12).toFixed(1)}px)`;
       } else {
-        // Fully gone — sticky release at rawP=1.0 is invisible, no drift possible
+        // Locked invisible — sticky releases at rawP=1.0, nothing to drift
         goldBlock.style.opacity = '0';
         goldBlock.style.filter  = 'blur(12px)';
       }
