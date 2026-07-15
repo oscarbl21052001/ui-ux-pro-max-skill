@@ -29,7 +29,7 @@ export default function TeamSection() {
     <section
       ref={sectionRef}
       id="bombinhas"
-      className="relative px-6 pt-28 pb-24 md:pt-40 md:pb-36"
+      className="relative px-6 pt-28 pb-24 md:pt-40 md:pb-40"
     >
       <div className="relative mx-auto max-w-7xl" style={{ zIndex: 1 }}>
 
