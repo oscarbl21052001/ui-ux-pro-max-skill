@@ -50,8 +50,17 @@ export default function TeamSection() {
         className="relative mx-auto max-w-7xl"
         style={{ zIndex: 1, perspective: '1200px' }}
       >
-        {/* Editorial text column — left-aligned, max-w-2xl */}
-        <div className="max-w-2xl space-y-10">
+        {/* Editorial text column — left-aligned, max-w-2xl, glassmorphic card */}
+        <div
+          className="max-w-2xl space-y-10 rounded-3xl p-8 md:p-10"
+          style={{
+            background: 'rgba(10, 12, 16, 0.38)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 8px 48px -8px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)',
+          }}
+        >
 
           {/* ── Group 1: Kicker + Title ────────────────────────────────── */}
           <motion.div
