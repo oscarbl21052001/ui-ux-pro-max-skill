@@ -75,13 +75,14 @@ export default function TeamSection() {
           >
             {/* Kicker */}
             <p
-              className="font-inter text-xs font-semibold uppercase"
+              className="font-cardo italic"
               style={{
                 color: '#C9A24B',
-                letterSpacing: '0.22em',
+                fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)',
+                letterSpacing: '0.08em',
               }}
             >
-              INVERSIÓN PROTEGIDA POR LEY
+              ¿POR QUÉ DEBERÍA ELEGIR BOMBINHAS?
             </p>
 
             {/* Title */}
