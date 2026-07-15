@@ -38,10 +38,10 @@ export default function SectionBackground() {
       const heroProgress  = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
 
       // Hero video frozen at its CF_OUT frame once fade starts (no ghosting)
-      const CF_OUT_START = 0.60;   // hero begins fading out
-      const CF_OUT_END   = 0.78;   // hero fully gone → pure #0E1418 bg
-      const CF_IN_START  = 0.80;   // bomb begins fading in (brief black gap)
-      const CF_IN_END    = 1.00;   // bomb fully opaque
+      const CF_OUT_START = 0.30;   // hero begins fading out
+      const CF_OUT_END   = 0.50;   // hero fully gone → pure #0E1418 bg ("dark valley")
+      const CF_IN_START  = 0.70;   // bomb begins fading in
+      const CF_IN_END    = 0.90;   // bomb fully opaque
 
       heroTarget = Math.min(heroProgress, CF_OUT_START) * (heroVid.duration || 30);
 

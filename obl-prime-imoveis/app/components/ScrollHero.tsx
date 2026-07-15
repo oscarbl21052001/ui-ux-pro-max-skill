@@ -65,8 +65,14 @@ export default function ScrollHero() {
 
       textBlock.style.opacity = String(Math.max(1 - p / 0.5, 0));
 
-      const goldOpacity = p <= 0.5 ? 0 : Math.min((p - 0.5) / 0.5, 1);
-      goldBlock.style.opacity = String(goldOpacity);
+      // Gold text: fade IN over dark valley [0.50→0.70], fade OUT as bomb rises [0.70→0.90]
+      let goldOpacity = 0;
+      if (p > 0.50 && p <= 0.70) {
+        goldOpacity = (p - 0.50) / 0.20;
+      } else if (p > 0.70 && p <= 0.90) {
+        goldOpacity = 1 - (p - 0.70) / 0.20;
+      }
+      goldBlock.style.opacity = String(Math.min(Math.max(goldOpacity, 0), 1));
 
       rafRef.current = requestAnimationFrame(tick);
     };
