@@ -113,12 +113,20 @@ export default function TeamSection() {
               willChange: 'transform, opacity, filter',
             }}
           >
-            <div
+            <motion.div
               className="rounded-lg px-6 py-5 space-y-2"
               style={{
-                border: '1px solid rgba(201,162,75,0.32)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: 'rgba(201,162,75,0.32)',
                 background: 'rgba(201,162,75,0.04)',
               }}
+              whileHover={{
+                borderColor: 'rgba(201,162,75,0.62)',
+                background: 'rgba(201,162,75,0.08)',
+                boxShadow: '0 0 24px 4px rgba(201,162,75,0.07)',
+              }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
               <p
                 className="font-inter font-semibold uppercase leading-relaxed"
@@ -138,7 +146,7 @@ export default function TeamSection() {
               >
                 Un solo resultado: escasez permanente.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* ── Group 3: Paragraph + Button ───────────────────────────── */}
@@ -168,9 +176,11 @@ export default function TeamSection() {
               href="/bombinhas-info"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full font-inter font-semibold"
+              className="group inline-flex items-center gap-2 rounded-full font-inter font-semibold"
               style={{
-                border: '1px solid rgba(201,162,75,0.50)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: 'rgba(201,162,75,0.50)',
                 color: '#C9A24B',
                 background: 'transparent',
                 padding: '0.75rem 2rem',
@@ -179,13 +189,19 @@ export default function TeamSection() {
                 boxShadow: '0 0 0 0 rgba(201,162,75,0)',
               }}
               whileHover={{
-                boxShadow: '0 0 32px 6px rgba(201,162,75,0.16), 0 0 0 1px rgba(201,162,75,0.70)',
+                borderColor: 'rgba(201,162,75,0.85)',
+                color: '#E8D090',
+                boxShadow: '0 0 32px 8px rgba(201,162,75,0.14), 0 0 0 1px rgba(201,162,75,0.70)',
               }}
               whileTap={{ scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 380, damping: 20 }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
             >
               Más info
-              <span aria-hidden style={{ fontSize: '1rem' }}>→</span>
+              <span
+                aria-hidden
+                className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                style={{ fontSize: '1rem' }}
+              >→</span>
             </motion.a>
           </motion.div>
 
