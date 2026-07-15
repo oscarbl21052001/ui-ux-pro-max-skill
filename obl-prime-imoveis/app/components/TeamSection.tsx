@@ -122,9 +122,9 @@ export default function TeamSection() {
                 background: 'rgba(201,162,75,0.04)',
               }}
               whileHover={{
-                borderColor: 'rgba(201,162,75,0.62)',
-                background: 'rgba(201,162,75,0.08)',
-                boxShadow: '0 0 24px 4px rgba(201,162,75,0.07)',
+                borderColor: 'rgba(201,162,75,0.82)',
+                background: 'rgba(201,162,75,0.13)',
+                boxShadow: '0 0 28px 6px rgba(212,175,55,0.15)',
               }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
@@ -142,7 +142,7 @@ export default function TeamSection() {
               </p>
               <p
                 className="font-cardo italic"
-                style={{ color: 'rgba(201,162,75,0.62)', fontSize: '1rem' }}
+                style={{ color: 'rgba(255,255,255,0.90)', fontSize: '1rem' }}
               >
                 Un solo resultado: escasez permanente.
               </p>
@@ -189,9 +189,10 @@ export default function TeamSection() {
                 boxShadow: '0 0 0 0 rgba(201,162,75,0)',
               }}
               whileHover={{
-                borderColor: 'rgba(201,162,75,0.85)',
-                color: '#E8D090',
-                boxShadow: '0 0 32px 8px rgba(201,162,75,0.14), 0 0 0 1px rgba(201,162,75,0.70)',
+                borderColor: 'rgba(212,175,55,1)',
+                color: '#F5E6A8',
+                background: 'rgba(201,162,75,0.10)',
+                boxShadow: '0 0 36px 10px rgba(212,175,55,0.18), 0 0 0 1px rgba(212,175,55,0.85)',
               }}
               whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.4, ease: 'easeInOut' }}
