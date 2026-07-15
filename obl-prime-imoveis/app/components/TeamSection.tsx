@@ -1,54 +1,21 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
+
+const FADE_UP = {
+  hidden: { opacity: 0, y: 32, filter: 'blur(6px)' },
+  show:   { opacity: 1, y: 0,  filter: 'blur(0px)' },
+};
 
 export default function TeamSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // ── Scroll-linked 3D fly-in ──────────────────────────────────────────────
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'start 40%'],
-  });
-
-  const smooth = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 24,
-    restDelta: 0.001,
-  });
-
-  // Group 1: kicker + title — leads, first to land
-  const titleScale   = useTransform(smooth, [0, 1], [2.0, 1]);
-  const titleZ       = useTransform(smooth, [0, 1], [380, 0]);
-  const titleOpacity = useTransform(smooth, [0, 0.5], [0, 1]);
-  const titleBlurN   = useTransform(smooth, [0, 0.6], [8, 0]);
-  const titleFilter  = useTransform(titleBlurN, (v) => `blur(${v}px)`);
-
-  // Group 2: data box — one beat behind
-  const boxScale   = useTransform(smooth, [0.05, 1], [2.6, 1]);
-  const boxZ       = useTransform(smooth, [0.05, 1], [420, 0]);
-  const boxOpacity = useTransform(smooth, [0.05, 0.55], [0, 1]);
-  const boxBlurN   = useTransform(smooth, [0.05, 0.65], [6, 0]);
-  const boxFilter  = useTransform(boxBlurN, (v) => `blur(${v}px)`);
-
-  // Group 3: paragraph + button — two beats behind
-  const textScale   = useTransform(smooth, [0.1, 1], [1.5, 1]);
-  const textZ       = useTransform(smooth, [0.1, 1], [260, 0]);
-  const textOpacity = useTransform(smooth, [0.1, 0.6], [0, 1]);
-  const textBlurN   = useTransform(smooth, [0.1, 0.7], [5, 0]);
-  const textFilter  = useTransform(textBlurN, (v) => `blur(${v}px)`);
-  // ─────────────────────────────────────────────────────────────────────────
-
   return (
     <section
-      ref={sectionRef}
       id="bombinhas"
       className="relative px-6 pt-28 pb-24 md:pt-40 md:pb-36"
     >
       <div
         className="relative mx-auto max-w-7xl"
-        style={{ zIndex: 1, perspective: '1200px' }}
+        style={{ zIndex: 1 }}
       >
         {/* Centered glassmorphic card — max-w-4xl, horizontal proportions */}
         <div
@@ -68,13 +35,11 @@ export default function TeamSection() {
           {/* ── Group 1: Kicker + Title ────────────────────────────────── */}
           <motion.div
             className="space-y-6"
-            style={{
-              scale: titleScale,
-              z: titleZ,
-              opacity: titleOpacity,
-              filter: titleFilter,
-              willChange: 'transform, opacity, filter',
-            }}
+            variants={FADE_UP}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
           >
             {/* Kicker */}
             <p
@@ -107,13 +72,11 @@ export default function TeamSection() {
 
           {/* ── Group 2: Data box ─────────────────────────────────────── */}
           <motion.div
-            style={{
-              scale: boxScale,
-              z: boxZ,
-              opacity: boxOpacity,
-              filter: boxFilter,
-              willChange: 'transform, opacity, filter',
-            }}
+            variants={FADE_UP}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, ease: 'easeOut', delay: 0.15 }}
           >
             <motion.div
               className="rounded-lg px-6 py-5 space-y-2"
@@ -154,13 +117,11 @@ export default function TeamSection() {
           {/* ── Group 3: Paragraph + Button ───────────────────────────── */}
           <motion.div
             className="space-y-10"
-            style={{
-              scale: textScale,
-              z: textZ,
-              opacity: textOpacity,
-              filter: textFilter,
-              willChange: 'transform, opacity, filter',
-            }}
+            variants={FADE_UP}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, ease: 'easeOut', delay: 0.3 }}
           >
             <p
               className="font-cardo leading-relaxed"
