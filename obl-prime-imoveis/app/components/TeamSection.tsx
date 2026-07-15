@@ -50,9 +50,9 @@ export default function TeamSection() {
         className="relative mx-auto max-w-7xl"
         style={{ zIndex: 1, perspective: '1200px' }}
       >
-        {/* Editorial text column — left-aligned, max-w-2xl, glassmorphic card */}
+        {/* Centered glassmorphic card — max-w-4xl, horizontal proportions */}
         <div
-          className="max-w-2xl space-y-10 rounded-3xl p-8 md:p-10"
+          className="mx-auto max-w-4xl space-y-8 rounded-3xl px-10 py-10 md:px-14 md:py-12 text-center"
           style={{
             background: 'rgba(10, 12, 16, 0.38)',
             backdropFilter: 'blur(18px)',
