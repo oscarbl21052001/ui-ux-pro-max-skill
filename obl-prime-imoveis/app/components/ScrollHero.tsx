@@ -84,7 +84,7 @@ export default function ScrollHero() {
         const exitP = Math.min((rawP - 1.0) / 0.3, 1);
         goldBlock.style.opacity   = String((1 - exitP).toFixed(3));
         goldBlock.style.filter    = `blur(${(exitP * 12).toFixed(1)}px)`;
-        goldBlock.style.transform = `translateZ(0) translateY(${(-exitP * 20).toFixed(1)}px)`;
+        goldBlock.style.transform = 'translateZ(0)';
       }
 
       rafRef.current = requestAnimationFrame(tick);
