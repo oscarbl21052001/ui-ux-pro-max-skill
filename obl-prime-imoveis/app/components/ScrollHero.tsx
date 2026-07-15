@@ -68,20 +68,23 @@ export default function ScrollHero() {
       // Hero headline: fades out in first half
       textBlock.style.opacity = String(Math.max(1 - p / 0.5, 0));
 
-      if (rawP <= 0.5) {
+      if (rawP <= 0.50) {
         // Before gold text appears
         goldBlock.style.opacity = '0';
         goldBlock.style.filter  = '';
-      } else if (rawP <= 1.0) {
-        // Fade IN: opacity 0→1 over [0.5, 1.0]
-        goldBlock.style.opacity = String(Math.min((rawP - 0.5) / 0.5, 1));
+      } else if (rawP <= 0.62) {
+        // Fade IN: 0.50 → 0.62
+        goldBlock.style.opacity = String(Math.min((rawP - 0.50) / 0.12, 1));
         goldBlock.style.filter  = '';
-      } else {
-        // Blur-OUT: pure opacity+blur, text stays pinned (position: fixed)
-        // rawP 1.0→1.3 → full exit
-        const exitP = Math.min((rawP - 1.0) / 0.3, 1);
+      } else if (rawP <= 0.75) {
+        // Blur-OUT: 0.62 → 0.75 — completes well before sticky releases at rawP=1.0
+        const exitP = Math.min((rawP - 0.62) / 0.13, 1);
         goldBlock.style.opacity = String((1 - exitP).toFixed(3));
         goldBlock.style.filter  = `blur(${(exitP * 12).toFixed(1)}px)`;
+      } else {
+        // Fully gone — sticky release at rawP=1.0 is invisible, no drift possible
+        goldBlock.style.opacity = '0';
+        goldBlock.style.filter  = 'blur(12px)';
       }
 
       rafRef.current = requestAnimationFrame(tick);
