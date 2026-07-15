@@ -99,7 +99,6 @@ export default function TeamSection() {
                 no busca promesas.
               </span>
               <span className="block">Busca garantías legales</span>
-              <span className="block italic font-light">— como esta.</span>
             </h2>
           </motion.div>
 
