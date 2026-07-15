@@ -65,7 +65,7 @@ export default function TeamSection() {
                   letterSpacing: '0.08em',
                 }}
               >
-                ¿POR QUÉ DEBERÍA ELEGIR BOMBINHAS?
+                ¿POR QUÉ DEBERÍA ELEGIR BOMBINHAS? [v103]
               </p>
 
               <h2
