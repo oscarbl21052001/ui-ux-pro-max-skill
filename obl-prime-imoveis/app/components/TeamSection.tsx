@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+
+const BG_VIDEO_SRC = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260715_142322_a3f9c067-a8d3-465c-9075-ebd055f69007.mp4';
+const BG_VIDEO_DURATION = 8;
 
 interface PolaroidCard {
   id: number;
@@ -34,6 +37,55 @@ export default function TeamSection() {
   const [topIndex, setTopIndex] = useState(0);
   const [flickState, setFlickState] = useState<'idle' | 'flicking'>('idle');
   const sectionRef = useRef<HTMLElement>(null);
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
+
+  // ── Scroll-driven background video scrubbing ─────────────────────────────
+  useEffect(() => {
+    const section = sectionRef.current;
+    const bgVideo = bgVideoRef.current;
+    if (!section || !bgVideo) return;
+
+    bgVideo.pause();
+
+    let bgTarget = 0;
+    let bgCurrent = 0;
+    let raf: number;
+    const LERP = 0.14;
+
+    const onScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const vH = window.innerHeight;
+
+      // Scrub: maps full section traversal (top at vH → bottom at 0) to 0→1
+      const total = rect.height + vH;
+      const scrolled = vH - rect.top;
+      const progress = Math.min(Math.max(scrolled / total, 0), 1);
+      bgTarget = progress * BG_VIDEO_DURATION;
+
+      // Seamless fade-in: 0 when section top at viewport bottom → 1 when top at 60% viewport
+      const fadeRange = vH * 0.4;
+      const fadeP = Math.min(Math.max((vH - rect.top) / fadeRange, 0), 1);
+      bgVideo.style.opacity = String(fadeP * 0.82);
+    };
+
+    const tick = () => {
+      bgCurrent += (bgTarget - bgCurrent) * LERP;
+      if (bgVideo.readyState >= 2 && Math.abs(bgCurrent - bgVideo.currentTime) > 0.01) {
+        bgVideo.currentTime = bgCurrent;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    raf = requestAnimationFrame(tick);
+    onScroll();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+  // ─────────────────────────────────────────────────────────────────────────
 
   // ── Scroll-linked animation ──────────────────────────────────────────────
   const { scrollYProgress } = useScroll({
@@ -141,10 +193,45 @@ export default function TeamSection() {
     <section
       ref={sectionRef}
       id="bombinhas"
-      className="relative px-6 pt-24 pb-8 md:pb-16 lg:pb-24 bg-[#0E1418]"
+      className="relative px-6 pt-24 pb-8 md:pb-16 lg:pb-24 bg-[#0E1418] overflow-hidden"
       style={{ perspective: '1200px' }}
     >
-      <div className="mx-auto max-w-5xl">
+      {/* Scroll-driven background video — starts transparent, fades in with scroll */}
+      <video
+        ref={bgVideoRef}
+        muted
+        playsInline
+        preload="auto"
+        crossOrigin="anonymous"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          opacity: 0,
+          willChange: 'transform, opacity',
+          zIndex: 0,
+        }}
+      >
+        <source src={BG_VIDEO_SRC} type="video/mp4" />
+      </video>
+
+      {/* Gradient overlay: ensures text legibility over the moving video */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          background:
+            'linear-gradient(to bottom, #0E1418CC 0%, #0E141899 40%, #0E141899 60%, #0E1418E6 100%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-5xl" style={{ zIndex: 2 }}>
         {/* Title block */}
         <motion.div
           className="mb-20 text-center"
