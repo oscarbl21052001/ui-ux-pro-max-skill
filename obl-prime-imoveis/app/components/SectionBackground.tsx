@@ -21,11 +21,11 @@ export default function SectionBackground() {
     const container = containerRef.current;
     if (!heroVid || !bombVid || !container) return;
 
-    heroVid.pause();
+    // Hero plays freely — never scrub its currentTime
+    heroVid.play().catch(() => {});
     bombVid.pause();
 
     const LERP = 0.28;
-    let heroTarget = 0, heroCurrent = 0;
     let bombTarget = 0, bombCurrent = 0;
     let raf: number;
 
@@ -42,8 +42,6 @@ export default function SectionBackground() {
       const CF_OUT_END   = 0.78;   // hero fully gone → pure #0E1418 bg
       const CF_IN_START  = 0.80;   // bomb begins fading in (brief black gap)
       const CF_IN_END    = 1.00;   // bomb fully opaque
-
-      heroTarget = Math.min(heroProgress, CF_OUT_START) * (heroVid.duration || 30);
 
       // Hero opacity: 1→0 in [CF_OUT_START, CF_OUT_END]
       const heroT = Math.min(Math.max((heroProgress - CF_OUT_START) / (CF_OUT_END - CF_OUT_START), 0), 1);
@@ -94,13 +92,9 @@ export default function SectionBackground() {
         container.style.opacity = '1';
       }
 
-      // ── LERP scrub — identical LERP keeps both videos in sync ─────────────
-      heroCurrent += (heroTarget - heroCurrent) * LERP;
+      // ── LERP scrub — only for bomb video; hero plays freely ──────────────
       bombCurrent += (bombTarget - bombCurrent) * LERP;
 
-      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.01) {
-        heroVid.currentTime = heroCurrent;
-      }
       if (bombVid.readyState >= 2 && Math.abs(bombCurrent - bombVid.currentTime) > 0.01) {
         bombVid.currentTime = bombCurrent;
       }
@@ -136,9 +130,11 @@ export default function SectionBackground() {
         transform: 'translateZ(0)',
       }}
     >
-      {/* Hero video — full-screen, scrubbed by scroll */}
+      {/* Hero video — plays freely in loop; opacity driven by scroll cross-fade */}
       <video
         ref={heroRef}
+        autoPlay
+        loop
         muted
         playsInline
         preload="auto"
