@@ -12,16 +12,21 @@ export default function TeamSection() {
     offset: ['start end', 'end start'],
   });
 
-  // Entry 0→0.20 · Plateau 0.20→0.78 · Exit 0.78→1.0
+  // Mirrors "BIENVENIDO A TU PARAÍSO" animation from ScrollHero:
+  //   Hidden   [0 → 0.20]  — section not yet in view
+  //   Fade-in  [0.20 → 0.30] — opacity 0→1, NO blur (clean entry)
+  //   Plateau  [0.30 → 0.68] — full opacity, no blur (reading zone)
+  //   Blur-out [0.68 → 0.82] — opacity 1→0, blur 0→12px (same exit style)
+  //   Gone     [0.82 → 1.0]  — locked invisible
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.20, 0.78, 1.0],
-    [0,  1,   1,   0]
+    [0, 0.20, 0.30, 0.68, 0.82, 1.0],
+    [0,  0,   1,    1,    0,    0]
   );
   const blurPx = useTransform(
     scrollYProgress,
-    [0, 0.20, 0.78, 1.0],
-    [20, 0,   0,   20]
+    [0, 0.68, 0.82, 1.0],
+    [0,  0,   12,   12]
   );
   const cardFilter = useTransform(blurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
