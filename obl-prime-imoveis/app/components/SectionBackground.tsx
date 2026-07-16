@@ -5,8 +5,9 @@ import { useEffect, useRef } from 'react';
 const HERO_VIDEO_MP4  = '/hero.mp4';
 const HERO_VIDEO_WEBM = '/hero.webm';
 const BOMB_VIDEO_SRC  = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260715_142322_a3f9c067-a8d3-465c-9075-ebd055f69007.mp4';
+const BOMB_DURATION   = 8;
 
-// Hero section is 300vh tall → 200vh of scrollable budget
+// Hero occupies 300vh → scrollable budget = 200vh
 const HERO_VH = 300;
 
 export default function SectionBackground() {
@@ -15,49 +16,93 @@ export default function SectionBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const heroVid   = heroRef.current;
-    const bombVid   = bombRef.current;
+    const heroVid  = heroRef.current;
+    const bombVid  = bombRef.current;
     const container = containerRef.current;
     if (!heroVid || !bombVid || !container) return;
 
-    // Both videos play freely at all times — never pause or scrub currentTime
-    heroVid.play().catch(() => {});
-    bombVid.play().catch(() => {});
+    heroVid.pause();
+    bombVid.pause();
 
+    const LERP = 0.28;
+    let heroTarget = 0, heroCurrent = 0;
+    let bombTarget = 0, bombCurrent = 0;
     let raf: number;
 
     const tick = () => {
       const scrollY = window.scrollY;
-      const vH      = window.innerHeight;
+      const vH     = window.innerHeight;
 
-      // ── Hero cross-fade: driven by scroll position through hero section ──
-      const heroScrollMax = (HERO_VH / 100 - 1) * vH;   // = 200vh in px
+      // ── Hero progress 0→1 across its 200vh scroll budget ─────────────────
+      const heroScrollMax = (HERO_VH / 100 - 1) * vH;   // = 200vh
       const heroProgress  = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
 
-      // Hero fades out [0.60 → 0.78]
-      const CF_OUT_START = 0.60;
-      const CF_OUT_END   = 0.78;
-      // Bomb fades in  [0.80 → 1.00] with power2.out easing
-      const CF_IN_START  = 0.80;
-      const CF_IN_END    = 1.00;
+      // Hero video frozen at its CF_OUT frame once fade starts (no ghosting)
+      const CF_OUT_START = 0.60;   // hero begins fading out
+      const CF_OUT_END   = 0.78;   // hero fully gone → pure #0E1418 bg
+      const CF_IN_START  = 0.80;   // bomb begins fading in (brief black gap)
+      const CF_IN_END    = 1.00;   // bomb fully opaque
 
+      heroTarget = Math.min(heroProgress, CF_OUT_START) * (heroVid.duration || 30);
+
+      // Hero opacity: 1→0 in [CF_OUT_START, CF_OUT_END]
       const heroT = Math.min(Math.max((heroProgress - CF_OUT_START) / (CF_OUT_END - CF_OUT_START), 0), 1);
       heroVid.style.opacity = String(1 - heroT);
 
+      // Bomb opacity: 0→1 in [CF_IN_START, CF_IN_END] with power2.out easing
       const rawBombT = Math.min(Math.max((heroProgress - CF_IN_START) / (CF_IN_END - CF_IN_START), 0), 1);
-      const bombT    = 1 - Math.pow(1 - rawBombT, 2);
-      bombVid.style.opacity  = String(bombT);
+      const bombT    = 1 - Math.pow(1 - rawBombT, 2);   // power2.out
+      bombVid.style.opacity = String(bombT);
 
-      // ── Fade entire canvas out as content scrolls past the video sections ─
+      // ── Bombinhas + Proyectos combined video scrub ───────────────────────
+      // Pre-scrub: advance bomb video as soon as it starts fading in (CF_IN_START)
+      // so it never shows a frozen frame-0 while becoming visible.
+      const preScrubP = Math.min(Math.max((heroProgress - CF_IN_START) / (CF_IN_END - CF_IN_START), 0), 1);
+      bombTarget = preScrubP * 1.5; // covers first 1.5 s during the crossfade window
+
+      // Combined scrub: #bombinhas top entering viewport → #proyectos bottom exiting viewport
+      const bombEl = document.getElementById('bombinhas');
       const proyEl = document.getElementById('proyectos');
+      if (bombEl && proyEl) {
+        const bombRect  = bombEl.getBoundingClientRect();
+        // Total scroll distance = both sections + one viewport height of entry travel
+        const totalRange = bombEl.offsetHeight + proyEl.offsetHeight + vH;
+        const scrolled   = vH - bombRect.top;      // px scrolled since bombinhas entered from bottom
+        const combinedP  = Math.min(Math.max(scrolled / totalRange, 0), 1);
+        const rectTarget = combinedP * BOMB_DURATION;
+        if (rectTarget > bombTarget) bombTarget = rectTarget; // never wind back
+      } else if (bombEl) {
+        // Fallback: scrub only against bombinhas if proyectos not found
+        const rect       = bombEl.getBoundingClientRect();
+        const total      = bombEl.offsetHeight + vH;
+        const scrolled   = vH - rect.top;
+        const bombP      = Math.min(Math.max(scrolled / total, 0), 1);
+        const rectTarget = bombP * BOMB_DURATION;
+        if (rectTarget > bombTarget) bombTarget = rectTarget;
+      }
+
+      // ── Phase C: fade canvas as Proyectos EXITS (bottom leaves viewport) ──
+      // This keeps the video visible through all of Proyectos and fades after.
       if (proyEl) {
         const rect      = proyEl.getBoundingClientRect();
+        // Fade over the last 40vh before proyectos bottom clears the top of viewport
         const fadeRange = vH * 0.40;
-        const exiting   = fadeRange - rect.bottom;   // positive when near top
+        const exiting   = fadeRange - rect.bottom;  // positive when bottom < fadeRange
         const t         = Math.min(Math.max(exiting / fadeRange, 0), 1);
         container.style.opacity = String(1 - t);
       } else {
         container.style.opacity = '1';
+      }
+
+      // ── LERP scrub — identical LERP keeps both videos in sync ─────────────
+      heroCurrent += (heroTarget - heroCurrent) * LERP;
+      bombCurrent += (bombTarget - bombCurrent) * LERP;
+
+      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.01) {
+        heroVid.currentTime = heroCurrent;
+      }
+      if (bombVid.readyState >= 2 && Math.abs(bombCurrent - bombVid.currentTime) > 0.01) {
+        bombVid.currentTime = bombCurrent;
       }
 
       raf = requestAnimationFrame(tick);
@@ -74,7 +119,7 @@ export default function SectionBackground() {
     height: '100%',
     objectFit: 'cover',
     objectPosition: 'center center',
-    willChange: 'opacity',
+    willChange: 'transform, opacity',
   };
 
   return (
@@ -91,11 +136,9 @@ export default function SectionBackground() {
         transform: 'translateZ(0)',
       }}
     >
-      {/* Hero video — plays freely in loop, opacity driven by scroll cross-fade */}
+      {/* Hero video — full-screen, scrubbed by scroll */}
       <video
         ref={heroRef}
-        autoPlay
-        loop
         muted
         playsInline
         preload="auto"
@@ -105,11 +148,9 @@ export default function SectionBackground() {
         <source src={HERO_VIDEO_WEBM} type="video/webm" />
       </video>
 
-      {/* Bombinhas video — plays freely in loop, fades in as hero exits */}
+      {/* Bombinhas video — cross-fades in as hero exits */}
       <video
         ref={bombRef}
-        autoPlay
-        loop
         muted
         playsInline
         preload="auto"
@@ -119,7 +160,7 @@ export default function SectionBackground() {
         <source src={BOMB_VIDEO_SRC} type="video/mp4" />
       </video>
 
-      {/* Subtle dark overlay for text legibility */}
+      {/* Subtle overlay — keeps both videos legible and on-brand */}
       <div
         style={{
           position: 'absolute',
