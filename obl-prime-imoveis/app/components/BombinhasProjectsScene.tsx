@@ -115,10 +115,10 @@ function CarouselCard({
       <div style={{
         width: CARD_W, height: CARD_H,
         transform: 'translate(-50%, -50%)',
-        background: 'linear-gradient(145deg, rgba(255,255,255,0.075) 0%, rgba(255,255,255,0.025) 100%)',
-        backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)',
-        border: '1px solid rgba(201,162,75,0.22)', borderRadius: 16, padding: '20px 18px',
-        boxShadow: '0 2px 0 inset rgba(255,255,255,0.07), 0 24px 48px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(201,162,75,0.12)',
+        background: 'linear-gradient(145deg, rgba(8,10,14,0.86) 0%, rgba(4,6,9,0.91) 100%)',
+        backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+        border: '1px solid rgba(201,162,75,0.28)', borderRadius: 16, padding: '20px 18px',
+        boxShadow: '0 2px 0 inset rgba(255,255,255,0.05), 0 24px 48px rgba(0,0,0,0.70), 0 0 0 0.5px rgba(201,162,75,0.18)',
         display: 'flex', flexDirection: 'column', gap: 6,
         filter: isActive ? 'invert(1)' : 'invert(0)',
         transition: 'filter 220ms ease',
@@ -169,27 +169,31 @@ export default function BombinhasProjectsScene() {
     offset: ['start start', 'end end'],
   });
 
+  // h-[400vh] → 300vh sticky scroll budget
+  // Phase 1 (Bombinhas):  [0.00 → 0.37] = ~111vh
+  //   Fade-in  [0.00 → 0.07]: 21vh — opacity 0→1, no blur
+  //   Plateau  [0.07 → 0.28]: 63vh — full opacity, no blur
+  //   Blur-out [0.28 → 0.37]: 27vh — opacity 1→0, blur 0→20px
+  // Phase 2 (Carousel):   [0.37 → 1.00] = ~189vh
+  //   Zoom-in  [0.37 → 0.52]: 45vh — scale 0.7→1, opacity 0→1, blur 10→0
+  //   Plateau  [0.52 → 1.00]: 144vh — full opacity, scale 1, no blur
+
   // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
-  // Fade-in  [0.00 → 0.08]: opacity 0→1, no blur
-  // Plateau  [0.08 → 0.35]: full opacity, no blur
-  // Blur-out [0.35 → 0.45]: opacity 1→0, blur 0→20px
-  const bombOpacity = useTransform(scrollYProgress, [0, 0.08, 0.35, 0.45], [0, 1, 1, 0]);
-  const bombBlurPx  = useTransform(scrollYProgress, [0, 0.35, 0.45], [0, 0, 20]);
+  const bombOpacity = useTransform(scrollYProgress, [0, 0.07, 0.28, 0.37], [0, 1, 1, 0]);
+  const bombBlurPx  = useTransform(scrollYProgress, [0, 0.28, 0.37], [0, 0, 20]);
   const bombFilter  = useTransform(bombBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
-  // Zoom-in  [0.45 → 0.62]: scale 0.7→1, opacity 0→1, blur 10→0
-  // Plateau  [0.62 → 1.00]: full opacity, scale 1, no blur
-  const projOpacity = useTransform(scrollYProgress, [0.45, 0.62], [0, 1]);
-  const projScale   = useTransform(scrollYProgress, [0.45, 0.62], [0.7, 1]);
-  const projBlurPx  = useTransform(scrollYProgress, [0.45, 0.62], [10, 0]);
+  const projOpacity = useTransform(scrollYProgress, [0.37, 0.52], [0, 1]);
+  const projScale   = useTransform(scrollYProgress, [0.37, 0.52], [0.7, 1]);
+  const projBlurPx  = useTransform(scrollYProgress, [0.37, 0.52], [10, 0]);
   const projFilter  = useTransform(projBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
 
   return (
-    <div ref={containerRef} id="bombinhas" className="relative h-[300vh]">
+    <div ref={containerRef} id="bombinhas" className="relative h-[400vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
 
         {/* ── Phase 1: Bombinhas glassmorphic card ───────────────────── */}
