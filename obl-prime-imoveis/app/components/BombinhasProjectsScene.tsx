@@ -256,27 +256,9 @@ export default function BombinhasProjectsScene() {
         {/* ── Phase 2: Fundamentos del Mercado — 3D carousel ─────────── */}
         <motion.div
           id="proyectos"
-          className="absolute inset-0 flex flex-col items-center justify-center"
+          className="absolute inset-0 flex items-center justify-center"
           style={{ opacity: projOpacity, scale: projScale, filter: projFilter, willChange: 'opacity, filter, transform', pointerEvents: 'none' }}
         >
-          {/* Title */}
-          <div className="text-center mb-10 px-6">
-            <h2
-              className="font-playfair"
-              style={{
-                fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 700,
-                letterSpacing: '-0.02em', lineHeight: 1.1,
-                background: 'linear-gradient(90deg, #FFF4D0 0%, #F3C63F 40%, #C7941D 100%)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}
-            >
-              Fundamentos del Mercado
-            </h2>
-            <p className="mt-4 max-w-lg mx-auto text-base text-neutral-400 font-inter">
-              Los datos que hacen de Bombinhas una inversión sin precedentes.
-            </p>
-          </div>
-
           {/* 3D carousel stage — transparent bg, video shows through */}
           <div style={{ height: visualH, position: 'relative', width: '100%', pointerEvents: 'auto' }}>
             {/* Lateral fade masks — semi-transparent so video blends */}
