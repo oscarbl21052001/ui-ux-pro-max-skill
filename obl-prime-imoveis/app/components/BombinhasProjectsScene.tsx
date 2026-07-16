@@ -261,14 +261,6 @@ export default function BombinhasProjectsScene() {
         >
           {/* 3D carousel stage — transparent bg, video shows through */}
           <div style={{ height: visualH, position: 'relative', width: '100%', pointerEvents: 'auto' }}>
-            {/* Lateral fade masks — semi-transparent so video blends */}
-            <div
-              aria-hidden
-              style={{
-                position: 'absolute', inset: 0, zIndex: 20, pointerEvents: 'none',
-                background: 'linear-gradient(to right, rgba(6,9,11,0.75) 0%, transparent 18%, transparent 82%, rgba(6,9,11,0.75) 100%)',
-              }}
-            />
             <div
               style={{
                 position: 'absolute', inset: 0,
