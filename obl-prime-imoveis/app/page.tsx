@@ -4,7 +4,7 @@ import ScrollHero from "./components/ScrollHero";
 import BombinhasProjectsScene from "./components/BombinhasProjectsScene";
 import AboutSection from "./components/AboutSection";
 import GlobeSection from "./components/GlobeSection";
-import CarouselSection from "./components/CarouselSection";
+import ProjectsSection from "./components/ProjectsSection";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <BombinhasProjectsScene />
       <AboutSection />
       <GlobeSection />
-      <CarouselSection />
+      <ProjectsSection />
     </>
   );
 }
