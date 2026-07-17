@@ -58,15 +58,15 @@ export default function SectionBackground() {
       // Pre-scrub: advance bomb video as soon as it starts fading in (CF_IN_START)
       // so it never shows a frozen frame-0 while becoming visible.
       const preScrubP = Math.min(Math.max((heroProgress - CF_IN_START) / (CF_IN_END - CF_IN_START), 0), 1);
-      bombTarget = preScrubP * 1.5; // covers first 1.5 s during the crossfade window
+      bombTarget = preScrubP * 0.3; // minimal advance during crossfade to avoid freeze
 
       // Combined scrub: #bombinhas top entering viewport → #proyectos bottom exiting viewport
       const bombEl = document.getElementById('bombinhas');
       const proyEl = document.getElementById('proyectos');
       if (bombEl && proyEl) {
         const bombRect  = bombEl.getBoundingClientRect();
-        // Total scroll distance = both sections + one viewport height of entry travel
-        const totalRange = bombEl.offsetHeight + proyEl.offsetHeight + vH;
+        // Total scroll distance = bombinhas section + one viewport height of entry travel
+        const totalRange = bombEl.offsetHeight + vH;
         const scrolled   = vH - bombRect.top;      // px scrolled since bombinhas entered from bottom
         const combinedP  = Math.min(Math.max(scrolled / totalRange, 0), 1);
         const rectTarget = combinedP * BOMB_DURATION;

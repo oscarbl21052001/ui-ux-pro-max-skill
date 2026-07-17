@@ -76,13 +76,13 @@ export default function ScrollHero() {
         // Fade IN: quick appearance 0.50→0.56
         goldBlock.style.opacity = String(Math.min((rawP - 0.50) / 0.06, 1));
         goldBlock.style.filter  = '';
-      } else if (rawP <= 0.70) {
+      } else if (rawP <= 0.82) {
         // READING PLATEAU: full opacity, no blur — user has time to read
         goldBlock.style.opacity = '1';
         goldBlock.style.filter  = '';
-      } else if (rawP <= 0.825) {
-        // BLUR-OUT: 0.70→0.825 — fast but smooth exit, done before sticky releases
-        const exitP = Math.min((rawP - 0.70) / 0.125, 1);
+      } else if (rawP <= 0.97) {
+        // BLUR-OUT: 0.82→0.97 — smooth exit, finishes just before sticky releases
+        const exitP = Math.min((rawP - 0.82) / 0.15, 1);
         goldBlock.style.opacity = String((1 - exitP).toFixed(3));
         goldBlock.style.filter  = `blur(${(exitP * 12).toFixed(1)}px)`;
       } else {
