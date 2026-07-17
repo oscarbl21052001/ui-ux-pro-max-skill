@@ -338,9 +338,9 @@ export default function BombinhasInfoPage() {
                   ["Perspectiva de futuro", "Mayor regulación e incertidumbre", "Expansión del turismo y oportunidades de inversión"],
                 ].map(([aspect, spain, bombinhas], i) => (
                   <tr key={i} className="border-b border-neutral-800">
-                    <td className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B]">{aspect}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-bold text-white">{spain}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-bold text-white">{bombinhas}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-[#C9A24B]">{aspect}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white">{spain}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white">{bombinhas}</td>
                   </tr>
                 ))}
               </tbody>
