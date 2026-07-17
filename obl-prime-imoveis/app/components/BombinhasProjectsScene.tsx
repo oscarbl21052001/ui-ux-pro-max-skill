@@ -17,7 +17,7 @@ const CARDS = [
 
 const N      = CARDS.length;
 const ANGLE  = 360 / N;
-const RADIUS = 300;
+const RADIUS = 440;
 const CARD_W = 200;
 const CARD_H = 260;
 
@@ -264,23 +264,25 @@ export default function BombinhasProjectsScene() {
               style={{
                 position: 'absolute', inset: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                perspective: '3000px', perspectiveOrigin: '50% 50%', overflow: 'visible',
+                perspective: '1500px', perspectiveOrigin: 'center center', overflow: 'visible',
               }}
             >
               <div style={{ transform: `scale(${scale})`, transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0 }}>
-                <div
-                  ref={ringRef}
-                  className="carousel-ring"
-                  style={{ transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, willChange: 'transform', animation: 'carouselSpin 18s linear infinite' }}
-                >
-                  {CARDS.map((card, i) => (
-                    <CarouselCard
-                      key={card.id} card={card} index={i}
-                      isActive={activeCard === card.id}
-                      onPress={() => handlePress(card.id)}
-                      onRelease={handleRelease}
-                    />
-                  ))}
+                <div style={{ transform: 'rotateX(-12deg)', transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0 }}>
+                  <div
+                    ref={ringRef}
+                    className="carousel-ring"
+                    style={{ transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, willChange: 'transform', animation: 'carouselSpin 18s linear infinite' }}
+                  >
+                    {CARDS.map((card, i) => (
+                      <CarouselCard
+                        key={card.id} card={card} index={i}
+                        isActive={activeCard === card.id}
+                        onPress={() => handlePress(card.id)}
+                        onRelease={handleRelease}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
