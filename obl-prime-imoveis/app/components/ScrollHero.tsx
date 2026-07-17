@@ -94,8 +94,9 @@ export default function ScrollHero() {
             backfaceVisibility: 'hidden',
           }}
         >
-          <h2 className="hero-gold-headline" style={{ fontFamily: "'Parfumerie Script Old Style', 'Parfumerie Script', cursive" }}>
-            Bienvenido a tu Paraíso
+          <h2 className="hero-gold-headline" style={{ fontFamily: "'Parfumerie Script Old Style', 'Parfumerie Script', cursive", textAlign: 'center' }}>
+            <span style={{ display: 'block' }}>Bienvenido a tu</span>
+            <span style={{ display: 'block' }}>Paraíso</span>
           </h2>
         </div>
       </div>

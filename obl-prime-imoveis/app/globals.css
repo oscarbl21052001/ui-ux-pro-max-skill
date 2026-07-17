@@ -146,10 +146,10 @@ body {
 }
 
 .hero-gold-headline {
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(4.5rem, 12vw, 11rem);
   font-weight: 400;
   letter-spacing: 0.01em;
-  line-height: 1.1;
+  line-height: 1.18;
   max-width: 90vw;
   background: linear-gradient(90deg, #FFF4D0 0%, #F3C63F 40%, #C7941D 100%);
   -webkit-background-clip: text;
