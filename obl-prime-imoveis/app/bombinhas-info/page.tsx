@@ -119,7 +119,7 @@ export default function BombinhasInfoPage() {
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Un Destino Exclusivo con Restricción Estructural de Oferta
               </h1>
-              <p className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo">
+              <p className="text-base md:text-xl text-white leading-loose font-cardo">
                 Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
                 centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
                 Atlántico, con solo 35,9 km² de superficie total, de los cuales
@@ -146,7 +146,7 @@ export default function BombinhasInfoPage() {
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Turismo Potente y Demanda Constante
               </h2>
-              <p className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo">
+              <p className="text-base md:text-xl text-white leading-loose font-cardo">
                 Según datos del IBGE (Instituto Brasileño de Geografía y Estadística),
                 Bombinhas tiene
                 aproximadamente <strong className="text-[#E3C174]">25.058 habitantes permanentes</strong>.
