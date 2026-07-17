@@ -115,10 +115,10 @@ function CarouselCard({
       <div style={{
         width: CARD_W, height: CARD_H,
         transform: 'translate(-50%, -50%)',
-        background: 'linear-gradient(145deg, rgba(8,10,14,0.86) 0%, rgba(4,6,9,0.91) 100%)',
+        background: 'linear-gradient(145deg, rgba(8,10,14,0.68) 0%, rgba(4,6,9,0.78) 100%)',
         backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
         border: '1px solid rgba(201,162,75,0.28)', borderRadius: 16, padding: '20px 18px',
-        boxShadow: '0 2px 0 inset rgba(255,255,255,0.05), 0 24px 48px rgba(0,0,0,0.70), 0 0 0 0.5px rgba(201,162,75,0.18)',
+        boxShadow: '0 2px 0 inset rgba(255,255,255,0.06), 0 8px 20px rgba(0,0,0,0.38), 0 0 0 0.5px rgba(201,162,75,0.18)',
         display: 'flex', flexDirection: 'column', gap: 6,
         filter: isActive ? 'invert(1)' : 'invert(0)',
         transition: 'filter 220ms ease',
@@ -261,6 +261,14 @@ export default function BombinhasProjectsScene() {
         >
           {/* 3D carousel stage — transparent bg, video shows through */}
           <div style={{ height: visualH, position: 'relative', width: '100%', pointerEvents: 'auto' }}>
+            {/* Edge softener — fades only the outermost 16% where side cards bleed */}
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute', inset: 0, zIndex: 20, pointerEvents: 'none',
+                background: 'linear-gradient(to right, rgba(6,9,11,0.45) 0%, transparent 16%, transparent 84%, rgba(6,9,11,0.45) 100%)',
+              }}
+            />
             <div
               style={{
                 position: 'absolute', inset: 0,
