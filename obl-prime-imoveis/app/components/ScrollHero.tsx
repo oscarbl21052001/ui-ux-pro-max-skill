@@ -2,44 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 
-const SPARKLE_POSITIONS = [
-  { top: '-8%', left: '5%', size: 14, delay: 0 },
-  { top: '-5%', right: '8%', size: 11, delay: 0.7 },
-  { top: '35%', left: '-4%', size: 10, delay: 1.4 },
-  { top: '40%', right: '-3%', size: 13, delay: 0.3 },
-  { top: '85%', left: '15%', size: 9, delay: 2.1 },
-  { top: '90%', right: '12%', size: 12, delay: 1.8 },
-];
-
-function InlineSparkles() {
-  return (
-    <>
-      {SPARKLE_POSITIONS.map((s, i) => (
-        <svg
-          key={i}
-          className="absolute sparkle-pulse"
-          style={{
-            top: s.top,
-            left: s.left,
-            right: s.right,
-            width: s.size,
-            height: s.size,
-            animationDelay: `${s.delay}s`,
-          }}
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"
-            fill="#FFF099"
-          />
-        </svg>
-      ))}
-    </>
-  );
-}
-
 export default function ScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef      = useRef<HTMLDivElement>(null);
@@ -132,12 +94,9 @@ export default function ScrollHero() {
             backfaceVisibility: 'hidden',
           }}
         >
-          <span className="relative inline-block">
-            <InlineSparkles />
-            <h2 className="hero-gold-headline font-playfair">
-              BIENVENIDO A TU PARAÍSO
-            </h2>
-          </span>
+          <h2 className="hero-gold-headline" style={{ fontFamily: "'Parfumerie Script Old Style', 'Parfumerie Script', cursive" }}>
+            Bienvenido a tu Paraíso
+          </h2>
         </div>
       </div>
     </div>
