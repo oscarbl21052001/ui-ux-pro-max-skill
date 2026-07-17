@@ -146,7 +146,7 @@ body {
 }
 
 .hero-gold-headline {
-  font-size: clamp(4.5rem, 12vw, 11rem);
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.18;
