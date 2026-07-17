@@ -17,7 +17,7 @@ const CARDS = [
 
 const N      = CARDS.length;
 const ANGLE  = 360 / N;
-const RADIUS = 520;
+const RADIUS = 580;
 const CARD_W = 200;
 const CARD_H = 260;
 
@@ -104,6 +104,7 @@ function CarouselCard({
       aria-hidden
       style={{
         position: 'absolute', left: 0, top: 0,
+        transformOrigin: '0px 0px 0px',
         transform: `rotateY(${index * ANGLE}deg) translateZ(${RADIUS}px)`,
         cursor: 'pointer', userSelect: 'none', WebkitUserSelect: 'none',
       }}
