@@ -268,21 +268,19 @@ export default function BombinhasProjectsScene() {
               }}
             >
               <div style={{ transform: `scale(${scale})`, transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0 }}>
-                <div style={{ transform: 'rotateX(-12deg)', transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0 }}>
-                  <div
-                    ref={ringRef}
-                    className="carousel-ring"
-                    style={{ transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, willChange: 'transform', animation: 'carouselSpin 18s linear infinite' }}
-                  >
-                    {CARDS.map((card, i) => (
-                      <CarouselCard
-                        key={card.id} card={card} index={i}
-                        isActive={activeCard === card.id}
-                        onPress={() => handlePress(card.id)}
-                        onRelease={handleRelease}
-                      />
-                    ))}
-                  </div>
+                <div
+                  ref={ringRef}
+                  className="carousel-ring"
+                  style={{ transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, willChange: 'transform', animation: 'carouselSpin 18s linear infinite' }}
+                >
+                  {CARDS.map((card, i) => (
+                    <CarouselCard
+                      key={card.id} card={card} index={i}
+                      isActive={activeCard === card.id}
+                      onPress={() => handlePress(card.id)}
+                      onRelease={handleRelease}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
