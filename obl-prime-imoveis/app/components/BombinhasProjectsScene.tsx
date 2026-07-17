@@ -17,7 +17,7 @@ const CARDS = [
 
 const N      = CARDS.length;
 const ANGLE  = 360 / N;
-const RADIUS = 440;
+const RADIUS = 520;
 const CARD_W = 200;
 const CARD_H = 260;
 
