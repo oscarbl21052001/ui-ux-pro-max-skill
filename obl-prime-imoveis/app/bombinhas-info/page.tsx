@@ -119,7 +119,7 @@ export default function BombinhasInfoPage() {
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Un Destino Exclusivo con Restricción Estructural de Oferta
               </h1>
-              <p className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter">
+              <p className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo">
                 Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
                 centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
                 Atlántico, con solo 35,9 km² de superficie total, de los cuales
@@ -146,7 +146,7 @@ export default function BombinhasInfoPage() {
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
                 Turismo Potente y Demanda Constante
               </h2>
-              <p className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter">
+              <p className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo">
                 Según datos del IBGE (Instituto Brasileño de Geografía y Estadística),
                 Bombinhas tiene
                 aproximadamente <strong className="text-[#E3C174]">25.058 habitantes permanentes</strong>.
@@ -194,7 +194,7 @@ export default function BombinhasInfoPage() {
             Valorización Inmobiliaria
           </motion.h2>
           <motion.p
-            className="text-base md:text-lg font-bold text-white leading-relaxed max-w-3xl mx-auto font-inter"
+            className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -251,7 +251,7 @@ export default function BombinhasInfoPage() {
                 <div className="text-[#F3E5AB] uppercase tracking-wide font-bold text-base md:text-lg font-inter mb-3">
                   Pre-lanzamiento / Lanzamiento
                 </div>
-                <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
+                <p className="text-base md:text-lg text-white leading-loose font-cardo">
                   <strong className="text-[#C9A24B]">Precio más bajo del ciclo</strong>.
                   Mayor potencial de revalorización durante la obra y mejores condiciones
                   de pago (generalmente con cuotas ajustadas por INCC, índice que protege
@@ -270,7 +270,7 @@ export default function BombinhasInfoPage() {
                 <div className="text-[#F3E5AB] uppercase tracking-wide font-bold text-base md:text-lg font-inter mb-3">
                   En obra
                 </div>
-                <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
+                <p className="text-base md:text-lg text-white leading-loose font-cardo">
                   <strong className="text-[#C9A24B]">Precio intermedio</strong>. Ya se
                   puede visualizar mejor el proyecto y hay más información disponible.
                   Sigue ofreciendo buen margen de apreciación hasta la entrega.
@@ -287,7 +287,7 @@ export default function BombinhasInfoPage() {
                 <div className="text-[#F3E5AB] uppercase tracking-wide font-bold text-base md:text-lg font-inter mb-3">
                   Entregado / Listo para habitar
                 </div>
-                <p className="text-base md:text-lg font-bold text-white leading-relaxed font-inter">
+                <p className="text-base md:text-lg text-white leading-loose font-cardo">
                   <strong className="text-[#C9A24B]">Entrega inmediata</strong>. Es el
                   momento ideal si buscas comenzar a generar renta por alquiler de forma
                   inmediata o disfrutar la propiedad como segunda residencia. Además,
