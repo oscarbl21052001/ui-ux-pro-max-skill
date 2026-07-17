@@ -17,7 +17,7 @@ const CARDS = [
 
 const N      = CARDS.length;
 const ANGLE  = 360 / N;
-const RADIUS = 440;
+const RADIUS = 300;
 const CARD_W = 200;
 const CARD_H = 260;
 
@@ -264,7 +264,7 @@ export default function BombinhasProjectsScene() {
               style={{
                 position: 'absolute', inset: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                perspective: '1500px', perspectiveOrigin: 'center center', overflow: 'visible',
+                perspective: '3000px', perspectiveOrigin: '50% 50%', overflow: 'visible',
               }}
             >
               <div style={{ transform: `scale(${scale})`, transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0 }}>
