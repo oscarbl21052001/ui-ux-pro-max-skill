@@ -130,7 +130,7 @@ export default function SectionBackground() {
         position: 'fixed',
         inset: 0,
         zIndex: -1,
-        backgroundColor: '#0E1418',
+        backgroundColor: '#FDFBF7',
         overflow: 'hidden',
         willChange: 'opacity',
         transform: 'translateZ(0)',
@@ -165,7 +165,7 @@ export default function SectionBackground() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to bottom, rgba(14,20,24,0.18) 0%, rgba(14,20,24,0.28) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.10) 100%)',
           pointerEvents: 'none',
         }}
       />
