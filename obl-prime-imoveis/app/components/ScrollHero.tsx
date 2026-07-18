@@ -95,8 +95,8 @@ export default function ScrollHero() {
           }}
         >
           <h2 className="hero-gold-headline font-playfair uppercase" style={{ textAlign: 'center' }}>
-            <span style={{ display: 'block' }}>Bienvenido a tu</span>
-            <span style={{ display: 'block' }}>Paraíso</span>
+            <span style={{ display: 'block', whiteSpace: 'nowrap' }}>Bienvenido a tu</span>
+            <span style={{ display: 'block', whiteSpace: 'nowrap' }}>Paraíso</span>
           </h2>
         </div>
       </div>
