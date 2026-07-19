@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import ProjectShowcase from './ProjectShowcase';
 
 // ── Carousel data (Phase 2 — Fundamentos del Mercado) ────────────────────────
 const CARDS = [
@@ -298,41 +299,12 @@ export default function BombinhasProjectsScene() {
           </div>
         </motion.div>
 
-        {/* ── Phase 3: Proyectos stat cards ──────────────────────────── */}
+        {/* ── Phase 3: Proyectos — interactive project showcase ──────── */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center px-6"
+          className="absolute inset-0"
           style={{ opacity: statsOpacity, scale: statsScale, filter: statsFilter, willChange: 'opacity, filter, transform', pointerEvents: 'none' }}
         >
-          <div className="w-full max-w-5xl mx-auto text-center">
-            <h2
-              className="font-playfair font-extrabold tracking-tight pb-10"
-              style={{
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                background: 'linear-gradient(90deg, #C9A24B 0%, #E3C174 100%)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}
-            >
-              PROYECTOS
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style={{ pointerEvents: 'auto' }}>
-              {[
-                { value: '150+',  label: 'Projects Completed' },
-                { value: '1200+', label: 'Happy Clients'      },
-                { value: '12',    label: 'Years Experience'   },
-                { value: '98%',   label: 'Satisfaction Rate'  },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl p-8 text-center"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-                >
-                  <p className="font-playfair font-extrabold text-4xl text-white mb-2">{stat.value}</p>
-                  <p className="text-neutral-400 text-sm tracking-wide font-inter uppercase">{stat.label}</p>
-                  <div className="mt-6 h-px w-full" style={{ background: 'linear-gradient(to right, transparent, rgba(201,162,75,0.40), transparent)' }} />
-                </div>
-              ))}
-            </div>
-          </div>
+          <ProjectShowcase />
         </motion.div>
 
       </div>
