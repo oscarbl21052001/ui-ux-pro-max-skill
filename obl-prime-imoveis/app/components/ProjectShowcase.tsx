@@ -71,8 +71,9 @@ export default function ProjectShowcase() {
         }}
       >
         <h2
-          className="font-playfair font-extrabold tracking-tight pb-7 text-center"
+          className="font-extrabold tracking-tight pb-7 text-center"
           style={{
+            fontFamily: 'var(--font-perandory)',
             fontSize: 'clamp(1.8rem, 4.5vw, 3rem)',
             background: 'linear-gradient(90deg, #C9A24B 0%, #E3C174 100%)',
             WebkitBackgroundClip: 'text',
@@ -143,9 +144,9 @@ export default function ProjectShowcase() {
                 {p.num}
               </span>
               <h3 style={{
-                fontFamily: 'var(--font-playfair-display)',
+                fontFamily: 'var(--font-cardo)',
                 fontSize: 'clamp(1rem, 2vw, 1.45rem)',
-                fontWeight: 600,
+                fontWeight: 400,
                 color: hoveredId === p.id ? '#F5E6A8' : 'rgba(255,255,255,0.88)',
                 transition: 'color 0.28s ease',
                 lineHeight: 1.2,
