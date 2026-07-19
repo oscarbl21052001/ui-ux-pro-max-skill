@@ -176,7 +176,8 @@ export default function BombinhasProjectsScene() {
   //   Blur-out [0.28 → 0.37]: 27vh — opacity 1→0, blur 0→20px
   // Phase 2 (Carousel):   [0.37 → 1.00] = ~189vh
   //   Zoom-in  [0.37 → 0.52]: 45vh — scale 0.7→1, opacity 0→1, blur 10→0
-  //   Plateau  [0.52 → 1.00]: 144vh — full opacity, scale 1, no blur
+  //   Plateau  [0.52 → 0.80]: 84vh — full opacity, scale 1, no blur
+  //   Blur-out [0.80 → 0.95]: 45vh — opacity 1→0, blur 0→20px
 
   // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
   const bombOpacity = useTransform(scrollYProgress, [0, 0.07, 0.28, 0.37], [0, 1, 1, 0]);
@@ -184,9 +185,9 @@ export default function BombinhasProjectsScene() {
   const bombFilter  = useTransform(bombBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
-  const projOpacity = useTransform(scrollYProgress, [0.37, 0.52], [0, 1]);
+  const projOpacity = useTransform(scrollYProgress, [0.37, 0.52, 0.80, 0.95], [0, 1, 1, 0]);
   const projScale   = useTransform(scrollYProgress, [0.37, 0.52], [0.7, 1]);
-  const projBlurPx  = useTransform(scrollYProgress, [0.37, 0.52], [10, 0]);
+  const projBlurPx  = useTransform(scrollYProgress, [0.37, 0.52, 0.80, 0.95], [10, 0, 0, 20]);
   const projFilter  = useTransform(projBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   const stageH  = 360;
