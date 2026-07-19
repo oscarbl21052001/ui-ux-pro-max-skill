@@ -169,32 +169,42 @@ export default function BombinhasProjectsScene() {
     offset: ['start start', 'end end'],
   });
 
-  // h-[400vh] → 300vh sticky scroll budget
-  // Phase 1 (Bombinhas):  [0.00 → 0.37] = ~111vh
-  //   Fade-in  [0.00 → 0.07]: 21vh — opacity 0→1, no blur
-  //   Plateau  [0.07 → 0.28]: 63vh — full opacity, no blur
-  //   Blur-out [0.28 → 0.37]: 27vh — opacity 1→0, blur 0→20px
-  // Phase 2 (Carousel):   [0.37 → 1.00] = ~189vh
-  //   Zoom-in  [0.37 → 0.52]: 45vh — scale 0.7→1, opacity 0→1, blur 10→0
-  //   Plateau  [0.52 → 0.80]: 84vh — full opacity, scale 1, no blur
-  //   Blur-out [0.80 → 0.95]: 45vh — opacity 1→0, blur 0→20px
+  // h-[550vh] → 450vh sticky scroll budget (all phases keep same absolute vh distances)
+  // Phase 1 (Bombinhas):  [0.00 → 0.25] = ~112vh
+  //   Fade-in  [0.00 → 0.05]: 22vh — opacity 0→1, no blur
+  //   Plateau  [0.05 → 0.19]: 63vh — full opacity, no blur
+  //   Blur-out [0.19 → 0.25]: 27vh — opacity 1→0, blur 0→20px
+  // Phase 2 (Carousel):   [0.25 → 0.63] = ~171vh
+  //   Zoom-in  [0.25 → 0.35]: 45vh — scale 0.7→1, opacity 0→1, blur 10→0
+  //   Plateau  [0.35 → 0.53]: 81vh — full opacity, scale 1, no blur
+  //   Blur-out [0.53 → 0.63]: 45vh — opacity 1→0, blur 0→20px
+  // Phase 3 (Proyectos):  [0.63 → 1.00] = ~167vh
+  //   Zoom-in  [0.63 → 0.70]: 31vh — scale 0.7→1, opacity 0→1, blur 10→0
+  //   Plateau  [0.70 → 0.87]: 76vh — full opacity, scale 1, no blur
+  //   Blur-out [0.87 → 0.97]: 45vh — opacity 1→0, blur 0→20px
 
   // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
-  const bombOpacity = useTransform(scrollYProgress, [0, 0.07, 0.28, 0.37], [0, 1, 1, 0]);
-  const bombBlurPx  = useTransform(scrollYProgress, [0, 0.28, 0.37], [0, 0, 20]);
+  const bombOpacity = useTransform(scrollYProgress, [0, 0.05, 0.19, 0.25], [0, 1, 1, 0]);
+  const bombBlurPx  = useTransform(scrollYProgress, [0, 0.19, 0.25], [0, 0, 20]);
   const bombFilter  = useTransform(bombBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
-  const projOpacity = useTransform(scrollYProgress, [0.37, 0.52, 0.80, 0.95], [0, 1, 1, 0]);
-  const projScale   = useTransform(scrollYProgress, [0.37, 0.52], [0.7, 1]);
-  const projBlurPx  = useTransform(scrollYProgress, [0.37, 0.52, 0.80, 0.95], [10, 0, 0, 20]);
+  const projOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [0, 1, 1, 0]);
+  const projScale   = useTransform(scrollYProgress, [0.25, 0.35], [0.7, 1]);
+  const projBlurPx  = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [10, 0, 0, 20]);
   const projFilter  = useTransform(projBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
+
+  // ── Phase 3: Proyectos ─────────────────────────────────────────────────────
+  const statsOpacity = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [0, 1, 1, 0]);
+  const statsScale   = useTransform(scrollYProgress, [0.63, 0.70], [0.7, 1]);
+  const statsBlurPx  = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [10, 0, 0, 20]);
+  const statsFilter  = useTransform(statsBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
 
   return (
-    <div ref={containerRef} id="bombinhas" className="relative h-[400vh]">
+    <div ref={containerRef} id="bombinhas" className="relative h-[550vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
 
         {/* ── Phase 1: Bombinhas glassmorphic card ───────────────────── */}
@@ -288,7 +298,46 @@ export default function BombinhasProjectsScene() {
           </div>
         </motion.div>
 
+        {/* ── Phase 3: Proyectos stat cards ──────────────────────────── */}
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-center px-6"
+          style={{ opacity: statsOpacity, scale: statsScale, filter: statsFilter, willChange: 'opacity, filter, transform', pointerEvents: 'none' }}
+        >
+          <div className="w-full max-w-5xl mx-auto text-center">
+            <h2
+              className="font-playfair font-extrabold tracking-tight pb-10"
+              style={{
+                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                background: 'linear-gradient(90deg, #C9A24B 0%, #E3C174 100%)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              }}
+            >
+              PROYECTOS
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style={{ pointerEvents: 'auto' }}>
+              {[
+                { value: '150+',  label: 'Projects Completed' },
+                { value: '1200+', label: 'Happy Clients'      },
+                { value: '12',    label: 'Years Experience'   },
+                { value: '98%',   label: 'Satisfaction Rate'  },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl p-8 text-center"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+                >
+                  <p className="font-playfair font-extrabold text-4xl text-white mb-2">{stat.value}</p>
+                  <p className="text-neutral-400 text-sm tracking-wide font-inter uppercase">{stat.label}</p>
+                  <div className="mt-6 h-px w-full" style={{ background: 'linear-gradient(to right, transparent, rgba(201,162,75,0.40), transparent)' }} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
       </div>
+      {/* Anchor for SectionBackground video fade-out phase */}
+      <div id="proyectos" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
     </div>
   );
 }
