@@ -256,7 +256,6 @@ export default function BombinhasProjectsScene() {
 
         {/* ── Phase 2: Fundamentos del Mercado — 3D carousel ─────────── */}
         <motion.div
-          id="proyectos"
           className="absolute inset-0 flex items-center justify-center"
           style={{ opacity: projOpacity, scale: projScale, filter: projFilter, willChange: 'opacity, filter, transform', pointerEvents: 'none' }}
         >

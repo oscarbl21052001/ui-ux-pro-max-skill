@@ -14,9 +14,9 @@ export default function Home() {
       <Navbar />
       <ScrollHero />
       <BombinhasProjectsScene />
+      <ProjectsSection />
       <AboutSection />
       <GlobeSection />
-      <ProjectsSection />
     </>
   );
 }
