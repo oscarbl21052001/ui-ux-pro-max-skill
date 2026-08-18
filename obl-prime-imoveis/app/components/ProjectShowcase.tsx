@@ -17,7 +17,7 @@ const PROJECTS = [
   { id: 5, num: '05', title: 'Ponta das Canas',         category: 'Lotes Exclusivos',      img: '/paisaje.jpg' },
 ];
 
-export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEvents?: MotionValue<string> }) {
+export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEvents?: MotionValue<'auto' | 'none'> }) {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const mouseRef  = useRef({ x: 0, y: 0 });
   const smoothRef = useRef({ x: 0, y: 0 });
