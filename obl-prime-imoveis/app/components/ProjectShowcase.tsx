@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { motion, type MotionValue } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -16,7 +17,7 @@ const PROJECTS = [
   { id: 5, num: '05', title: 'Ponta das Canas',         category: 'Lotes Exclusivos',      img: '/paisaje.jpg' },
 ];
 
-export default function ProjectShowcase() {
+export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEvents?: MotionValue<string> }) {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const mouseRef  = useRef({ x: 0, y: 0 });
   const smoothRef = useRef({ x: 0, y: 0 });
@@ -55,7 +56,7 @@ export default function ProjectShowcase() {
       style={{ pointerEvents: 'none' }}
     >
       {/* Glassmorphic card — same finish as Phase 1 Bombinhas card */}
-      <div
+      <motion.div
         className="w-full max-w-2xl rounded-3xl px-10 py-10 md:px-12"
         style={{
           background: 'rgba(10, 12, 16, 0.38)',
@@ -65,7 +66,7 @@ export default function ProjectShowcase() {
           boxShadow: '0 8px 48px -8px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)',
           transform: 'translateZ(0)',
           isolation: 'isolate',
-          pointerEvents: 'auto',
+          pointerEvents: cardPointerEvents ?? 'auto',
           position: 'relative',
           zIndex: 1,
         }}
@@ -178,7 +179,7 @@ export default function ProjectShowcase() {
             </div>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Floating image card — follows cursor via LERP */}
       <div
