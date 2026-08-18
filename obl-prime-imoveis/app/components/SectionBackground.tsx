@@ -33,16 +33,17 @@ export default function SectionBackground() {
       const vH     = window.innerHeight;
       const proyEl = document.getElementById('proyectos');
 
-      // ── Single video scrub: hero-web.mov covers page-top → end of Proyectos ─
-      // proyEl (#proyectos) is the 1px anchor at the bottom of BombinhasProjectsScene.
-      // Its absolute offset from document top is constant = rect.top + scrollY.
-      // We map video 0→duration across scrollY 0→proyAbsTop so the video's final
-      // frame (white) lands exactly when the user finishes the Proyectos section,
-      // then the Phase C canvas fade-out completes the transition naturally.
-      if (proyEl) {
-        const proyAbsTop  = proyEl.getBoundingClientRect().top + scrollY;
-        const totalScroll = Math.max(proyAbsTop, 1);
-        const totalP      = Math.min(Math.max(scrollY / totalScroll, 0), 1);
+      // ── Single video scrub: hero-web.mov covers page-top → end of Phase 3 ──
+      // Phase 3 (Proyectos) exits at scrollYProgress ≈ 0.97 within
+      // BombinhasProjectsScene (scroll budget = offsetHeight − vH).
+      // We map video 0→duration to scrollY 0→scrubEnd so the white final
+      // frame lands exactly when Phase 3's blur-out animation completes.
+      const bombEl = document.getElementById('bombinhas');
+
+      if (bombEl) {
+        const bombAbsTop = bombEl.getBoundingClientRect().top + scrollY; // constant
+        const scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
+        const totalP     = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
         heroTarget = totalP * (heroVid.duration || 30);
       } else {
         const heroScrollMax = (HERO_VH / 100 - 1) * vH;
