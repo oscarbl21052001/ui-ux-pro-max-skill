@@ -7,8 +7,8 @@ const HERO_VIDEO_MP4  = '/hero.mp4';
 const HERO_VIDEO_WEBM = '/hero.webm';
 const BOMB_VIDEO_SRC  = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260715_142322_a3f9c067-a8d3-465c-9075-ebd055f69007.mp4';
 
-// Hero occupies 300vh → scrollable budget = 200vh
-const HERO_VH = 300;
+// Hero occupies 200vh → scrollable budget = 100vh
+const HERO_VH = 200;
 
 export default function SectionBackground() {
   const heroRef      = useRef<HTMLVideoElement>(null);
