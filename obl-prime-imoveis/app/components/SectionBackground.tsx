@@ -39,18 +39,24 @@ export default function SectionBackground() {
       const heroProgress  = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
       heroTarget = heroProgress * (heroVid.duration || 30);
 
-      // ── Crossfade: hero→bomb as #bombinhas enters the viewport ───────────
-      // Hero stays at opacity 1 during ALL of ScrollHero (BIENVENIDO).
-      // Crossfade begins only once BombinhasProjectsScene top crosses viewport
-      // bottom, completing over 80vh — leisurely and gap-free (no white flash).
+      // ── Crossfade: hero→bomb, delayed past Phase 1 (Bombinhas card) ────────
+      // `entered` = vH - rect.top grows linearly with scroll:
+      //   entered < 0    → section not yet visible
+      //   entered = vH   → sticky phase begins (Phase 1 starts)
+      //   entered ≈ 2.2vH → Phase 1 ends (~25% of 450vh sticky budget)
+      // We wait until entered = 2.5vH so hero covers all of Phase 1 and a
+      // comfortable buffer into Phase 2 before the crossfade starts.
       const bombEl = document.getElementById('bombinhas');
       const proyEl = document.getElementById('proyectos');
 
       if (bombEl) {
         const rect    = bombEl.getBoundingClientRect();
-        const entered = vH - rect.top;  // <0 before visible, grows as it scrolls in
-        const crossT  = Math.min(Math.max(entered / (vH * 0.80), 0), 1);
-        const eased   = 1 - Math.pow(1 - crossT, 2);  // power2.out
+        const entered = vH - rect.top;
+        // Crossfade over 80vh starting well into Phase 2 — hero fully covers Phase 1
+        const HERO_EXIT_START = vH * 2.5;
+        const HERO_EXIT_RANGE = vH * 0.8;
+        const crossT = Math.min(Math.max((entered - HERO_EXIT_START) / HERO_EXIT_RANGE, 0), 1);
+        const eased  = 1 - Math.pow(1 - crossT, 2);  // power2.out
         heroVid.style.opacity = String(1 - eased);
         bombVid.style.opacity = String(eased);
       } else {
