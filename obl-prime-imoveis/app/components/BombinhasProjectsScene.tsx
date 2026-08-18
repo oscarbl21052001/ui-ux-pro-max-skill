@@ -101,29 +101,36 @@ function CarouselCard({
   card: typeof CARDS[0]; index: number; isActive: boolean; onPress: () => void; onRelease: () => void;
 }) {
   return (
+    // Outer: pure 3D positioner — no hit area (pointer-events: none)
     <div
       aria-hidden
       style={{
         position: 'absolute', left: 0, top: 0,
         transformOrigin: '0px 0px 0px',
         transform: `rotateY(${index * ANGLE}deg) translateZ(${RADIUS}px)`,
-        cursor: 'pointer', userSelect: 'none', WebkitUserSelect: 'none',
+        pointerEvents: 'none',
       }}
-      onPointerDown={(e) => { e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); onPress(); }}
-      onPointerUp={(e) => { e.currentTarget.releasePointerCapture(e.pointerId); onRelease(); }}
-      onPointerCancel={onRelease}
-      onDragStart={(e) => e.preventDefault()}
     >
-      <div style={{
-        width: CARD_W, height: CARD_H,
-        transform: 'translate(-50%, -50%)',
-        background: 'linear-gradient(145deg, rgba(8,10,14,0.82) 0%, rgba(4,6,9,0.88) 100%)',
-        border: '1px solid rgba(201,162,75,0.28)', borderRadius: 16, padding: '20px 18px',
-        boxShadow: '0 2px 0 inset rgba(255,255,255,0.06), 0 8px 20px rgba(0,0,0,0.38), 0 0 0 0.5px rgba(201,162,75,0.18)',
-        display: 'flex', flexDirection: 'column', gap: 6,
-        filter: isActive ? 'invert(1)' : 'invert(0)',
-        transition: 'filter 220ms ease',
-      }}>
+      {/* Inner: the actual visible card — sole hit target */}
+      <div
+        style={{
+          width: CARD_W, height: CARD_H,
+          transform: 'translate(-50%, -50%)',
+          background: 'linear-gradient(145deg, rgba(8,10,14,0.82) 0%, rgba(4,6,9,0.88) 100%)',
+          border: '1px solid rgba(201,162,75,0.28)', borderRadius: 16, padding: '20px 18px',
+          boxShadow: '0 2px 0 inset rgba(255,255,255,0.06), 0 8px 20px rgba(0,0,0,0.38), 0 0 0 0.5px rgba(201,162,75,0.18)',
+          display: 'flex', flexDirection: 'column', gap: 6,
+          filter: isActive ? 'invert(1)' : 'invert(0)',
+          transition: 'filter 220ms ease',
+          pointerEvents: 'auto',
+          cursor: 'pointer',
+          userSelect: 'none', WebkitUserSelect: 'none' as React.CSSProperties['WebkitUserSelect'],
+        }}
+        onPointerDown={(e) => { e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); onPress(); }}
+        onPointerUp={(e) => { e.currentTarget.releasePointerCapture(e.pointerId); onRelease(); }}
+        onPointerCancel={onRelease}
+        onDragStart={(e) => e.preventDefault()}
+      >
         <span style={{ fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(201,162,75,0.72)', fontFamily: 'var(--font-inter)' }}>
           {card.title}
         </span>
@@ -148,6 +155,8 @@ export default function BombinhasProjectsScene() {
   const ringRef      = useRef<HTMLDivElement>(null);
   const [scale, setScale]           = useState(1);
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const pausedRef    = useRef(false);
+  const ringAngleRef = useRef(0);
 
   useEffect(() => {
     const update = () => {
@@ -159,8 +168,27 @@ export default function BombinhasProjectsScene() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  const pause  = useCallback(() => { if (ringRef.current) ringRef.current.style.animationPlayState = 'paused';  }, []);
-  const resume = useCallback(() => { if (ringRef.current) ringRef.current.style.animationPlayState = 'running'; }, []);
+  // JS-driven rotation: keeps hit-testing in sync with the compositor
+  useEffect(() => {
+    const DEG_PER_MS = 360 / 18000; // 18s revolution
+    let raf: number;
+    let lastT: number | null = null;
+    const spin = (t: number) => {
+      if (lastT !== null && !pausedRef.current) {
+        ringAngleRef.current = (ringAngleRef.current + DEG_PER_MS * (t - lastT)) % 360;
+        if (ringRef.current) {
+          ringRef.current.style.transform = `rotateY(${ringAngleRef.current}deg)`;
+        }
+      }
+      lastT = t;
+      raf = requestAnimationFrame(spin);
+    };
+    raf = requestAnimationFrame(spin);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const pause  = useCallback(() => { pausedRef.current = true;  }, []);
+  const resume = useCallback(() => { pausedRef.current = false; }, []);
   const handlePress   = useCallback((id: number) => { setActiveCard(id); pause();  }, [pause]);
   const handleRelease = useCallback(() =>           { setActiveCard(null); resume(); }, [resume]);
 
@@ -192,10 +220,10 @@ export default function BombinhasProjectsScene() {
   const bombCardPE  = useTransform(scrollYProgress, (p) => p <= 0.26 ? 'auto' : 'none');
 
   // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
+  // No filter here — any CSS filter on an ancestor flattens preserve-3d and
+  // breaks Z-depth hit testing for the 3D carousel cards.
   const projOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [0, 1, 1, 0]);
   const projScale   = useTransform(scrollYProgress, [0.25, 0.35], [0.7, 1]);
-  const projBlurPx  = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [10, 0, 0, 20]);
-  const projFilter  = useTransform(projBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
 
   // ── Phase 3: Proyectos ─────────────────────────────────────────────────────
   const statsOpacity = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [0, 1, 1, 0]);
@@ -270,24 +298,25 @@ export default function BombinhasProjectsScene() {
         </motion.div>
 
         {/* ── Phase 2: Fundamentos del Mercado — 3D carousel ─────────── */}
+        {/* No filter on this wrapper — CSS filter flattens preserve-3d and breaks hit testing */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
-          style={{ opacity: projOpacity, scale: projScale, filter: projFilter, willChange: 'opacity, filter, transform', pointerEvents: 'none' }}
+          style={{ opacity: projOpacity, scale: projScale, willChange: 'opacity, transform', pointerEvents: 'none' }}
         >
-          {/* 3D carousel stage — transparent bg, video shows through */}
-          <div style={{ height: visualH, position: 'relative', width: '100%', pointerEvents: 'auto' }}>
+          {/* Stage: pointer-events none on all containers, auto only on card elements */}
+          <div style={{ height: visualH, position: 'relative', width: '100%', pointerEvents: 'none' }}>
             <div
               style={{
                 position: 'absolute', inset: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 perspective: '1500px', perspectiveOrigin: 'center center', overflow: 'visible',
+                pointerEvents: 'none',
               }}
             >
-              <div style={{ transform: `scale(${scale})`, transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0 }}>
+              <div style={{ transform: `scale(${scale})`, transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, pointerEvents: 'none' }}>
                 <div
                   ref={ringRef}
-                  className="carousel-ring"
-                  style={{ transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, willChange: 'transform', animation: 'carouselSpin 18s linear infinite' }}
+                  style={{ transformStyle: 'preserve-3d', transformOrigin: 'center center', width: 0, height: 0, willChange: 'transform', pointerEvents: 'none' }}
                 >
                   {CARDS.map((card, i) => (
                     <CarouselCard
