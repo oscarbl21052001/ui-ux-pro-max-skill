@@ -59,11 +59,11 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
       <motion.div
         className="w-full max-w-2xl rounded-3xl px-10 py-10 md:px-12"
         style={{
-          background: 'rgba(10, 12, 16, 0.38)',
-          backdropFilter: 'blur(18px)',
-          WebkitBackdropFilter: 'blur(18px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          boxShadow: '0 8px 48px -8px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)',
+          background: 'rgba(10, 12, 16, 0.72)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          border: '1px solid rgba(255, 255, 255, 0.10)',
+          boxShadow: '0 8px 48px -8px rgba(0,0,0,0.70), inset 0 1px 0 rgba(255,255,255,0.07)',
           transform: 'translateZ(0)',
           isolation: 'isolate',
           pointerEvents: cardPointerEvents ?? 'auto',
