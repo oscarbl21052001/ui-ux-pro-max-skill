@@ -85,7 +85,14 @@ export default function SectionBackground() {
     height: '100%',
     objectFit: 'cover',
     objectPosition: 'center center',
-    willChange: 'transform, opacity',
+    // Force GPU compositing so the browser scales on the GPU rather than
+    // the CPU — avoids the blurry bilinear upscale that software rendering applies.
+    transform: 'translateZ(0)',
+    backfaceVisibility: 'hidden',
+    // Explicitly clear any inherited filter and let the browser decode at
+    // native quality with no post-process sharpening or blurring.
+    filter: 'none',
+    willChange: 'opacity',
   };
 
   return (
@@ -98,8 +105,8 @@ export default function SectionBackground() {
         zIndex: -1,
         backgroundColor: '#FDFBF7',
         overflow: 'hidden',
-        willChange: 'opacity',
         transform: 'translateZ(0)',
+        willChange: 'opacity',
       }}
     >
       {/* Hero video — full-screen, scrubbed by scroll */}
