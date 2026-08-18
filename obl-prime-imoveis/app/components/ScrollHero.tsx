@@ -23,8 +23,10 @@ export default function ScrollHero() {
     const tick = () => {
       const p = Math.min(progressRef.current, 1);
 
-      // Hero headline: fades out across the full scroll budget
-      textBlock.style.opacity = String(Math.max(1 - p / 0.5, 0));
+      // Hero headline: full opacity until 60% scroll, then fades out over 30%
+      const fadeStart = 0.60;
+      const fadeLen   = 0.30;
+      textBlock.style.opacity = String(Math.max(1 - Math.max(p - fadeStart, 0) / fadeLen, 0));
 
       rafRef.current = requestAnimationFrame(tick);
     };
