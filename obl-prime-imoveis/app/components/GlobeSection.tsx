@@ -159,7 +159,7 @@ function GlobeCanvas() {
           const [rx, ry, rz] = project(px, py, pz, phi, THETA);
           if (rz <= 0) continue;
           ctx.beginPath();
-          ctx.arc(cx + rx * R, cy - ry * R, 0.7 + rz * 0.55, 0, 2 * Math.PI);
+          ctx.arc(cx - rx * R, cy - ry * R, 0.7 + rz * 0.55, 0, 2 * Math.PI);
           ctx.fillStyle = `rgba(90,74,40,${(0.42 + rz * 0.48).toFixed(2)})`;
           ctx.fill();
         }
@@ -186,7 +186,7 @@ function GlobeCanvas() {
           const el = markerEls.current[i];
           if (!el) return;
           if (rz > 0) {
-            el.style.left    = cx + rx * R + 'px';
+            el.style.left    = cx - rx * R + 'px';
             el.style.top     = cy - ry * R + 'px';
             el.style.opacity = String(Math.min(1, rz * 2).toFixed(2));
           } else {
