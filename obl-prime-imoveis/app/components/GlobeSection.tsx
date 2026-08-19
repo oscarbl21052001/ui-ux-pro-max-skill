@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useCallback } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import createGlobe from 'cobe';
 
 interface GlobeMarker {
@@ -214,71 +214,57 @@ function GlobeCanvas() {
 }
 
 export default function GlobeSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Full-range tracking over 200vh budget — mirrors AboutSection pattern.
+  // Fade-in starts at 0.55 (when AboutSection begins its exit blur) so the
+  // two scenes overlap cleanly with no dark gap.
+  // Hold : 0.65 → 0.85  fully visible, pinned at center
+  // Fade-out : 0.85 → 1.0
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 0.75', 'start 0.15'],
+    target: containerRef,
+    offset: ['start end', 'end start'],
   });
 
-  // Spring smoothing — balanced landing
-  const smooth = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 24,
-    restDelta: 0.001,
-  });
-
-  // Text — leads the globe slightly, fully landed at scroll end
-  const textScale  = useTransform(smooth, [0, 1], [2.2, 1]);
-  const textZ      = useTransform(smooth, [0, 1], [420, 0]);
-  const textOpacity = useTransform(smooth, [0, 0.5], [0, 1]);
-  const textBlurN  = useTransform(smooth, [0, 0.6], [8, 0]);
-  const textFilter = useTransform(textBlurN, (v) => `blur(${v}px)`);
-
-  // Globe — heavier, arrives a beat after the text
-  const globeScale  = useTransform(smooth, [0.05, 1], [2.8, 1]);
-  const globeZ      = useTransform(smooth, [0.05, 1], [500, 0]);
-  const globeOpacity = useTransform(smooth, [0.05, 0.55], [0, 1]);
-  const globeBlurN  = useTransform(smooth, [0.05, 0.65], [10, 0]);
-  const globeFilter = useTransform(globeBlurN, (v) => `blur(${v}px)`);
+  const opacity = useTransform(scrollYProgress, [0.52, 0.65, 0.85, 1.0], [0, 1, 1, 0]);
+  const filter  = useTransform(scrollYProgress, [0.52, 0.65, 0.85, 1.0],
+    ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
+  const scale   = useTransform(scrollYProgress, [0.52, 0.65, 0.85, 1.0],
+    [0.94, 1, 1, 0.94]);
+  const pointerEvents = useTransform(scrollYProgress,
+    (p) => p > 0.62 && p < 0.87 ? 'auto' : 'none');
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FDFBF7] px-6 py-24"
-      style={{ perspective: '1200px' }}
-    >
+    // 200vh scroll budget — keeps the fixed layer alive long enough
+    <div ref={containerRef} id="presencia-global" className="relative h-[200vh]">
       <motion.div
-        className="mb-12 text-center"
         style={{
-          zIndex: 10,
-          scale: textScale,
-          z: textZ,
-          opacity: textOpacity,
-          filter: textFilter,
-          willChange: 'transform, opacity, filter',
-          background: 'transparent',
+          position: 'fixed',
+          inset: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          backgroundColor: '#FDFBF7',
+          opacity,
+          filter,
+          scale,
+          pointerEvents,
+          zIndex: 4,
         }}
       >
-        <h2 className="globe-section-title font-playfair">
-          Presencia Global
-        </h2>
-        <p className="mt-4 max-w-lg mx-auto text-base text-neutral-600 font-inter">
-          Inversores de todo el mundo confían en OBL Prime para acceder al mercado inmobiliario de Bombinhas.
-        </p>
-      </motion.div>
+        <div className="mb-12 text-center px-6">
+          <h2 className="globe-section-title font-playfair">
+            Presencia Global
+          </h2>
+          <p className="mt-4 max-w-lg mx-auto text-base text-neutral-600 font-inter">
+            Inversores de todo el mundo confían en OBL Prime para acceder al mercado inmobiliario de Bombinhas.
+          </p>
+        </div>
 
-      <motion.div
-        style={{
-          scale: globeScale,
-          z: globeZ,
-          opacity: globeOpacity,
-          filter: globeFilter,
-          willChange: 'transform, opacity, filter',
-        }}
-      >
         <GlobeCanvas />
       </motion.div>
-    </section>
+    </div>
   );
 }
