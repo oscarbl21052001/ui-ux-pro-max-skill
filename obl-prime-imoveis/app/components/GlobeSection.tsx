@@ -116,7 +116,7 @@ function GlobeCanvas() {
         width:  SIZE,
         height: SIZE,
         phi: 0,
-        theta: 0.2,
+        theta: 0,
         dark: 0,
         diffuse: 1.5,
         mapSamples: 16000,
@@ -137,7 +137,7 @@ function GlobeCanvas() {
       function animate() {
         if (!isPausedRef.current) phi += 0.006;
         const curPhi = phi + phiOffsetRef.current + dragOffset.current.phi;
-        const curTheta = 0.2 + thetaOffsetRef.current + dragOffset.current.theta;
+        const curTheta = 0 + thetaOffsetRef.current + dragOffset.current.theta;
 
         globe!.update({ phi: curPhi, theta: curTheta });
 
