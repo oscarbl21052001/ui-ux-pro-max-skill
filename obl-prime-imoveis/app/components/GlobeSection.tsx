@@ -99,10 +99,12 @@ function GlobeCanvas() {
     // Fixed render size — identical for both axes so the WebGL sphere
     // is always a perfect circle regardless of container or devicePixelRatio.
     const SIZE = 400;
-    const DPR  = Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2);
 
     function init() {
       if (globe) return;
+
+      // Read DPR inside init() so it reflects the actual client value, not SSR's 1.
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
       // Force CSS dimensions to the exact same px value before cobe reads them.
       canvas.style.width  = `${SIZE}px`;
@@ -187,8 +189,10 @@ function GlobeCanvas() {
         onPointerDown={handlePointerDown}
         style={{
           display: 'block',
-          width: 650,
-          height: 650,
+          width: '400px',
+          height: '400px',
+          maxWidth: '400px',
+          maxHeight: '400px',
           cursor: 'grab',
           opacity: 0,
           transition: 'opacity 1.2s ease',
