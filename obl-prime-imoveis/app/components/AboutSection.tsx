@@ -141,6 +141,8 @@ export default function AboutSection() {
     ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
   const contentScale   = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
     [0.94, 1, 1, 0.94]);
+  const contentPointerEvents = useTransform(scrollYProgress, (p) =>
+    p > 0.30 && p < 0.57 ? 'auto' : 'none');
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -159,11 +161,22 @@ export default function AboutSection() {
       {/* SectionBackground Phase C watches this to know when to fade the canvas */}
       <div id="nosotros-exit" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
 
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
-        <motion.div
-          className="w-full"
-          style={{ opacity: contentOpacity, filter: contentFilter, scale: contentScale }}
-        >
+      <motion.div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          opacity: contentOpacity,
+          filter: contentFilter,
+          scale: contentScale,
+          pointerEvents: contentPointerEvents,
+          zIndex: 5,
+        }}
+      >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
             SOBRE NOSOTROS
           </h2>
@@ -215,8 +228,7 @@ export default function AboutSection() {
               ))}
             </div>
           </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 }
