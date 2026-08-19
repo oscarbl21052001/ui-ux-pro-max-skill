@@ -125,19 +125,22 @@ export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef     = useRef<HTMLVideoElement>(null);
 
-  // Full-range scroll tracking: start end → end start spans 300vh for a 200vh section.
+  // Full-range tracking: ['start end','end start'] spans 300vh for a 200vh section.
   // Sticky pins from progress ≈ 0.33 to ≈ 0.67 (100vh of hold).
-  // Fade-in  : 0    → 0.25  (entering viewport, before sticky locks in)
-  // Hold     : 0.25 → 0.50  (pinned, fully visible)
-  // Fade-out : 0.50 → 0.67  (blur+opacity out WHILE still pinned — no scroll sensation)
-  // Silent   : 0.67 → 1.00  (transparent; outer div exits invisibly)
+  // ALL transitions are confined to the pinned window so content never moves vertically:
+  //   Fade-in  : 0.33 → 0.45  content appears in place (blur+scale → sharp)
+  //   Hold     : 0.45 → 0.55  fully visible, static
+  //   Fade-out : 0.55 → 0.67  content dissolves in place (sharp → blur+scale)
+  //   Silent   : outside range → clamped to opacity 0 (invisible scroll before/after)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.25, 0.50, 0.67], [0, 1, 1, 0]);
-  const contentFilter  = useTransform(scrollYProgress, [0, 0.25, 0.50, 0.67],
+  const contentOpacity = useTransform(scrollYProgress, [0.33, 0.45, 0.55, 0.67], [0, 1, 1, 0]);
+  const contentFilter  = useTransform(scrollYProgress, [0.33, 0.45, 0.55, 0.67],
     ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
+  const contentScale   = useTransform(scrollYProgress, [0.33, 0.45, 0.55, 0.67],
+    [0.94, 1, 1, 0.94]);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -159,7 +162,7 @@ export default function AboutSection() {
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
         <motion.div
           className="w-full"
-          style={{ opacity: contentOpacity, filter: contentFilter }}
+          style={{ opacity: contentOpacity, filter: contentFilter, scale: contentScale }}
         >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
             SOBRE NOSOTROS
