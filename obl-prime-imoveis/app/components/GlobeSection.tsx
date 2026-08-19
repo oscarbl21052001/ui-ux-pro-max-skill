@@ -174,7 +174,7 @@ function GlobeCanvas() {
   return (
     <div
       className="relative aspect-square select-none w-full max-w-[680px]"
-      style={{ zIndex: 20, borderRadius: '50%', overflow: 'hidden' }}
+      style={{ zIndex: 20, borderRadius: '50%', overflow: 'hidden', maxHeight: 'min(680px, 58vh)' }}
     >
       <canvas
         ref={canvasRef}
@@ -243,7 +243,8 @@ export default function GlobeSection() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-end',
+          paddingBottom: '4vh',
           overflow: 'hidden',
           backgroundColor: '#FDFBF7',
           opacity,
@@ -253,7 +254,7 @@ export default function GlobeSection() {
           zIndex: 4,
         }}
       >
-        <div className="mb-4 text-center px-6">
+        <div className="mb-3 text-center px-6">
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
             PRESENCIA GLOBAL
           </h2>
