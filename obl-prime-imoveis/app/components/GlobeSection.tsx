@@ -96,19 +96,22 @@ function GlobeCanvas() {
     let animationId: number;
     let phi = 0;
 
-    function init() {
-      const width = canvas.offsetWidth;
-      if (width === 0 || globe) return;
+    // Fixed render size — identical for both axes so the WebGL sphere
+    // is always a perfect circle regardless of container or devicePixelRatio.
+    const SIZE = 650;
+    const DPR  = Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2);
 
-      // Pin canvas display to exact square so cobe's square WebGL output
-      // is never stretched by CSS percentage heights.
-      canvas.style.width  = `${width}px`;
-      canvas.style.height = `${width}px`;
+    function init() {
+      if (globe) return;
+
+      // Force CSS dimensions to the exact same px value before cobe reads them.
+      canvas.style.width  = `${SIZE}px`;
+      canvas.style.height = `${SIZE}px`;
 
       globe = createGlobe(canvas, {
-        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-        width,
-        height: width,
+        devicePixelRatio: DPR,
+        width:  SIZE * DPR,
+        height: SIZE * DPR,
         phi: 0,
         theta: 0.2,
         dark: 0,
@@ -158,17 +161,8 @@ function GlobeCanvas() {
       setTimeout(() => canvas && (canvas.style.opacity = '1'));
     }
 
-    if (canvas.offsetWidth > 0) {
-      init();
-    } else {
-      const ro = new ResizeObserver((entries) => {
-        if (entries[0]?.contentRect.width > 0) {
-          ro.disconnect();
-          init();
-        }
-      });
-      ro.observe(canvas);
-    }
+    // Init immediately — SIZE is fixed, no need to wait for layout.
+    init();
 
     return () => {
       if (animationId) cancelAnimationFrame(animationId);
@@ -183,8 +177,8 @@ function GlobeCanvas() {
         zIndex: 20,
         borderRadius: '50%',
         overflow: 'hidden',
-        width: 'min(680px, 90vw)',
-        height: 'min(680px, 90vw)',
+        width: 650,
+        height: 650,
         flexShrink: 0,
       }}
     >
@@ -193,6 +187,8 @@ function GlobeCanvas() {
         onPointerDown={handlePointerDown}
         style={{
           display: 'block',
+          width: 650,
+          height: 650,
           cursor: 'grab',
           opacity: 0,
           transition: 'opacity 1.2s ease',
