@@ -251,7 +251,7 @@ export default function GlobeSection() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'flex-end',
-          paddingBottom: '15vh',
+          paddingBottom: '25vh',
           overflow: 'hidden',
           backgroundColor: '#FDFBF7',
           opacity,
