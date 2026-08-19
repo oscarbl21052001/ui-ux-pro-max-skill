@@ -123,7 +123,10 @@ function GlobeCanvas() {
         for (let x = 0; x < TW; x++) {
           if (pix[(y * TW + x) * 4] > 128) {
             const lat = (0.5 - y / TH) * 180;
-            const lng = (x / TW - 0.5) * 360;
+            // Cobe texture: u=0 → 0° (Greenwich), u=0.5 → 180°E, u=1 → 0° (wrap)
+            // Standard equirectangular starts at −180°; cobe starts at 0°.
+            let lng = (x / TW) * 360;
+            if (lng > 180) lng -= 360; // normalise to [−180, 180]
             dots.push(latLngTo3D(lat, lng));
           }
         }
