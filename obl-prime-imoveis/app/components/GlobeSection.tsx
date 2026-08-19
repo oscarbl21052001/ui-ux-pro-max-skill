@@ -123,7 +123,7 @@ function GlobeCanvas() {
       });
 
       function animate() {
-        if (!isPausedRef.current) phi += 0.003;
+        if (!isPausedRef.current) phi += 0.006;
         const curPhi = phi + phiOffsetRef.current + dragOffset.current.phi;
         const curTheta = 0.2 + thetaOffsetRef.current + dragOffset.current.theta;
 
@@ -173,7 +173,7 @@ function GlobeCanvas() {
 
   return (
     <div
-      className="relative aspect-square select-none w-full max-w-[540px]"
+      className="relative aspect-square select-none w-full max-w-[680px]"
       style={{ zIndex: 20, borderRadius: '50%', overflow: 'hidden' }}
     >
       <canvas
@@ -254,8 +254,8 @@ export default function GlobeSection() {
         }}
       >
         <div className="mb-12 text-center px-6">
-          <h2 className="globe-section-title font-playfair">
-            Presencia Global
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
+            PRESENCIA GLOBAL
           </h2>
           <p className="mt-4 max-w-lg mx-auto text-base text-neutral-600 font-inter">
             Inversores de todo el mundo confían en OBL Prime para acceder al mercado inmobiliario de Bombinhas.
