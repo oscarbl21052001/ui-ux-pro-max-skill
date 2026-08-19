@@ -173,8 +173,15 @@ function GlobeCanvas() {
 
   return (
     <div
-      className="relative aspect-square select-none w-full max-w-[680px]"
-      style={{ zIndex: 20, borderRadius: '50%', overflow: 'hidden', maxHeight: 'min(680px, 58vh)' }}
+      className="relative select-none"
+      style={{
+        zIndex: 20,
+        borderRadius: '50%',
+        overflow: 'hidden',
+        width: 'min(680px, 90vw)',
+        height: 'min(680px, 90vw)',
+        flexShrink: 0,
+      }}
     >
       <canvas
         ref={canvasRef}
