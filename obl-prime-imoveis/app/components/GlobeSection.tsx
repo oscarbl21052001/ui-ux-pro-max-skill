@@ -217,22 +217,21 @@ export default function GlobeSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Full-range tracking over 200vh budget — mirrors AboutSection pattern.
-  // Fade-in starts at 0.55 (when AboutSection begins its exit blur) so the
-  // two scenes overlap cleanly with no dark gap.
-  // Hold : 0.65 → 0.85  fully visible, pinned at center
-  // Fade-out : 0.85 → 1.0
+  // Fade-in : 0.15 → 0.32  starts immediately as section enters viewport
+  // Hold    : 0.32 → 0.55  fully visible, pinned at center
+  // Fade-out: 0.55 → 0.67  dissolves before sticky releases
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
 
-  const opacity = useTransform(scrollYProgress, [0.52, 0.65, 0.85, 1.0], [0, 1, 1, 0]);
-  const filter  = useTransform(scrollYProgress, [0.52, 0.65, 0.85, 1.0],
+  const opacity = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67], [0, 1, 1, 0]);
+  const filter  = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
     ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
-  const scale   = useTransform(scrollYProgress, [0.52, 0.65, 0.85, 1.0],
+  const scale   = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
     [0.94, 1, 1, 0.94]);
   const pointerEvents = useTransform(scrollYProgress,
-    (p) => p > 0.62 && p < 0.87 ? 'auto' : 'none');
+    (p) => p > 0.30 && p < 0.57 ? 'auto' : 'none');
 
   return (
     // 200vh scroll budget — keeps the fixed layer alive long enough
