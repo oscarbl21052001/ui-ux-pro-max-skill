@@ -83,8 +83,8 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
     <motion.div
       className={`relative rounded-xl border p-5 transition-colors duration-300 cursor-default ${
         hovered
-          ? 'bg-white/[0.06] border-[#C9A24B]/50 shadow-[0_10px_30px_rgba(201,162,75,0.08)]'
-          : 'bg-white/[0.02] border-white/[0.06]'
+          ? 'bg-slate-800 border-[#C9A24B]/50 shadow-[0_10px_30px_rgba(201,162,75,0.12)]'
+          : 'bg-slate-900 border-slate-700/40'
       }`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -137,7 +137,7 @@ export default function AboutSection() {
     }
   }, []);
   return (
-    <section id="nosotros" className="relative bg-[#0E1418] w-full pt-20 pb-20">
+    <section id="nosotros" className="relative bg-white w-full pt-20 pb-20">
       <motion.h2
         className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4"
         initial={{ filter: 'blur(12px)', opacity: 0 }}
@@ -159,7 +159,7 @@ export default function AboutSection() {
       </motion.p>
 
       <motion.p
-        className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-neutral-400 px-6"
+        className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-slate-800 px-6"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
