@@ -125,13 +125,19 @@ export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef     = useRef<HTMLVideoElement>(null);
 
-  // Scroll-linked fade-in: blur(10px)→blur(0) + opacity 0→1 as section enters viewport
+  // Full-range scroll tracking: start end → end start spans 300vh for a 200vh section.
+  // Sticky pins from progress ≈ 0.33 to ≈ 0.67 (100vh of hold).
+  // Fade-in  : 0    → 0.25  (entering viewport, before sticky locks in)
+  // Hold     : 0.25 → 0.50  (pinned, fully visible)
+  // Fade-out : 0.50 → 0.67  (blur+opacity out WHILE still pinned — no scroll sensation)
+  // Silent   : 0.67 → 1.00  (transparent; outer div exits invisibly)
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 0.85', 'start 0.35'],
+    offset: ['start end', 'end start'],
   });
-  const contentOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const contentFilter  = useTransform(scrollYProgress, [0, 1], ['blur(10px)', 'blur(0px)']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.25, 0.50, 0.67], [0, 1, 1, 0]);
+  const contentFilter  = useTransform(scrollYProgress, [0, 0.25, 0.50, 0.67],
+    ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
