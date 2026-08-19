@@ -100,6 +100,11 @@ function GlobeCanvas() {
       const width = canvas.offsetWidth;
       if (width === 0 || globe) return;
 
+      // Pin canvas display to exact square so cobe's square WebGL output
+      // is never stretched by CSS percentage heights.
+      canvas.style.width  = `${width}px`;
+      canvas.style.height = `${width}px`;
+
       globe = createGlobe(canvas, {
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
         width,
@@ -187,8 +192,7 @@ function GlobeCanvas() {
         ref={canvasRef}
         onPointerDown={handlePointerDown}
         style={{
-          width: '100%',
-          height: '100%',
+          display: 'block',
           cursor: 'grab',
           opacity: 0,
           transition: 'opacity 1.2s ease',
