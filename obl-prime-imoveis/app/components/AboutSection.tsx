@@ -137,7 +137,9 @@ export default function AboutSection() {
     }
   }, []);
   return (
-    <section id="nosotros" className="relative bg-white w-full pt-20 pb-20">
+    <section id="nosotros" className="relative w-full pt-20 pb-20" style={{ backgroundColor: '#FDFBF7' }}>
+      {/* Gradient dissolve — blends the warm-white video final frame into this section */}
+      <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 80, background: 'linear-gradient(to bottom, transparent 0%, #FDFBF7 100%)', pointerEvents: 'none', zIndex: 0 }} />
       <motion.h2
         className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4"
         initial={{ filter: 'blur(12px)', opacity: 0 }}
