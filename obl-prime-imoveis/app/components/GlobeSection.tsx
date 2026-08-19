@@ -122,6 +122,7 @@ function GlobeCanvas() {
         mapSamples: 16000,
         mapBrightness: 8,
         scale: 1,
+        offset: [0, 0],
         baseColor: [0.92, 0.91, 0.9],
         markerColor: [0.76, 0.6, 0.15],
         glowColor: [0.94, 0.93, 0.91],
@@ -267,7 +268,7 @@ export default function GlobeSection() {
           zIndex: 4,
         }}
       >
-        <div className="mb-8 text-center px-6">
+        <div className="mb-12 text-center px-6">
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
             PRESENCIA GLOBAL
           </h2>
