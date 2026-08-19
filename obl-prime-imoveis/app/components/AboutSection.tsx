@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calculator } from 'lucide-react';
 
@@ -77,25 +77,28 @@ const RIGHT_SERVICES: ServiceCard[] = [
 ];
 
 function ServiceCardItem({ card }: { card: ServiceCard }) {
-  const [hovered, setHovered] = useState(false);
-
   return (
     <motion.div
-      className={`relative rounded-xl border p-5 transition-colors duration-300 cursor-default ${
-        hovered
-          ? 'bg-slate-800 border-[#C9A24B]/50 shadow-[0_10px_30px_rgba(201,162,75,0.12)]'
-          : 'bg-slate-900 border-slate-700/40'
-      }`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      whileHover={{ y: -4 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+      className="relative rounded-xl p-5 cursor-default"
+      style={{
+        background: 'rgba(10, 12, 16, 0.72)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        border: '1px solid rgba(255, 255, 255, 0.10)',
+        boxShadow: '0 8px 32px -8px rgba(0,0,0,0.60), inset 0 1px 0 rgba(255,255,255,0.07)',
+        transform: 'translateZ(0)',
+        isolation: 'isolate',
+      }}
+      whileHover={{
+        borderColor: 'rgba(201,162,75,0.50)',
+        boxShadow: '0 10px 36px -6px rgba(0,0,0,0.70), 0 0 24px 4px rgba(201,162,75,0.10), inset 0 1px 0 rgba(255,255,255,0.09)',
+        y: -4,
+      }}
+      transition={{ duration: 0.35, ease: 'easeInOut' }}
     >
       <div className="flex items-start gap-4">
-        <div
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
-            hovered ? 'bg-[#C9A24B] text-[#0E1418]' : 'bg-[#C9A24B]/10 text-[#C9A24B]'
-          }`}
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#C9A24B]"
+          style={{ background: 'rgba(201,162,75,0.12)', border: '1px solid rgba(201,162,75,0.22)' }}
         >
           {card.icon}
         </div>
@@ -103,16 +106,9 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
           <h4 className="font-inter text-sm font-semibold text-white tracking-wide">
             {card.title}
           </h4>
-          <p className="mt-1 font-inter text-xs leading-relaxed text-neutral-400">
+          <p className="mt-1 font-inter text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.62)' }}>
             {card.description}
           </p>
-          <span
-            className={`mt-2 inline-block font-inter text-xs font-medium text-[#C9A24B] transition-all duration-300 ${
-              hovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'
-            }`}
-          >
-            Learn more →
-          </span>
         </div>
       </div>
     </motion.div>
