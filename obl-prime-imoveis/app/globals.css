@@ -44,7 +44,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: #FDFBF7;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

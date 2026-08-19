@@ -245,7 +245,7 @@ export default function GlobeSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FAFAFA] px-6 py-24"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#FDFBF7] px-6 py-24"
       style={{ perspective: '1200px' }}
     >
       <motion.div
