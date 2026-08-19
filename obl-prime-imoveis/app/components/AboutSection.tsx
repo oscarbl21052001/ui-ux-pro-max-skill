@@ -81,7 +81,7 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
 
   return (
     <motion.div
-      className="relative rounded-xl p-5 cursor-default"
+      className="relative rounded-xl p-5 cursor-pointer"
       style={{
         background: 'rgba(10, 12, 16, 0.72)',
         backdropFilter: 'blur(24px)',
