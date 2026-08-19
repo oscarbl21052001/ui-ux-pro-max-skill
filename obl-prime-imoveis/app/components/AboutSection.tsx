@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calculator } from 'lucide-react';
 
@@ -77,6 +77,8 @@ const RIGHT_SERVICES: ServiceCard[] = [
 ];
 
 function ServiceCardItem({ card }: { card: ServiceCard }) {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <motion.div
       className="relative rounded-xl p-5 cursor-default"
@@ -89,6 +91,8 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
         transform: 'translateZ(0)',
         isolation: 'isolate',
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       whileHover={{
         borderColor: 'rgba(201,162,75,0.50)',
         boxShadow: '0 10px 36px -6px rgba(0,0,0,0.70), 0 0 24px 4px rgba(201,162,75,0.10), inset 0 1px 0 rgba(255,255,255,0.09)',
@@ -109,6 +113,16 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
           <p className="mt-1 font-inter text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.62)' }}>
             {card.description}
           </p>
+          <span
+            className="mt-2 inline-block font-inter text-xs font-medium transition-all duration-300"
+            style={{
+              color: '#C9A24B',
+              opacity: hovered ? 1 : 0,
+              transform: hovered ? 'translateX(0)' : 'translateX(-6px)',
+            }}
+          >
+            Saber más →
+          </span>
         </div>
       </div>
     </motion.div>
