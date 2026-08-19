@@ -104,6 +104,7 @@ function GlobeCanvas() {
       if (globe) return;
 
       // Read DPR inside init() so it reflects the actual client value, not SSR's 1.
+      // Do NOT pre-multiply SIZE by DPR — cobe multiplies internally (canvas.width = width * dpr).
       const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
       // Force CSS dimensions to the exact same px value before cobe reads them.
@@ -112,14 +113,15 @@ function GlobeCanvas() {
 
       globe = createGlobe(canvas, {
         devicePixelRatio: DPR,
-        width:  SIZE * DPR,
-        height: SIZE * DPR,
+        width:  SIZE,
+        height: SIZE,
         phi: 0,
         theta: 0.2,
         dark: 0,
         diffuse: 1.5,
         mapSamples: 16000,
         mapBrightness: 8,
+        scale: 1,
         baseColor: [0.92, 0.91, 0.9],
         markerColor: [0.76, 0.6, 0.15],
         glowColor: [0.94, 0.93, 0.91],
