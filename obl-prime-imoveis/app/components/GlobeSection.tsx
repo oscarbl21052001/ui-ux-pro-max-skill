@@ -180,8 +180,6 @@ function GlobeCanvas() {
       className="relative select-none"
       style={{
         zIndex: 20,
-        borderRadius: '50%',
-        overflow: 'hidden',
         width: 400,
         height: 400,
         flexShrink: 0,
@@ -268,7 +266,7 @@ export default function GlobeSection() {
           zIndex: 4,
         }}
       >
-        <div className="mb-12 text-center px-6">
+        <div className="mb-16 text-center px-6">
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
             PRESENCIA GLOBAL
           </h2>
