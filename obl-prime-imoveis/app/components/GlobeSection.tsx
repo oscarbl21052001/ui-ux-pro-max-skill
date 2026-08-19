@@ -98,7 +98,7 @@ function GlobeCanvas() {
 
     // Fixed render size — identical for both axes so the WebGL sphere
     // is always a perfect circle regardless of container or devicePixelRatio.
-    const SIZE = 650;
+    const SIZE = 500;
     const DPR  = Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2);
 
     function init() {
@@ -177,8 +177,8 @@ function GlobeCanvas() {
         zIndex: 20,
         borderRadius: '50%',
         overflow: 'hidden',
-        width: 650,
-        height: 650,
+        width: 500,
+        height: 500,
         flexShrink: 0,
       }}
     >
@@ -251,7 +251,7 @@ export default function GlobeSection() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'flex-end',
-          paddingBottom: '4vh',
+          paddingBottom: '15vh',
           overflow: 'hidden',
           backgroundColor: '#FDFBF7',
           opacity,
