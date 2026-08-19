@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useState, useCallback } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calculator } from 'lucide-react';
 
 interface ServiceCard {
@@ -122,12 +122,19 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
 const PORTFOLIO_VIDEO = '/portfolio-preview.mp4';
 
 export default function AboutSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef     = useRef<HTMLVideoElement>(null);
+
+  // Scroll-linked fade-in: blur(10px)→blur(0) + opacity 0→1 as section enters viewport
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 0.85', 'start 0.35'],
+  });
+  const contentOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const contentFilter  = useTransform(scrollYProgress, [0, 1], ['blur(10px)', 'blur(0px)']);
 
   const handleMouseEnter = useCallback(() => {
-    try {
-      videoRef.current?.play().catch(() => {});
-    } catch {}
+    try { videoRef.current?.play().catch(() => {}); } catch {}
   }, []);
 
   const handleMouseLeave = useCallback(() => {
@@ -136,95 +143,71 @@ export default function AboutSection() {
       videoRef.current.currentTime = 0;
     }
   }, []);
+
   return (
-    <section id="nosotros" className="relative w-full pt-20 pb-20" style={{ backgroundColor: '#FDFBF7' }}>
-      <motion.h2
-        className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4"
-        initial={{ filter: 'blur(12px)', opacity: 0 }}
-        whileInView={{ filter: 'blur(0px)', opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        SOBRE NOSOTROS
-      </motion.h2>
+    // 200vh scroll budget — content stays sticky while background video holds its final frame
+    <div ref={containerRef} id="nosotros" className="relative h-[200vh]">
+      {/* SectionBackground Phase C watches this to know when to fade the canvas */}
+      <div id="nosotros-exit" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
 
-      <motion.p
-        className="text-center font-inter text-xs font-semibold uppercase tracking-[4px] text-[#C9A24B]/70 mt-2"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
-      >
-        Nuestra visión y valores
-      </motion.p>
-
-      <motion.p
-        className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-slate-800 px-6"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
-      >
-        Combinamos experiencia en el mercado inmobiliario español con un análisis riguroso
-        del litoral brasileño para estructurar inversiones seguras y de alto potencial.
-        Nuestro compromiso es guiar cada paso con transparencia, asegurando no solo una
-        excelente rentabilidad, sino también la tranquilidad y el estilo de vida excepcional
-        que mereces en Bombinhas
-      </motion.p>
-
-      <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 max-w-7xl mx-auto w-full px-6 mt-12 items-center overflow-hidden">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
         <motion.div
-          className="lg:col-span-4 flex flex-col gap-4"
-          initial={{ x: -60, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="w-full"
+          style={{ opacity: contentOpacity, filter: contentFilter }}
         >
-          {LEFT_SERVICES.map((card) => (
-            <ServiceCardItem key={card.title} card={card} />
-          ))}
-        </motion.div>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
+            SOBRE NOSOTROS
+          </h2>
 
-        <motion.div
-          className="lg:col-span-3 flex justify-center"
-          initial={{ scale: 0.95, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
-        >
-          <div
-            className="group relative w-full max-w-[280px] overflow-hidden rounded-2xl border-2 border-[#C9A24B]/20 shadow-2xl"
-            style={{ aspectRatio: '3/4' }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <video
-              ref={videoRef}
-              muted
-              playsInline
-              loop
-              controls={false}
-              preload="auto"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-            >
-              <source src={PORTFOLIO_VIDEO} type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 pointer-events-none" />
+          <p className="text-center font-inter text-xs font-semibold uppercase tracking-[4px] text-[#C9A24B]/70 mt-2">
+            Nuestra visión y valores
+          </p>
+
+          <p className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-slate-800 px-6">
+            Combinamos experiencia en el mercado inmobiliario español con un análisis riguroso
+            del litoral brasileño para estructurar inversiones seguras y de alto potencial.
+            Nuestro compromiso es guiar cada paso con transparencia, asegurando no solo una
+            excelente rentabilidad, sino también la tranquilidad y el estilo de vida excepcional
+            que mereces en Bombinhas
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 max-w-7xl mx-auto w-full px-6 mt-12 items-center">
+            <div className="lg:col-span-4 flex flex-col gap-4">
+              {LEFT_SERVICES.map((card) => (
+                <ServiceCardItem key={card.title} card={card} />
+              ))}
+            </div>
+
+            <div className="lg:col-span-3 flex justify-center">
+              <div
+                className="group relative w-full max-w-[280px] overflow-hidden rounded-2xl border-2 border-[#C9A24B]/20 shadow-2xl"
+                style={{ aspectRatio: '3/4' }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <video
+                  ref={videoRef}
+                  muted
+                  playsInline
+                  loop
+                  controls={false}
+                  preload="auto"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                >
+                  <source src={PORTFOLIO_VIDEO} type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 pointer-events-none" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex flex-col gap-4">
+              {RIGHT_SERVICES.map((card) => (
+                <ServiceCardItem key={card.title} card={card} />
+              ))}
+            </div>
           </div>
         </motion.div>
-
-        <motion.div
-          className="lg:col-span-4 flex flex-col gap-4"
-          initial={{ x: 60, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          {RIGHT_SERVICES.map((card) => (
-            <ServiceCardItem key={card.title} card={card} />
-          ))}
-        </motion.div>
       </div>
-    </section>
+    </div>
   );
 }
