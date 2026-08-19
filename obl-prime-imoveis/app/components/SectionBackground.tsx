@@ -31,8 +31,6 @@ export default function SectionBackground() {
     const tick = () => {
       const scrollY = window.scrollY;
       const vH     = window.innerHeight;
-      const proyEl = document.getElementById('proyectos');
-
       // ── Single video scrub: hero-web.mov covers page-top → end of Phase 3 ──
       // Phase 3 (Proyectos) exits at scrollYProgress ≈ 0.97 within
       // BombinhasProjectsScene (scroll budget = offsetHeight − vH).
@@ -54,9 +52,10 @@ export default function SectionBackground() {
       heroVid.style.opacity = '1';
       bombVid.style.opacity = '0';
 
-      // ── Phase C: fade canvas as Proyectos exits viewport ─────────────────
-      if (proyEl) {
-        const rect      = proyEl.getBoundingClientRect();
+      // ── Phase C: fade canvas as Sobre Nosotros exits viewport ───────────
+      const nosotrosExitEl = document.getElementById('nosotros-exit');
+      if (nosotrosExitEl) {
+        const rect      = nosotrosExitEl.getBoundingClientRect();
         const fadeRange = vH * 0.40;
         const exiting   = fadeRange - rect.bottom;
         const t         = Math.min(Math.max(exiting / fadeRange, 0), 1);
