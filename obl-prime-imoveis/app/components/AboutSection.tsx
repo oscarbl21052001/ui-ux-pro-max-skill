@@ -127,19 +127,19 @@ export default function AboutSection() {
 
   // Full-range tracking: ['start end','end start'] spans 300vh for a 200vh section.
   // Sticky pins from progress ≈ 0.33 to ≈ 0.67 (100vh of hold).
-  // ALL transitions are confined to the pinned window so content never moves vertically:
-  //   Fade-in  : 0.33 → 0.45  content appears in place (blur+scale → sharp)
-  //   Hold     : 0.45 → 0.55  fully visible, static
-  //   Fade-out : 0.55 → 0.67  content dissolves in place (sharp → blur+scale)
-  //   Silent   : outside range → clamped to opacity 0 (invisible scroll before/after)
+  //   Fade-in  : 0.15 → 0.32  starts 55vh before sticky, overlapping Proyectos tail
+  //              (Phase 3 already transparent by then — no visual conflict)
+  //   Hold     : 0.32 → 0.55  fully visible, pinned
+  //   Fade-out : 0.55 → 0.67  dissolves in place before sticky releases
+  //   Silent   : outside range → clamped to opacity 0
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  const contentOpacity = useTransform(scrollYProgress, [0.33, 0.45, 0.55, 0.67], [0, 1, 1, 0]);
-  const contentFilter  = useTransform(scrollYProgress, [0.33, 0.45, 0.55, 0.67],
+  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67], [0, 1, 1, 0]);
+  const contentFilter  = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
     ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
-  const contentScale   = useTransform(scrollYProgress, [0.33, 0.45, 0.55, 0.67],
+  const contentScale   = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
     [0.94, 1, 1, 0.94]);
 
   const handleMouseEnter = useCallback(() => {
