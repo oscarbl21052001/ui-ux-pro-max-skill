@@ -135,7 +135,7 @@ function GlobeCanvas() {
         }
       }
 
-      const marker3D = MARKERS.map(m => latLngTo3D(m.location[0], m.location[1]));
+      const marker3D = MARKERS.map(m => latLngTo3D(m.location[0], -m.location[1]));
 
       function render() {
         if (!isPaused.current) phiRef.current += 0.006;
