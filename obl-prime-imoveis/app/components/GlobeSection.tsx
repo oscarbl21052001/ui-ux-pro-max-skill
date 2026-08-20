@@ -57,24 +57,28 @@ function project(
 }
 
 function GlobeCanvas() {
-  const canvasRef   = useRef<HTMLCanvasElement>(null);
-  const markerEls   = useRef<(HTMLDivElement | null)[]>([]);
-  const phiRef      = useRef(0);
-  const phiOffset   = useRef(0);
-  const dragOffset  = useRef(0);
-  const isPaused    = useRef(false);
-  const dragStart   = useRef<number | null>(null);
+  const canvasRef      = useRef<HTMLCanvasElement>(null);
+  const markerEls      = useRef<(HTMLDivElement | null)[]>([]);
+  const phiRef         = useRef(0);
+  const phiOffset      = useRef(0);
+  const phiDrag        = useRef(0);
+  const thetaOffset    = useRef(THETA);
+  const thetaDrag      = useRef(0);
+  const isPaused       = useRef(false);
+  const dragStart      = useRef<{ x: number; y: number } | null>(null);
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    dragStart.current = e.clientX;
+    dragStart.current = { x: e.clientX, y: e.clientY };
     isPaused.current  = true;
     if (canvasRef.current) canvasRef.current.style.cursor = 'grabbing';
   }, []);
 
   const handlePointerUp = useCallback(() => {
     if (dragStart.current !== null) {
-      phiOffset.current += dragOffset.current;
-      dragOffset.current = 0;
+      phiOffset.current   += phiDrag.current;
+      thetaOffset.current  = Math.max(-1.2, Math.min(1.2, thetaOffset.current + thetaDrag.current));
+      phiDrag.current      = 0;
+      thetaDrag.current    = 0;
     }
     dragStart.current = null;
     isPaused.current  = false;
@@ -83,8 +87,10 @@ function GlobeCanvas() {
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
-      if (dragStart.current !== null)
-        dragOffset.current = (e.clientX - dragStart.current) / 300;
+      if (dragStart.current !== null) {
+        phiDrag.current   =  (e.clientX - dragStart.current.x) / 300;
+        thetaDrag.current = -(e.clientY - dragStart.current.y) / 300;
+      }
     };
     window.addEventListener('pointermove', onMove,          { passive: true });
     window.addEventListener('pointerup',   handlePointerUp, { passive: true });
@@ -134,7 +140,8 @@ function GlobeCanvas() {
 
       function render() {
         if (!isPaused.current) phiRef.current += 0.006;
-        const phi = phiRef.current + phiOffset.current + dragOffset.current;
+        const phi   = phiRef.current + phiOffset.current + phiDrag.current;
+        const theta = Math.max(-1.2, Math.min(1.2, thetaOffset.current + thetaDrag.current));
 
         ctx.clearRect(0, 0, SIZE, SIZE);
 
@@ -154,10 +161,10 @@ function GlobeCanvas() {
 
         // Land dots with full two-axis projection
         for (const [px, py, pz] of dots) {
-          const [rx, ry, rz] = project(px, py, pz, phi, THETA);
+          const [rx, ry, rz] = project(px, py, pz, phi, theta);
           if (rz <= 0) continue;
           ctx.beginPath();
-          ctx.arc(cx - rx * R, cy - ry * R, 0.7 + rz * 0.55, 0, 2 * Math.PI);
+          ctx.arc(cx + rx * R, cy - ry * R, 0.7 + rz * 0.55, 0, 2 * Math.PI);
           ctx.fillStyle = `rgba(148,135,112,${(0.5 + rz * 0.4).toFixed(2)})`;
           ctx.fill();
         }
@@ -180,11 +187,11 @@ function GlobeCanvas() {
 
         // Markers
         MARKERS.forEach((m, i) => {
-          const [rx, ry, rz] = project(marker3D[i][0], marker3D[i][1], marker3D[i][2], phi, THETA);
+          const [rx, ry, rz] = project(marker3D[i][0], marker3D[i][1], marker3D[i][2], phi, theta);
           const el = markerEls.current[i];
           if (!el) return;
           if (rz > 0) {
-            el.style.left    = cx - rx * R + 'px';
+            el.style.left    = cx + rx * R + 'px';
             el.style.top     = cy - ry * R + 'px';
             el.style.opacity = String(Math.min(1, rz * 2).toFixed(2));
           } else {
