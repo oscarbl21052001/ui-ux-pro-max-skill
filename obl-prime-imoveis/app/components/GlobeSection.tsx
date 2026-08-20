@@ -88,8 +88,8 @@ function GlobeCanvas() {
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       if (dragStart.current !== null) {
-        phiDrag.current   =  (e.clientX - dragStart.current.x) / 300;
-        thetaDrag.current = -(e.clientY - dragStart.current.y) / 300;
+        phiDrag.current   = -(e.clientX - dragStart.current.x) / 300;
+        thetaDrag.current =  (e.clientY - dragStart.current.y) / 300;
       }
     };
     window.addEventListener('pointermove', onMove,          { passive: true });
@@ -129,8 +129,7 @@ function GlobeCanvas() {
         for (let x = 0; x < TW; x++) {
           if (pix[(y * TW + x) * 4] > 128) {
             const lat = (0.5 - y / TH) * 180;
-            // Standard equirectangular: u=0 → −180° (date line), u=0.5 → 0° (Greenwich)
-            const lng = (x / TW - 0.5) * 360;
+            const lng = (0.5 - x / TW) * 360;
             dots.push(latLngTo3D(lat, lng));
           }
         }
