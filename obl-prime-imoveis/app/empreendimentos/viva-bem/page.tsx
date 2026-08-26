@@ -1,53 +1,5 @@
 import Image from 'next/image';
 
-/* Treble-clef watermark SVG — inline so no extra file is needed */
-const TrebleClefSVG = () => (
-  <svg
-    aria-hidden
-    viewBox="0 0 120 300"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    style={{
-      position: 'absolute',
-      left: '-2rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      height: '80vh',
-      maxHeight: '640px',
-      width: 'auto',
-      opacity: 0.07,
-      pointerEvents: 'none',
-      userSelect: 'none',
-    }}
-  >
-    {/* Simplified treble-clef path */}
-    <path
-      d="M60 10
-         C60 10 80 30 80 60
-         C80 80 70 95 58 100
-         C70 108 85 125 85 150
-         C85 185 62 210 42 215
-         C55 220 65 235 65 250
-         C65 270 50 285 35 285
-         C20 285 10 272 10 258
-         C10 244 20 232 35 232
-         C42 232 48 236 52 242
-         C48 230 40 220 30 215
-         C15 208 5 190 5 168
-         C5 138 28 112 55 105
-         C42 98 32 82 32 62
-         C32 35 45 10 60 10 Z
-         M60 10 L60 290"
-      stroke="white"
-      strokeWidth="6"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <circle cx="35" cy="258" r="18" stroke="white" strokeWidth="5" fill="none" />
-    <ellipse cx="52" cy="168" rx="30" ry="42" stroke="white" strokeWidth="5" fill="none" />
-  </svg>
-);
-
 export default function VivaBemPage() {
   return (
     <main
@@ -63,9 +15,6 @@ export default function VivaBemPage() {
         overflow: 'hidden',
       }}
     >
-      {/* Treble-clef watermark */}
-      <TrebleClefSVG />
-
       <div
         style={{
           display: 'grid',
@@ -130,12 +79,15 @@ export default function VivaBemPage() {
               maxWidth: '38ch',
             }}
           >
-            Un desarrollo residencial de alto padrón ubicado en{' '}
-            <strong style={{ color: '#ffffff', fontWeight: 700 }}>Rua Pintassilgo</strong>,
-            en el corazón de <strong style={{ color: '#ffffff', fontWeight: 700 }}>Bombinhas</strong>.
-            Arquitectura contemporánea, acabados nobles y una localización privilegiada a minutos
-            de las mejores playas de Santa Catarina. La inversión que combina rentabilidad y
-            estilo de vida.
+            Más que una propiedad, este proyecto ha sido concebido para quienes valoran la calidad
+            de vida, la practicidad y una ubicación estratégica. Diseñado para disfrutar del máximo
+            confort, combina una arquitectura contemporánea, ambientes perfectamente distribuidos y
+            una localización que facilita la rutina diaria en todos los sentidos.
+            <br /><br />
+            Es el espacio donde la comodidad, la movilidad y la tranquilidad conviven en armonía:
+            ideal tanto para quienes buscan vivir con más tiempo y menos preocupaciones, como para
+            quienes desean disfrutar de su tiempo libre o rentabilizar su inversión de forma
+            inteligente.
           </p>
 
           {/* CTA */}
