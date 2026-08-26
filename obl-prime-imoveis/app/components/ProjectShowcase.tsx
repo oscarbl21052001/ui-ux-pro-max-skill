@@ -10,11 +10,11 @@ const CARD_H = 210;
 const LERP_K = 0.09;
 
 const PROJECTS = [
-  { id: 1, num: '01', title: 'Viva + empreendimentos',  category: 'Promotora',             img: '/VIVA.jpg' },
-  { id: 2, num: '02', title: 'Vista Mar Premium',       category: 'Apartamentos de Luxo',  img: '/paisaje.jpg' },
-  { id: 3, num: '03', title: 'Terraço Bombinhas',       category: 'Casas de Alto Padrão',  img: '/paisaje.jpg' },
-  { id: 4, num: '04', title: 'Canto Grande Resort',     category: 'Investimento Turístico', img: '/paisaje.jpg' },
-  { id: 5, num: '05', title: 'Ponta das Canas',         category: 'Lotes Exclusivos',      img: '/paisaje.jpg' },
+  { id: 1, num: '01', title: 'Viva + empreendimentos',  category: 'Promotora',             img: '/VIVA.jpg',    href: '/proyectos/viva' },
+  { id: 2, num: '02', title: 'Vista Mar Premium',       category: 'Apartamentos de Luxo',  img: '/paisaje.jpg', href: null },
+  { id: 3, num: '03', title: 'Terraço Bombinhas',       category: 'Casas de Alto Padrão',  img: '/paisaje.jpg', href: null },
+  { id: 4, num: '04', title: 'Canto Grande Resort',     category: 'Investimento Turístico', img: '/paisaje.jpg', href: null },
+  { id: 5, num: '05', title: 'Ponta das Canas',         category: 'Lotes Exclusivos',      img: '/paisaje.jpg', href: null },
 ];
 
 export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEvents?: MotionValue<'auto' | 'none'> }) {
@@ -117,9 +117,10 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
               justifyContent: 'space-between',
               padding: '0.9rem 0',
               borderBottom: '1px solid rgba(255,255,255,0.055)',
-              cursor: 'default',
+              cursor: p.href ? 'pointer' : 'default',
               position: 'relative',
             }}
+            onClick={() => { if (p.href) window.open(p.href, '_blank', 'noopener,noreferrer'); }}
           >
             {/* Animated underline — grows from left on hover */}
             <span
