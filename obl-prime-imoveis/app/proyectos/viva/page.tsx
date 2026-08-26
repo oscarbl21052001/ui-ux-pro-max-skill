@@ -8,7 +8,7 @@ const CARDS = [
   {
     id: 1,
     title: 'VIVA BEM',
-    description: 'Descripción del proyecto 1. Añade aquí los detalles, tipología y características principales.',
+    description: 'Exclusivo pré-lançamento en Rua Pintassilgo, Bombinhas/SC.',
     img: '/VIVA BEM.png',
     href: '#',
   },
