@@ -58,12 +58,12 @@ export default function VivaBemPage() {
             Viva Bem
           </h1>
 
-          {/* Divider */}
+          {/* Divider — spans full title width, fades right */}
           <div
             style={{
-              width: '3rem',
+              width: '100%',
               height: '2px',
-              background: 'linear-gradient(to right, rgba(255,255,255,0.80), rgba(255,255,255,0.10))',
+              background: 'linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%)',
               borderRadius: 2,
             }}
           />
