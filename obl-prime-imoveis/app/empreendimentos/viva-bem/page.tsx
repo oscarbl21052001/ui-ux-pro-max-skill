@@ -170,92 +170,29 @@ export default function VivaBemPage() {
           </a>
         </div>
 
-        {/* ── Right column: pop-out image ─────────────────────────────── */}
-        {/*
-          Pop-out technique:
-          - Outer wrapper: position:relative, overflow:visible, paddingTop reserves
-            the pop amount so the image overflow doesn't clip the layout.
-          - Card (green bg) and Image wrapper are SIBLINGS inside the outer wrapper.
-          - Image wrapper: position:absolute, bottom:0 — anchors at card bottom and
-            extends upward by (cardHeight + popAmount), so the top pops above the card.
-          - PNG transparency lets the building silhouette appear above the frame.
-        */}
+        {/* ── Right column: image directa, sin card verde ─────────────── */}
         <div
           style={{
-            position: 'relative',
-            overflow: 'visible',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'flex-end',
-            paddingTop: '5rem',  /* space reserved for the pop-out overflow */
+            alignItems: 'center',
           }}
         >
-          {/* 1 — Rounded background card (emerald green) */}
-          <div
+          <Image
+            src="/VIVA BEM MEJORA.jpg"
+            alt="Viva Bem — render del edificio"
+            width={640}
+            height={800}
             style={{
               width: '100%',
-              maxWidth: '420px',
-              height: '500px',
-              borderRadius: '2.5rem',
-              background: 'linear-gradient(160deg, #0C5350 0%, #084846 100%)',
-              border: '1px solid rgba(255,255,255,0.12)',
-              boxShadow: '0 32px 80px -16px rgba(8,72,70,0.60), 0 0 0 1px rgba(255,255,255,0.06)',
-              position: 'relative',
-              flexShrink: 0,
+              maxWidth: '580px',
+              height: 'auto',
+              objectFit: 'contain',
+              display: 'block',
             }}
-          >
-            {/* Badge — sits inside the card, below the building */}
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '1.5rem',
-                left: '1.5rem',
-                zIndex: 5,
-                background: 'rgba(255,255,255,0.14)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                borderRadius: '0.75rem',
-                padding: '0.6rem 1rem',
-                border: '1px solid rgba(255,255,255,0.14)',
-              }}
-            >
-              <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.60rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C9A24B' }}>
-                Pré-lançamento
-              </p>
-              <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.73rem', fontWeight: 500, color: 'rgba(255,255,255,0.85)', marginTop: '0.15rem' }}>
-                Rua Pintassilgo · Bombinhas
-              </p>
-            </div>
-          </div>
-
-          {/* 2 — Image: sibling of card, anchored bottom:0, pops above card top */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '90%',
-              maxWidth: '390px',
-              /* card height (500px) + pop amount (5rem ≈ 80px) = 580px */
-              height: 'calc(500px + 5rem)',
-              zIndex: 10,
-              pointerEvents: 'none',
-            }}
-          >
-            <Image
-              src="/VIVA BEM MEJORA.jpg"
-              alt="Viva Bem — render del edificio"
-              fill
-              style={{
-                objectFit: 'contain',
-                objectPosition: 'bottom center',
-                filter: 'drop-shadow(0 20px 40px rgba(8,72,70,0.50))',
-              }}
-              sizes="(max-width: 768px) 100vw, 40vw"
-              priority
-            />
-          </div>
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+          />
         </div>
       </div>
     </main>
