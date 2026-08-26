@@ -10,7 +10,7 @@ const CARDS = [
     title: 'VIVA BEM',
     description: 'Exclusivo pré-lançamento en Rua Pintassilgo, Bombinhas/SC.',
     img: '/VIVA BEM.png',
-    href: '#',
+    href: '/empreendimentos/viva-bem',
   },
   {
     id: 2,
