@@ -7,9 +7,9 @@ import Image from 'next/image';
 const CARDS = [
   {
     id: 1,
-    title: 'Tarjeta 1',
+    title: 'VIVA BEM',
     description: 'Descripción del proyecto 1. Añade aquí los detalles, tipología y características principales.',
-    img: '/VIVA.jpg',
+    img: '/VIVA BEM.png',
     href: '#',
   },
   {
@@ -180,7 +180,7 @@ export default function VivaPage() {
                   style={{
                     fontFamily: 'var(--font-playfair-display, Georgia, serif)',
                     fontSize: 'clamp(1.1rem, 2vw, 1.6rem)',
-                    fontWeight: 700,
+                    fontWeight: 800,
                     color: '#F5E6A8',
                     margin: '0 0 0.5rem',
                     lineHeight: 1.2,
