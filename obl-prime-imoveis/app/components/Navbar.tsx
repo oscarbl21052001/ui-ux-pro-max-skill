@@ -41,6 +41,13 @@ export default function Navbar() {
             <li key={label}>
               <a
                 href={`#${label.toLowerCase()}`}
+                onClick={(e) => {
+                  const target = document.getElementById(label.toLowerCase());
+                  if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
                 className={`nav-link font-inter text-[13px] font-normal uppercase tracking-[1.5px] text-white/85 no-underline transition-colors duration-300 hover:text-white nav-content ${
                   visible ? 'nav-content-show' : ''
                 }`}
