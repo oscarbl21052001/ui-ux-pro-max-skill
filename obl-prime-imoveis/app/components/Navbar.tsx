@@ -42,10 +42,32 @@ export default function Navbar() {
               <a
                 href={`#${label.toLowerCase()}`}
                 onClick={(e) => {
-                  const target = document.getElementById(label.toLowerCase());
-                  if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  e.preventDefault();
+                  const key = label.toLowerCase();
+
+                  // BombinhasProjectsScene uses ['start start','end end']:
+                  //   scrollYProgress = (scrollTop − containerTop) / (containerH − vh)
+                  // Phase 1 plateau centre ≈ scrollYProgress 0.10
+                  // Phase 3 plateau centre ≈ scrollYProgress 0.78
+                  if (key === 'bombinhas') {
+                    const el = document.getElementById('bombinhas');
+                    if (!el) return;
+                    const range = el.offsetHeight - window.innerHeight;
+                    window.scrollTo({ top: el.offsetTop + 0.10 * range, behavior: 'smooth' });
+                  } else if (key === 'proyectos') {
+                    const el = document.getElementById('bombinhas');
+                    if (!el) return;
+                    const range = el.offsetHeight - window.innerHeight;
+                    window.scrollTo({ top: el.offsetTop + 0.78 * range, behavior: 'smooth' });
+                  } else if (key === 'nosotros') {
+                    // AboutSection ['start end','end start']: scrolling to containerTop
+                    // puts scrollYProgress ≈ 0.33 — right at the content plateau start.
+                    const el = document.getElementById('nosotros');
+                    if (!el) return;
+                    window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+                  } else {
+                    const el = document.getElementById(key);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
                 className={`nav-link font-inter text-[13px] font-normal uppercase tracking-[1.5px] text-white/85 no-underline transition-colors duration-300 hover:text-white nav-content ${
