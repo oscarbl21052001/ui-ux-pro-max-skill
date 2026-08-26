@@ -1,18 +1,71 @@
 import Image from 'next/image';
 
+/* Treble-clef watermark SVG — inline so no extra file is needed */
+const TrebleClefSVG = () => (
+  <svg
+    aria-hidden
+    viewBox="0 0 120 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{
+      position: 'absolute',
+      left: '-2rem',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      height: '80vh',
+      maxHeight: '640px',
+      width: 'auto',
+      opacity: 0.07,
+      pointerEvents: 'none',
+      userSelect: 'none',
+    }}
+  >
+    {/* Simplified treble-clef path */}
+    <path
+      d="M60 10
+         C60 10 80 30 80 60
+         C80 80 70 95 58 100
+         C70 108 85 125 85 150
+         C85 185 62 210 42 215
+         C55 220 65 235 65 250
+         C65 270 50 285 35 285
+         C20 285 10 272 10 258
+         C10 244 20 232 35 232
+         C42 232 48 236 52 242
+         C48 230 40 220 30 215
+         C15 208 5 190 5 168
+         C5 138 28 112 55 105
+         C42 98 32 82 32 62
+         C32 35 45 10 60 10 Z
+         M60 10 L60 290"
+      stroke="white"
+      strokeWidth="6"
+      strokeLinecap="round"
+      fill="none"
+    />
+    <circle cx="35" cy="258" r="18" stroke="white" strokeWidth="5" fill="none" />
+    <ellipse cx="52" cy="168" rx="30" ry="42" stroke="white" strokeWidth="5" fill="none" />
+  </svg>
+);
+
 export default function VivaBemPage() {
   return (
     <main
       style={{
         minHeight: '100vh',
-        backgroundColor: '#F5F0E8',
+        backgroundColor: '#B39A6A',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '4rem 2rem',
         fontFamily: 'sans-serif',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
+      {/* Treble-clef watermark */}
+      <TrebleClefSVG />
+
       <div
         style={{
           display: 'grid',
@@ -21,6 +74,8 @@ export default function VivaBemPage() {
           maxWidth: '1200px',
           width: '100%',
           alignItems: 'center',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* ── Left column: text ───────────────────────────────────────── */}
@@ -33,7 +88,7 @@ export default function VivaBemPage() {
               fontWeight: 600,
               letterSpacing: '0.20em',
               textTransform: 'uppercase',
-              color: '#B8914A',
+              color: 'rgba(255,255,255,0.75)',
               margin: 0,
             }}
           >
@@ -47,7 +102,7 @@ export default function VivaBemPage() {
               fontSize: 'clamp(3rem, 6vw, 5.5rem)',
               fontWeight: 400,
               lineHeight: 1.05,
-              color: '#2C2416',
+              color: '#ffffff',
               margin: 0,
             }}
           >
@@ -59,7 +114,7 @@ export default function VivaBemPage() {
             style={{
               width: '3rem',
               height: '2px',
-              background: 'linear-gradient(to right, #C9A24B, rgba(201,162,75,0.25))',
+              background: 'linear-gradient(to right, rgba(255,255,255,0.80), rgba(255,255,255,0.10))',
               borderRadius: 2,
             }}
           />
@@ -70,15 +125,17 @@ export default function VivaBemPage() {
               fontFamily: 'var(--font-inter, sans-serif)',
               fontSize: '1rem',
               lineHeight: 1.75,
-              color: '#4A3F30',
+              color: 'rgba(255,255,255,0.88)',
               margin: 0,
               maxWidth: '38ch',
             }}
           >
-            Un desarrollo residencial de alto padrón ubicado en Rua Pintassilgo,
-            en el corazón de Bombinhas. Arquitectura contemporánea, acabados nobles
-            y una localización privilegiada a minutos de las mejores playas de
-            Santa Catarina. La inversión que combina rentabilidad y estilo de vida.
+            Un desarrollo residencial de alto padrón ubicado en{' '}
+            <strong style={{ color: '#ffffff', fontWeight: 700 }}>Rua Pintassilgo</strong>,
+            en el corazón de <strong style={{ color: '#ffffff', fontWeight: 700 }}>Bombinhas</strong>.
+            Arquitectura contemporánea, acabados nobles y una localización privilegiada a minutos
+            de las mejores playas de Santa Catarina. La inversión que combina rentabilidad y
+            estilo de vida.
           </p>
 
           {/* CTA */}
@@ -92,7 +149,10 @@ export default function VivaBemPage() {
               paddingBottom: '0.85rem',
               paddingLeft: '2rem',
               paddingRight: '2rem',
-              background: '#C9A24B',
+              background: 'rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255,255,255,0.35)',
               color: '#fff',
               fontFamily: 'var(--font-inter, sans-serif)',
               fontSize: '0.78rem',
@@ -102,7 +162,7 @@ export default function VivaBemPage() {
               borderRadius: '3rem',
               textDecoration: 'none',
               alignSelf: 'flex-start',
-              boxShadow: '0 4px 20px -4px rgba(201,162,75,0.45)',
+              boxShadow: '0 4px 20px -4px rgba(0,0,0,0.25)',
               transition: 'background 0.3s ease, box-shadow 0.3s ease',
             }}
           >
@@ -113,33 +173,34 @@ export default function VivaBemPage() {
         {/* ── Right column: pop-out image ─────────────────────────────── */}
         {/*
           Pop-out technique:
-          - Outer wrapper has paddingTop to reserve overflow space.
-          - Card (colored bg) and Image are SIBLINGS inside the wrapper.
-          - Image is position:absolute bottom:0 so it anchors at the card
-            bottom and extends upward by (cardHeight + popAmount).
-          - This means the top (popAmount) of the image floats above the card.
+          - Outer wrapper: position:relative, overflow:visible, paddingTop reserves
+            the pop amount so the image overflow doesn't clip the layout.
+          - Card (green bg) and Image wrapper are SIBLINGS inside the outer wrapper.
+          - Image wrapper: position:absolute, bottom:0 — anchors at card bottom and
+            extends upward by (cardHeight + popAmount), so the top pops above the card.
           - PNG transparency lets the building silhouette appear above the frame.
         */}
         <div
           style={{
             position: 'relative',
+            overflow: 'visible',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-end',
-            paddingTop: '4rem',   /* space reserved for the pop-out overflow */
+            paddingTop: '5rem',  /* space reserved for the pop-out overflow */
           }}
         >
-          {/* 1 — Rounded background card (deep green contrasts a render PNG) */}
+          {/* 1 — Rounded background card (emerald green) */}
           <div
             style={{
               width: '100%',
               maxWidth: '420px',
-              height: '480px',
-              borderRadius: '2rem',
-              background: 'linear-gradient(160deg, #1C3D2C 0%, #142C1F 100%)',
-              border: '1px solid rgba(201,162,75,0.22)',
-              boxShadow: '0 28px 70px -14px rgba(10,25,15,0.50), 0 0 0 1px rgba(201,162,75,0.10)',
-              position: 'relative',   /* stacking context for badge */
+              height: '500px',
+              borderRadius: '2.5rem',
+              background: 'linear-gradient(160deg, #0C5350 0%, #084846 100%)',
+              border: '1px solid rgba(255,255,255,0.12)',
+              boxShadow: '0 32px 80px -16px rgba(8,72,70,0.60), 0 0 0 1px rgba(255,255,255,0.06)',
+              position: 'relative',
               flexShrink: 0,
             }}
           >
@@ -155,7 +216,7 @@ export default function VivaBemPage() {
                 WebkitBackdropFilter: 'blur(12px)',
                 borderRadius: '0.75rem',
                 padding: '0.6rem 1rem',
-                border: '1px solid rgba(255,255,255,0.12)',
+                border: '1px solid rgba(255,255,255,0.14)',
               }}
             >
               <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.60rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C9A24B' }}>
@@ -167,17 +228,17 @@ export default function VivaBemPage() {
             </div>
           </div>
 
-          {/* 2 — Image: sibling of card, anchored at bottom, pops above */}
+          {/* 2 — Image: sibling of card, anchored bottom:0, pops above card top */}
           <div
             style={{
               position: 'absolute',
               bottom: 0,
               left: '50%',
               transform: 'translateX(-50%)',
-              width: '88%',
-              maxWidth: '380px',
-              /* card height (480px) + pop amount (4rem ≈ 64px) = 544px */
-              height: 'calc(480px + 4rem)',
+              width: '90%',
+              maxWidth: '390px',
+              /* card height (500px) + pop amount (5rem ≈ 80px) = 580px */
+              height: 'calc(500px + 5rem)',
               zIndex: 10,
               pointerEvents: 'none',
             }}
@@ -189,7 +250,7 @@ export default function VivaBemPage() {
               style={{
                 objectFit: 'contain',
                 objectPosition: 'bottom center',
-                filter: 'drop-shadow(0 18px 36px rgba(8,20,10,0.45))',
+                filter: 'drop-shadow(0 20px 40px rgba(8,72,70,0.50))',
               }}
               sizes="(max-width: 768px) 100vw, 40vw"
               priority
