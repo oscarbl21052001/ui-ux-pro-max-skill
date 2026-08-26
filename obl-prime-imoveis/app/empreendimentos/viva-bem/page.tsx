@@ -244,7 +244,7 @@ export default function VivaBemPage() {
             }}
           >
             <Image
-              src="/PERFIL VIVA BEM.png"
+              src="/VIVA BEM MEJORA.jpg"
               alt="Viva Bem — render del edificio"
               fill
               style={{
