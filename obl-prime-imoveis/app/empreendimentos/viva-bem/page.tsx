@@ -53,7 +53,7 @@ export default function VivaBemPage() {
     <main
       style={{
         minHeight: '100vh',
-        backgroundColor: '#B39A6A',
+        backgroundColor: '#A28B60',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -170,12 +170,13 @@ export default function VivaBemPage() {
           </a>
         </div>
 
-        {/* ── Right column: image directa, sin card verde ─────────────── */}
+        {/* ── Right column: image directa +50% ────────────────────────── */}
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            overflow: 'visible',
           }}
         >
           <Image
@@ -189,8 +190,10 @@ export default function VivaBemPage() {
               height: 'auto',
               objectFit: 'contain',
               display: 'block',
+              transform: 'scale(1.5)',
+              transformOrigin: 'center center',
             }}
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 60vw"
             priority
           />
         </div>
