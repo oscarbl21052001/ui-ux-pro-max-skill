@@ -111,79 +111,89 @@ export default function VivaBemPage() {
         </div>
 
         {/* ── Right column: pop-out image ─────────────────────────────── */}
+        {/*
+          Pop-out technique:
+          - Outer wrapper has paddingTop to reserve overflow space.
+          - Card (colored bg) and Image are SIBLINGS inside the wrapper.
+          - Image is position:absolute bottom:0 so it anchors at the card
+            bottom and extends upward by (cardHeight + popAmount).
+          - This means the top (popAmount) of the image floats above the card.
+          - PNG transparency lets the building silhouette appear above the frame.
+        */}
         <div
           style={{
             position: 'relative',
             display: 'flex',
             justifyContent: 'center',
-            /* Extra top padding so the overflowing image has room */
-            paddingTop: '3.5rem',
+            alignItems: 'flex-end',
+            paddingTop: '4rem',   /* space reserved for the pop-out overflow */
           }}
         >
-          {/* Rounded background card */}
+          {/* 1 — Rounded background card (deep green contrasts a render PNG) */}
           <div
             style={{
               width: '100%',
               maxWidth: '420px',
               height: '480px',
               borderRadius: '2rem',
-              background: 'linear-gradient(145deg, #EDE6D5 0%, #D9CFBB 100%)',
+              background: 'linear-gradient(160deg, #1C3D2C 0%, #142C1F 100%)',
               border: '1px solid rgba(201,162,75,0.22)',
-              boxShadow: '0 24px 60px -12px rgba(60,45,20,0.22), 0 0 0 1px rgba(201,162,75,0.12)',
-              position: 'relative',
-              overflow: 'visible',
+              boxShadow: '0 28px 70px -14px rgba(10,25,15,0.50), 0 0 0 1px rgba(201,162,75,0.10)',
+              position: 'relative',   /* stacking context for badge */
+              flexShrink: 0,
             }}
           >
-            {/* Image — overflows the card from the top for the pop-out effect */}
-            <div
-              style={{
-                position: 'absolute',
-                /* Negative top pulls the image upward beyond the card edge */
-                top: '-3.5rem',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '88%',
-                height: 'calc(100% + 4rem)',
-                zIndex: 10,
-                /* Allow the image to visually overflow above */
-                overflow: 'visible',
-              }}
-            >
-              <Image
-                src="/PERFIL VIVA BEM.png"
-                alt="Viva Bem — render del edificio"
-                fill
-                style={{
-                  objectFit: 'contain',
-                  objectPosition: 'bottom center',
-                  filter: 'drop-shadow(0 20px 40px rgba(30,20,5,0.30))',
-                }}
-                sizes="(max-width: 768px) 100vw, 40vw"
-                priority
-              />
-            </div>
-
-            {/* Subtle badge inside the card (bottom-left) */}
+            {/* Badge — sits inside the card, below the building */}
             <div
               style={{
                 position: 'absolute',
                 bottom: '1.5rem',
                 left: '1.5rem',
                 zIndex: 5,
-                background: 'rgba(255,255,255,0.72)',
-                backdropFilter: 'blur(10px)',
+                background: 'rgba(255,255,255,0.14)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 borderRadius: '0.75rem',
                 padding: '0.6rem 1rem',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                border: '1px solid rgba(255,255,255,0.12)',
               }}
             >
-              <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#B8914A' }}>
+              <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.60rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C9A24B' }}>
                 Pré-lançamento
               </p>
-              <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.75rem', fontWeight: 600, color: '#2C2416', marginTop: '0.1rem' }}>
+              <p style={{ margin: 0, fontFamily: 'var(--font-inter, sans-serif)', fontSize: '0.73rem', fontWeight: 500, color: 'rgba(255,255,255,0.85)', marginTop: '0.15rem' }}>
                 Rua Pintassilgo · Bombinhas
               </p>
             </div>
+          </div>
+
+          {/* 2 — Image: sibling of card, anchored at bottom, pops above */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '88%',
+              maxWidth: '380px',
+              /* card height (480px) + pop amount (4rem ≈ 64px) = 544px */
+              height: 'calc(480px + 4rem)',
+              zIndex: 10,
+              pointerEvents: 'none',
+            }}
+          >
+            <Image
+              src="/PERFIL VIVA BEM.png"
+              alt="Viva Bem — render del edificio"
+              fill
+              style={{
+                objectFit: 'contain',
+                objectPosition: 'bottom center',
+                filter: 'drop-shadow(0 18px 36px rgba(8,20,10,0.45))',
+              }}
+              sizes="(max-width: 768px) 100vw, 40vw"
+              priority
+            />
           </div>
         </div>
       </div>
