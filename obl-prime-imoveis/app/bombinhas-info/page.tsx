@@ -303,49 +303,88 @@ export default function BombinhasInfoPage() {
         </div>
       </section>
 
-      {/* ── SECTION 4: Tabla Comparativa de Rentabilidad ── */}
+      {/* ── SECTION 4: Simulador de Rentabilidad por Tipología ── */}
       <section className="relative py-24 md:py-32 px-6">
         <motion.div
-          className="mx-auto max-w-5xl"
+          className="mx-auto max-w-6xl"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-4xl md:text-5xl tracking-tight mb-12 pb-2 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
-            Rentabilidad por Alquiler Vacacional
+          <h2 className="text-4xl md:text-5xl tracking-tight mb-4 pb-2 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+            Simulador de Rentabilidad por Tipología
           </h2>
+          <p className="text-center text-neutral-400 text-sm mb-12 font-inter">
+            Estimaciones basadas en datos de mercado de Bombinhas (Seazone · FipeZAP · Airbnb SC · 2024)
+          </p>
 
-          <div className="overflow-x-auto w-full px-0 md:px-4">
+          <div className="overflow-x-auto w-full px-0 md:px-2">
             <table className="w-full border-collapse font-inter">
               <thead>
-                <tr className="border-b border-neutral-700">
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair">Aspecto</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair">España 🇪🇸</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair">Bombinhas 🇧🇷</th>
+                <tr className="border-b border-[#C9A24B]/40">
+                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Tipología</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Superficie</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio Est.</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Renta Mensual Est.</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Ocupación Anual</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto</th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  ["Regulación", "Restricciones crecientes y licencias limitadas", "Entorno favorable al alquiler vacacional"],
-                  ["Alquiler vacacional", "Cada vez más condicionado", "Totalmente consolidado"],
-                  ["Rentabilidad", "Buena, pero con mayor presión regulatoria", "Alto potencial de ingresos por alquiler"],
-                  ["Ocupación", "Dependiente de la ubicación y la temporada", "Alta ocupación en las zonas premium que comercializamos durante gran parte del año"],
-                  ["Demanda turística", "Alta", "Muy alta, constante y en crecimiento"],
-                  ["Revalorización", "Mercado maduro", "Mercado con potencial de crecimiento"],
-                  ["Competencia", "Muy elevada", "Menor oferta de propiedades exclusivas"],
-                  ["Perfil del inversor", "Búsqueda de estabilidad", "Diversificación, seguridad y crecimiento patrimonial"],
-                  ["Perspectiva de futuro", "Mayor regulación e incertidumbre", "Expansión del turismo y oportunidades de inversión"],
-                ].map(([aspect, spain, bombinhas], i) => (
-                  <tr key={i} className="border-b border-neutral-800">
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-[#C9A24B]">{aspect}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white">{spain}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white">{bombinhas}</td>
+                  {
+                    tipo: "Studio",
+                    superficie: "35 – 45 m²",
+                    precio: "R$ 450 – 600 k",
+                    renta: "R$ 3.500 – 5.500 / mes",
+                    ocupacion: "~70 %",
+                    roi: "9 – 11 %",
+                  },
+                  {
+                    tipo: "1 Dormitorio",
+                    superficie: "50 – 65 m²",
+                    precio: "R$ 650 – 900 k",
+                    renta: "R$ 5.000 – 8.000 / mes",
+                    ocupacion: "~65 %",
+                    roi: "8 – 10 %",
+                  },
+                  {
+                    tipo: "2 Dormitorios",
+                    superficie: "70 – 90 m²",
+                    precio: "R$ 900 k – 1,3 M",
+                    renta: "R$ 7.000 – 12.000 / mes",
+                    ocupacion: "~62 %",
+                    roi: "8 – 9 %",
+                  },
+                  {
+                    tipo: "Penthouse",
+                    superficie: "120 m²+",
+                    precio: "R$ 2 M+",
+                    renta: "R$ 15.000 – 25.000 / mes",
+                    ocupacion: "~58 %",
+                    roi: "7 – 9 %",
+                  },
+                ].map((row, i) => (
+                  <tr
+                    key={i}
+                    className={`border-b border-neutral-800 transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? "bg-white/[0.015]" : ""}`}
+                  >
+                    <td className="p-4 text-left text-sm md:text-base font-semibold font-playfair text-[#C9A24B] whitespace-nowrap">{row.tipo}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-300 whitespace-nowrap">{row.superficie}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.precio}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.renta}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-300 whitespace-nowrap">{row.ocupacion}</td>
+                    <td className="p-4 text-center text-sm md:text-base font-bold font-inter text-emerald-400 whitespace-nowrap">{row.roi}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+
+          <p className="text-center text-neutral-500 text-xs mt-6 font-inter">
+            * Estimaciones orientativas. ROI bruto calculado sobre ingresos anuales / precio de compra. No incluye gastos de gestión, IPTU ni mantenimiento.
+          </p>
         </motion.div>
       </section>
     </div>
