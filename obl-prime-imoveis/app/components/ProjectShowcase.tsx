@@ -201,10 +201,11 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
         }}>
           <span style={{
             fontFamily: 'var(--font-inter)',
-            fontSize: '0.65rem',
-            letterSpacing: '0.12em',
+            fontSize: '0.72rem',
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: 'rgba(201,162,75,0.40)',
+            color: 'rgba(201,162,75,0.80)',
+            fontWeight: 600,
           }}>
             + 27 promotoras más →
           </span>
