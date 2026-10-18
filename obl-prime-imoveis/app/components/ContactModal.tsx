@@ -115,7 +115,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
 
                   {[
                     { label: 'Nombre', value: nombre, setter: setNombre, type: 'text', placeholder: 'Tu nombre completo' },
-                    { label: 'Teléfono', value: telefono, setter: setTelefono, type: 'tel', placeholder: '+34 600 000 000' },
+                    { label: 'Teléfono', value: telefono, setter: setTelefono, type: 'tel', placeholder: '+54 9 11 0000 0000' },
                   ].map(({ label, value, setter, type, placeholder }) => (
                     <div key={label} style={{ marginBottom: '1.25rem' }}>
                       <label style={{
