@@ -383,10 +383,10 @@ export default function BombinhasInfoPage() {
                 </thead>
                 <tbody>
                   {[
-                    { tipo: "1 Dormitório",           superficie: "49 – 60 m²",   precio: "R$ 790 – 900 k",   diaria: "R$ 900 – 1.500 / día",  roi: "~25 – 35 %" },
-                    { tipo: "2 Dormitórios",           superficie: "70 – 86 m²",   precio: "R$ 910 k – 1,2 M", diaria: "R$ 900 – 2.000 / día",  roi: "~18 – 25 %" },
-                    { tipo: "2 Dormitórios Premium",   superficie: "100 – 130 m²", precio: "R$ 1,2 M – 1,4 M", diaria: "R$ 1.400 – 2.000 / día", roi: "~18 – 22 %" },
-                    { tipo: "3 Dorm. / Cobertura",     superficie: "90 – 114 m²",  precio: "R$ 1,3 M – 2,1 M", diaria: "R$ 1.200 – 2.500 / día", roi: "~15 – 20 %" },
+                    { tipo: "1 Dormitório",           superficie: "49 – 60 m²",   precio: "R$ 790 – 900 k",   diaria: "R$ 800 – 1.500 / día",  roi: "11 – 14 %" },
+                    { tipo: "2 Dormitórios",           superficie: "70 – 86 m²",   precio: "R$ 910 k – 1,2 M", diaria: "R$ 825 – 1.150 / día",  roi: "8 – 10 %"  },
+                    { tipo: "2 Dormitórios Premium",   superficie: "100 – 130 m²", precio: "R$ 1,2 M – 1,4 M", diaria: "R$ 1.150 – 2.000 / día", roi: "8 – 9 %"   },
+                    { tipo: "3 Dorm. / Cobertura",     superficie: "90 – 114 m²",  precio: "R$ 1,3 M – 2,1 M", diaria: "R$ 1.290 – 2.650 / día", roi: "7 – 9 %"   },
                   ].map((row, i) => (
                     <tr key={i} className={`border-b border-neutral-800 transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? "bg-white/[0.015]" : ""}`}>
                       <td className="p-4 text-left text-sm md:text-base font-semibold font-playfair text-[#C9A24B] whitespace-nowrap">{row.tipo}</td>
@@ -402,7 +402,7 @@ export default function BombinhasInfoPage() {
           </div>
 
           <p className="text-center text-neutral-500 text-xs mt-4 font-inter">
-            * Precios de compra y diárias de temporada normal extraídos de VivaReal y ZAP Imóveis (Bombinhas, SC — oct. 2026). Diárias de temporada alta estimadas aplicando multiplicador ×2,5 habitual en destinos premium de SC. ROI bruto anual calculado sobre el total de ingresos / precio de compra. No incluye gastos de gestión, IPTU ni mantenimiento.
+            * Temporada Normal: precios de compra y diárias de VivaReal y ZAP Imóveis (Bombinhas, SC — oct. 2026). Temporada Alta: diárias verificadas en Arlete Imóveis, VRM Imóveis, CasaFerias, Paraíso Bombinhas e roccoImob (temporada 2025/26-26/27). ROI bruto anual calculado sobre ingresos totales / precio de compra; no incluye gestión (10–15%), IPTU ni mantenimiento.
           </p>
         </motion.div>
       </section>
