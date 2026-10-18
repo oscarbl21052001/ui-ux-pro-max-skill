@@ -198,7 +198,7 @@ export default function AboutSection() {
                 >
                   <source src={PORTFOLIO_VIDEO} type="video/mp4" />
                 </video>
-                <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 pointer-events-none" />
+                <div className="absolute inset-0 pointer-events-none" />
               </div>
             </div>
 
