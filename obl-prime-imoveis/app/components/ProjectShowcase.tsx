@@ -208,7 +208,8 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
             src={PROJECTS.find(p => p.id === hoveredId)?.img ?? '/paisaje.jpg'}
             alt=""
             fill
-            style={{ objectFit: 'cover' }}
+            quality={100}
+            style={{ objectFit: 'contain' }}
           />
           <div style={{
             position: 'absolute', inset: 0,
