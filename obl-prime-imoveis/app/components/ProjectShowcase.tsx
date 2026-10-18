@@ -86,6 +86,7 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
         <p style={{
           fontFamily: 'var(--font-inter)',
           fontSize: '0.72rem',
+          fontWeight: 700,
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
           color: 'rgba(201,162,75,0.55)',
