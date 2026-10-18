@@ -10,11 +10,9 @@ const CARD_H = 210;
 const LERP_K = 0.09;
 
 const PROJECTS = [
-  { id: 1, num: '01', title: 'Viva + empreendimentos',  category: 'Promotora',             img: '/VIVA.jpg',    href: '/proyectos/viva' },
-  { id: 2, num: '02', title: 'Vista Mar Premium',       category: 'Apartamentos de Luxo',  img: '/paisaje.jpg', href: null },
-  { id: 3, num: '03', title: 'Terraço Bombinhas',       category: 'Casas de Alto Padrão',  img: '/paisaje.jpg', href: null },
-  { id: 4, num: '04', title: 'Canto Grande Resort',     category: 'Investimento Turístico', img: '/paisaje.jpg', href: null },
-  { id: 5, num: '05', title: 'Ponta das Canas',         category: 'Lotes Exclusivos',      img: '/paisaje.jpg', href: null },
+  { id: 1, num: '01', title: 'J.E. VARGAS', category: 'Promotora', img: '/VIVA.jpg',    href: '/proyectos/viva' },
+  { id: 2, num: '02', title: 'RESERVA',     category: 'Promotora', img: '/paisaje.jpg', href: null },
+  { id: 3, num: '03', title: 'FHS',         category: 'Promotora', img: '/paisaje.jpg', href: null },
 ];
 
 export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEvents?: MotionValue<'auto' | 'none'> }) {
