@@ -191,6 +191,24 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
             </div>
           </div>
         ))}
+
+        {/* More promotoras row */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: '0.75rem 0 0.25rem',
+        }}>
+          <span style={{
+            fontFamily: 'var(--font-inter)',
+            fontSize: '0.65rem',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'rgba(201,162,75,0.40)',
+          }}>
+            + 27 promotoras más →
+          </span>
+        </div>
       </motion.div>
 
       {/* Floating image card — follows cursor via LERP */}
