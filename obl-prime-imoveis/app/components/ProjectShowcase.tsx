@@ -195,24 +195,6 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
           </div>
         ))}
 
-        {/* CTA button */}
-        <div style={{ textAlign: 'center', marginTop: '1.75rem' }}>
-          <button
-            onClick={() => setModalOpen(true)}
-            style={{
-              padding: '0.75rem 2rem',
-              background: 'linear-gradient(90deg, #C9A24B, #E3C174)',
-              border: 'none', borderRadius: 10,
-              color: '#0a0c10', fontFamily: 'var(--font-inter)',
-              fontSize: '0.75rem', fontWeight: 700,
-              letterSpacing: '0.14em', textTransform: 'uppercase',
-              cursor: 'pointer',
-            }}
-          >
-            Recibir información de proyectos
-          </button>
-        </div>
-
         {/* More promotoras row */}
         <div style={{
           display: 'flex',
@@ -230,6 +212,24 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
           }}>
             + 27 promotoras más →
           </span>
+        </div>
+
+        {/* CTA button */}
+        <div style={{ textAlign: 'center', marginTop: '1.25rem' }}>
+          <button
+            onClick={() => setModalOpen(true)}
+            style={{
+              padding: '0.75rem 2rem',
+              background: 'linear-gradient(90deg, #C9A24B, #E3C174)',
+              border: 'none', borderRadius: 10,
+              color: '#0a0c10', fontFamily: 'var(--font-inter)',
+              fontSize: '0.75rem', fontWeight: 700,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              cursor: 'pointer',
+            }}
+          >
+            Recibir información de proyectos
+          </button>
         </div>
       </motion.div>
 
