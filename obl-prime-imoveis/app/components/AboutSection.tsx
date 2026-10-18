@@ -196,11 +196,10 @@ export default function AboutSection() {
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-slate-800 px-6">
-            Combinamos experiencia en el mercado inmobiliario español con un análisis riguroso
-            del litoral brasileño para estructurar inversiones seguras y de alto potencial.
-            Nuestro compromiso es guiar cada paso con transparencia, asegurando no solo una
-            excelente rentabilidad, sino también la tranquilidad y el estilo de vida excepcional
-            que mereces en Bombinhas
+            Combinamos la perspectiva del inversor extranjero con un análisis riguroso del litoral
+            brasileño para estructurar inversiones seguras y rentables. Nuestro compromiso es
+            acompañarte durante todo el proceso con total transparencia, asegurando la solidez
+            de tu patrimonio y el estilo de vida excepcional de Bombinhas
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 max-w-7xl mx-auto w-full px-6 mt-12 items-center">
