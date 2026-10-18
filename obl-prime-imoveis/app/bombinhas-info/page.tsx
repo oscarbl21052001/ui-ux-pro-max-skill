@@ -362,11 +362,11 @@ export default function BombinhasInfoPage() {
               <span className="text-[#E3C174] font-semibold">Más allá de la renta, el capital también trabaja.</span>{" "}
               Bombinhas lideró el ranking nacional de valorización con{" "}
               <span className="text-white font-semibold">+14,3 % en 12 meses</span>{" "}
-              (FipeZap+, 2026) —por encima de Balneário Camboriú e Itapema— y hasta un{" "}
+              (FipeZap+, 2026), por encima de Balneário Camboriú e Itapema, y hasta un{" "}
               <span className="text-white font-semibold">25 % anual</span>{" "}
               en zonas prime como Mariscal. Con oferta estructuralmente limitada por su geografía de península y el 70 % de Mata Atlântica protegida,
-              el retorno total —renta más apreciación— se sitúa en el{" "}
-              <span className="text-white font-semibold">18 – 20 % anual</span>{" "}
+              el retorno total, renta más apreciación, se sitúa entre el{" "}
+              <span className="text-white font-semibold">18 y el 20 % anual</span>{" "}
               <span className="text-neutral-500 text-xs">(FipeZap+ · AirDNA · ViveremSC, 2026)</span>.
             </p>
           </div>
