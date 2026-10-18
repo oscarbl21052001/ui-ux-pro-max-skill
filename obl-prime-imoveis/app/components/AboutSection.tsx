@@ -39,12 +39,13 @@ const RIGHT_SERVICES: ServiceCard[] = [
     description: 'Supervisión técnica en cada fase de la construcción para garantizar calidad y plazos.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-        <path d="M12 3v3" />
-        <path d="M5.5 9.5A7 7 0 0119 10H5a7 7 0 01.5-.5z" />
-        <rect x="3" y="10" width="18" height="3" rx="1" />
-        <line x1="6" y1="13" x2="6" y2="17" />
-        <line x1="18" y1="13" x2="18" y2="17" />
-        <line x1="4" y1="17" x2="20" y2="17" />
+        <line x1="6" y1="2" x2="6" y2="22" />
+        <line x1="6" y1="4" x2="20" y2="4" />
+        <line x1="20" y1="4" x2="20" y2="10" />
+        <line x1="6" y1="4" x2="20" y2="10" />
+        <line x1="13" y1="4" x2="6" y2="10" />
+        <line x1="20" y1="10" x2="20" y2="14" />
+        <rect x="17" y="14" width="6" height="4" rx="1" />
       </svg>
     ),
   },
