@@ -15,6 +15,9 @@ interface GlobeMarker {
 
 const MARKERS: GlobeMarker[] = [
   { location: [40.4637,  -3.7492],  size: 8,  color: '#10B981' },
+  { location: [41.87,   -12.57],    size: 8,  color: '#10B981' },
+  { location: [-9.19,    75.01],    size: 8,  color: '#10B981' },
+  { location: [-35.67,   71.54],    size: 8,  color: '#10B981' },
   { location: [-32.5228, -55.7658], size: 8,  color: '#10B981' },
   { location: [-38.4161, -63.6167], size: 8,  color: '#10B981' },
   { location: [-27.1472, -48.5161], size: 12, color: '#F3C63F', highlight: true },
