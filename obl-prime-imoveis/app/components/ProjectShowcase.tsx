@@ -131,10 +131,10 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
               justifyContent: 'space-between',
               padding: '0.9rem 0',
               borderBottom: '1px solid rgba(255,255,255,0.055)',
-              cursor: p.href ? 'pointer' : 'default',
+              cursor: 'pointer',
               position: 'relative',
             }}
-            onClick={() => { if (p.href) window.open(p.href, '_blank', 'noopener,noreferrer'); }}
+            onClick={() => { if (p.href) window.open(p.href, '_blank', 'noopener,noreferrer'); else setModalOpen(true); }}
           >
             {/* Animated underline — grows from left on hover */}
             <span
@@ -216,8 +216,11 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
 
         {/* CTA button */}
         <div style={{ textAlign: 'center', marginTop: '1.25rem' }}>
-          <button
+          <motion.button
             onClick={() => setModalOpen(true)}
+            whileHover={{ scale: 1.04, boxShadow: '0 0 20px rgba(201,162,75,0.45)' }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             style={{
               padding: '0.75rem 2rem',
               background: 'linear-gradient(90deg, #C9A24B, #E3C174)',
@@ -229,7 +232,7 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
             }}
           >
             Recibir información de proyectos
-          </button>
+          </motion.button>
         </div>
       </motion.div>
 
