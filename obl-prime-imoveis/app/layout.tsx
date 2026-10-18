@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Playfair_Display, Inter, Plus_Jakarta_Sans, Outfit, DM_Sans, Cardo } from "next/font/google";
+import { Playfair_Display, Inter, Plus_Jakarta_Sans, DM_Sans, Cardo } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,12 +31,6 @@ const jakarta = Plus_Jakarta_Sans({
   weight: ["800"],
 });
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
-});
-
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
@@ -63,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${jakarta.variable} ${outfit.variable} ${dmSans.variable} ${cardo.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${jakarta.variable} ${dmSans.variable} ${cardo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
