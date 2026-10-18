@@ -89,7 +89,7 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
           fontWeight: 700,
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          color: 'rgba(201,162,75,0.55)',
+          color: 'rgba(245,240,230,0.75)',
           textAlign: 'center',
           marginBottom: '1.75rem',
           marginTop: '-0.5rem',
