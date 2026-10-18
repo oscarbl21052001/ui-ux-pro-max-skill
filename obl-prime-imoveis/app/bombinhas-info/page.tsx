@@ -360,14 +360,12 @@ export default function BombinhasInfoPage() {
             <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-[#C9A24B]/40 to-transparent" />
             <p className="text-sm md:text-base font-inter text-neutral-300 leading-relaxed">
               <span className="text-[#E3C174] font-semibold">Más allá de la renta, el capital también trabaja.</span>{" "}
-              Bombinhas lideró el ranking nacional de valorización inmobiliaria con{" "}
-              <span className="text-white font-semibold">+14,3 % en los últimos 12 meses</span>{" "}
-              según el Índice FipeZap+ (CRECI-SC, 2026), superando a Balneário Camboriú e Itapema en el mismo período.
-              En ubicaciones de primer nivel —Mariscal, Quatro Ilhas, beira-mar— la apreciación puede alcanzar el{" "}
-              <span className="text-white font-semibold">25 % anual</span>.
-              Este diferencial estructural responde a una oferta permanentemente limitada: Bombinhas es una península de 34 km²
-              con el 70 % de su territorio protegido como Mata Atlântica, lo que impide cualquier expansión significativa de stock.
-              Combinando renta bruta y apreciación patrimonial, el retorno total de una unidad bien posicionada se sitúa en torno al{" "}
+              Bombinhas lideró el ranking nacional de valorización con{" "}
+              <span className="text-white font-semibold">+14,3 % en 12 meses</span>{" "}
+              (FipeZap+, 2026) —por encima de Balneário Camboriú e Itapema— y hasta un{" "}
+              <span className="text-white font-semibold">25 % anual</span>{" "}
+              en zonas prime como Mariscal. Con oferta estructuralmente limitada por su geografía de península y el 70 % de Mata Atlântica protegida,
+              el retorno total —renta más apreciación— se sitúa en el{" "}
               <span className="text-white font-semibold">18 – 20 % anual</span>{" "}
               <span className="text-neutral-500 text-xs">(FipeZap+ · AirDNA · ViveremSC, 2026)</span>.
             </p>
