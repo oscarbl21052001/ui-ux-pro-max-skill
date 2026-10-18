@@ -4,6 +4,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, type MotionValue } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
+import ContactModal from './ContactModal';
 
 const CARD_W = 300;
 const CARD_H = 210;
@@ -17,6 +18,7 @@ const PROJECTS = [
 
 export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEvents?: MotionValue<'auto' | 'none'> }) {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const mouseRef  = useRef({ x: 0, y: 0 });
   const smoothRef = useRef({ x: 0, y: 0 });
   const cardRef   = useRef<HTMLDivElement>(null);
@@ -193,6 +195,24 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
           </div>
         ))}
 
+        {/* CTA button */}
+        <div style={{ textAlign: 'center', marginTop: '1.75rem' }}>
+          <button
+            onClick={() => setModalOpen(true)}
+            style={{
+              padding: '0.75rem 2rem',
+              background: 'linear-gradient(90deg, #C9A24B, #E3C174)',
+              border: 'none', borderRadius: 10,
+              color: '#0a0c10', fontFamily: 'var(--font-inter)',
+              fontSize: '0.75rem', fontWeight: 700,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              cursor: 'pointer',
+            }}
+          >
+            Recibir información de proyectos
+          </button>
+        </div>
+
         {/* More promotoras row */}
         <div style={{
           display: 'flex',
@@ -212,6 +232,8 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
           </span>
         </div>
       </motion.div>
+
+      <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} />
 
       {/* Floating image card — follows cursor via LERP */}
       <div
