@@ -83,6 +83,19 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
           PROYECTOS
         </h2>
 
+        <p style={{
+          fontFamily: 'var(--font-inter)',
+          fontSize: '0.72rem',
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: 'rgba(201,162,75,0.55)',
+          textAlign: 'center',
+          marginBottom: '1.75rem',
+          marginTop: '-0.5rem',
+        }}>
+          Más de 30 proyectos desarrollados con promotoras de referencia en Brasil
+        </p>
+
         {/* Column headers */}
         <div
           className="flex items-center justify-between pb-3 mb-1"
