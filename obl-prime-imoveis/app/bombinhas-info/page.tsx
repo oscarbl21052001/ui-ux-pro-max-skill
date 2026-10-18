@@ -313,77 +313,96 @@ export default function BombinhasInfoPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h2 className="text-4xl md:text-5xl tracking-tight mb-4 pb-2 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
-            Simulador de Rentabilidad por Tipología
+            Rentabilidad por Tipología
           </h2>
-          <p className="text-center text-neutral-400 text-sm mb-12 font-inter">
+          <p className="text-center text-neutral-400 text-sm mb-16 font-inter">
             Datos reales de mercado — VivaReal · ZAP Imóveis · Bombinhas, SC (2026)
           </p>
 
-          <div className="overflow-x-auto w-full px-0 md:px-2">
-            <table className="w-full border-collapse font-inter">
-              <thead>
-                <tr className="border-b border-[#C9A24B]/40">
-                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Tipología</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Superficie</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio de Compra</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Diária Vacacional</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Días/Año Alquilados</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto Est.</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    tipo: "1 Dormitório",
-                    superficie: "49 – 60 m²",
-                    precio: "R$ 790 – 900 k",
-                    renta: "R$ 400 – 550 / día",
-                    ocupacion: "~200 días",
-                    roi: "11 – 14 %",
-                  },
-                  {
-                    tipo: "2 Dormitórios",
-                    superficie: "70 – 86 m²",
-                    precio: "R$ 910 k – 1,2 M",
-                    renta: "R$ 400 – 800 / día",
-                    ocupacion: "~183 días",
-                    roi: "8 – 10 %",
-                  },
-                  {
-                    tipo: "2 Dormitórios Premium",
-                    superficie: "100 – 130 m²",
-                    precio: "R$ 1,2 M – 1,4 M",
-                    renta: "R$ 600 – 790 / día",
-                    ocupacion: "~183 días",
-                    roi: "8 – 9 %",
-                  },
-                  {
-                    tipo: "3 Dormitórios / Cobertura",
-                    superficie: "90 – 114 m²",
-                    precio: "R$ 1,3 M – 2,1 M",
-                    renta: "R$ 450 – 900 / día",
-                    ocupacion: "~175 días",
-                    roi: "7 – 9 %",
-                  },
-                ].map((row, i) => (
-                  <tr
-                    key={i}
-                    className={`border-b border-neutral-800 transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? "bg-white/[0.015]" : ""}`}
-                  >
-                    <td className="p-4 text-left text-sm md:text-base font-semibold font-playfair text-[#C9A24B] whitespace-nowrap">{row.tipo}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-300 whitespace-nowrap">{row.superficie}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.precio}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.renta}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-300 whitespace-nowrap">{row.ocupacion}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-bold font-inter text-emerald-400 whitespace-nowrap">{row.roi}</td>
+          {/* Tabla 1: Temporada Normal / Baja */}
+          <div className="mb-14">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-px flex-1 bg-neutral-800" />
+              <h3 className="text-lg md:text-xl font-playfair font-semibold text-neutral-300 whitespace-nowrap">
+                Temporada Normal / Baja
+              </h3>
+              <span className="text-xs font-inter text-neutral-500 whitespace-nowrap">Mar – Nov</span>
+              <span className="h-px flex-1 bg-neutral-800" />
+            </div>
+            <div className="overflow-x-auto w-full">
+              <table className="w-full border-collapse font-inter">
+                <thead>
+                  <tr className="border-b border-neutral-700">
+                    <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Tipología</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Superficie</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio de Compra</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Diária</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {[
+                    { tipo: "1 Dormitório",           superficie: "49 – 60 m²",   precio: "R$ 790 – 900 k",   diaria: "R$ 400 – 550 / día",  roi: "11 – 14 %" },
+                    { tipo: "2 Dormitórios",           superficie: "70 – 86 m²",   precio: "R$ 910 k – 1,2 M", diaria: "R$ 400 – 800 / día",  roi: "8 – 10 %"  },
+                    { tipo: "2 Dormitórios Premium",   superficie: "100 – 130 m²", precio: "R$ 1,2 M – 1,4 M", diaria: "R$ 600 – 790 / día",  roi: "8 – 9 %"   },
+                    { tipo: "3 Dorm. / Cobertura",     superficie: "90 – 114 m²",  precio: "R$ 1,3 M – 2,1 M", diaria: "R$ 450 – 900 / día",  roi: "7 – 9 %"   },
+                  ].map((row, i) => (
+                    <tr key={i} className={`border-b border-neutral-800 transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? "bg-white/[0.015]" : ""}`}>
+                      <td className="p-4 text-left text-sm md:text-base font-semibold font-playfair text-[#C9A24B] whitespace-nowrap">{row.tipo}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-300 whitespace-nowrap">{row.superficie}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.precio}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.diaria}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-bold font-inter text-emerald-400 whitespace-nowrap">{row.roi}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <p className="text-center text-neutral-500 text-xs mt-6 font-inter">
-            * Precios de compra y diárias extraídos de VivaReal y ZAP Imóveis (Bombinhas, SC — octubre 2026). ROI bruto calculado sobre ingresos anuales / precio de compra. No incluye gastos de gestión, IPTU ni mantenimiento.
+          {/* Tabla 2: Temporada Alta */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-px flex-1 bg-neutral-800" />
+              <h3 className="text-lg md:text-xl font-playfair font-semibold text-[#E3C174] whitespace-nowrap">
+                Temporada Alta
+              </h3>
+              <span className="text-xs font-inter text-neutral-500 whitespace-nowrap">Dic – Feb · Carnaval · Julho</span>
+              <span className="h-px flex-1 bg-neutral-800" />
+            </div>
+            <div className="overflow-x-auto w-full">
+              <table className="w-full border-collapse font-inter">
+                <thead>
+                  <tr className="border-b border-[#C9A24B]/40">
+                    <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Tipología</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Superficie</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio de Compra</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Diária</th>
+                    <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { tipo: "1 Dormitório",           superficie: "49 – 60 m²",   precio: "R$ 790 – 900 k",   diaria: "R$ 900 – 1.500 / día",  roi: "~25 – 35 %" },
+                    { tipo: "2 Dormitórios",           superficie: "70 – 86 m²",   precio: "R$ 910 k – 1,2 M", diaria: "R$ 900 – 2.000 / día",  roi: "~18 – 25 %" },
+                    { tipo: "2 Dormitórios Premium",   superficie: "100 – 130 m²", precio: "R$ 1,2 M – 1,4 M", diaria: "R$ 1.400 – 2.000 / día", roi: "~18 – 22 %" },
+                    { tipo: "3 Dorm. / Cobertura",     superficie: "90 – 114 m²",  precio: "R$ 1,3 M – 2,1 M", diaria: "R$ 1.200 – 2.500 / día", roi: "~15 – 20 %" },
+                  ].map((row, i) => (
+                    <tr key={i} className={`border-b border-neutral-800 transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? "bg-white/[0.015]" : ""}`}>
+                      <td className="p-4 text-left text-sm md:text-base font-semibold font-playfair text-[#C9A24B] whitespace-nowrap">{row.tipo}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-300 whitespace-nowrap">{row.superficie}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.precio}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.diaria}</td>
+                      <td className="p-4 text-center text-sm md:text-base font-bold font-inter text-emerald-400 whitespace-nowrap">{row.roi}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p className="text-center text-neutral-500 text-xs mt-4 font-inter">
+            * Precios de compra y diárias de temporada normal extraídos de VivaReal y ZAP Imóveis (Bombinhas, SC — oct. 2026). Diárias de temporada alta estimadas aplicando multiplicador ×2,5 habitual en destinos premium de SC. ROI bruto anual calculado sobre el total de ingresos / precio de compra. No incluye gastos de gestión, IPTU ni mantenimiento.
           </p>
         </motion.div>
       </section>
