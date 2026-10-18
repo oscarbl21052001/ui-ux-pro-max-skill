@@ -88,7 +88,7 @@ function GlobeCanvas() {
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       if (dragStart.current !== null) {
-        phiDrag.current   = -(e.clientX - dragStart.current.x) / 300;
+        phiDrag.current   =  (e.clientX - dragStart.current.x) / 300;
         thetaDrag.current =  (e.clientY - dragStart.current.y) / 300;
       }
     };
