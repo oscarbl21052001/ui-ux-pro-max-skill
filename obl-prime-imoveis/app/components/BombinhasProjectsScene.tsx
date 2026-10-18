@@ -260,9 +260,9 @@ export default function BombinhasProjectsScene() {
                 ¿POR QUÉ DEBERÍA ELEGIR BOMBINHAS?
               </p>
               <h2 className="font-bold text-white" style={{ fontFamily: 'var(--font-perandory)', fontSize: 'clamp(2rem, 4.5vw, 3.75rem)', lineHeight: 1.14 }}>
-                <span className="block">Un inversor</span>
-                <span className="block" style={{ color: 'rgba(201,162,75,0.78)' }}>no busca promesas.</span>
-                <span className="block">Busca garantías legales</span>
+                <span className="block">NATURALEZA PRESERVADA</span>
+                <span className="block" style={{ color: 'rgba(201,162,75,0.78)' }}>CALIDAD DE VIDA</span>
+                <span className="block">POTENCIAL DE REVALORIZACIÓN</span>
               </h2>
             </div>
             <motion.div
