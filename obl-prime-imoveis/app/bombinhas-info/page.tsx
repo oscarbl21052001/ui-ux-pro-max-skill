@@ -316,7 +316,7 @@ export default function BombinhasInfoPage() {
             Simulador de Rentabilidad por Tipología
           </h2>
           <p className="text-center text-neutral-400 text-sm mb-12 font-inter">
-            Estimaciones basadas en datos de mercado de Bombinhas (Seazone · FipeZAP · Airbnb SC · 2024)
+            Datos reales de mercado — VivaReal · ZAP Imóveis · Bombinhas, SC (2026)
           </p>
 
           <div className="overflow-x-auto w-full px-0 md:px-2">
@@ -325,44 +325,44 @@ export default function BombinhasInfoPage() {
                 <tr className="border-b border-[#C9A24B]/40">
                   <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Tipología</th>
                   <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Superficie</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio Est.</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Renta Mensual Est.</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Ocupación Anual</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio de Compra</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Diária Vacacional</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Días/Año Alquilados</th>
+                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto Est.</th>
                 </tr>
               </thead>
               <tbody>
                 {[
                   {
-                    tipo: "Studio",
-                    superficie: "35 – 45 m²",
-                    precio: "R$ 450 – 600 k",
-                    renta: "R$ 3.500 – 5.500 / mes",
-                    ocupacion: "~70 %",
-                    roi: "9 – 11 %",
+                    tipo: "1 Dormitório",
+                    superficie: "49 – 60 m²",
+                    precio: "R$ 790 – 900 k",
+                    renta: "R$ 400 – 550 / día",
+                    ocupacion: "~200 días",
+                    roi: "11 – 14 %",
                   },
                   {
-                    tipo: "1 Dormitorio",
-                    superficie: "50 – 65 m²",
-                    precio: "R$ 650 – 900 k",
-                    renta: "R$ 5.000 – 8.000 / mes",
-                    ocupacion: "~65 %",
+                    tipo: "2 Dormitórios",
+                    superficie: "70 – 86 m²",
+                    precio: "R$ 910 k – 1,2 M",
+                    renta: "R$ 400 – 800 / día",
+                    ocupacion: "~183 días",
                     roi: "8 – 10 %",
                   },
                   {
-                    tipo: "2 Dormitorios",
-                    superficie: "70 – 90 m²",
-                    precio: "R$ 900 k – 1,3 M",
-                    renta: "R$ 7.000 – 12.000 / mes",
-                    ocupacion: "~62 %",
+                    tipo: "2 Dormitórios Premium",
+                    superficie: "100 – 130 m²",
+                    precio: "R$ 1,2 M – 1,4 M",
+                    renta: "R$ 600 – 790 / día",
+                    ocupacion: "~183 días",
                     roi: "8 – 9 %",
                   },
                   {
-                    tipo: "Penthouse",
-                    superficie: "120 m²+",
-                    precio: "R$ 2 M+",
-                    renta: "R$ 15.000 – 25.000 / mes",
-                    ocupacion: "~58 %",
+                    tipo: "3 Dormitórios / Cobertura",
+                    superficie: "90 – 114 m²",
+                    precio: "R$ 1,3 M – 2,1 M",
+                    renta: "R$ 450 – 900 / día",
+                    ocupacion: "~175 días",
                     roi: "7 – 9 %",
                   },
                 ].map((row, i) => (
@@ -383,7 +383,7 @@ export default function BombinhasInfoPage() {
           </div>
 
           <p className="text-center text-neutral-500 text-xs mt-6 font-inter">
-            * Estimaciones orientativas. ROI bruto calculado sobre ingresos anuales / precio de compra. No incluye gastos de gestión, IPTU ni mantenimiento.
+            * Precios de compra y diárias extraídos de VivaReal y ZAP Imóveis (Bombinhas, SC — octubre 2026). ROI bruto calculado sobre ingresos anuales / precio de compra. No incluye gastos de gestión, IPTU ni mantenimiento.
           </p>
         </motion.div>
       </section>
