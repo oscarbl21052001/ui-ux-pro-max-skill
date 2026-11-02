@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import WhatsAppButton from "./components/WhatsAppButton";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Playfair_Display, Inter, Plus_Jakarta_Sans, DM_Sans, Cardo } from "next/font/google";
 import "./globals.css";
@@ -56,7 +57,10 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${jakarta.variable} ${dmSans.variable} ${cardo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }
