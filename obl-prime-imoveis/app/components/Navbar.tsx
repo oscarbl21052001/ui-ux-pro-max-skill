@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
@@ -25,14 +26,14 @@ export default function Navbar() {
         }`}
         aria-label="OBL Prime Imóveis — Inicio"
       >
-        <div className="flex flex-col gap-px">
-          <span className="logo-obl font-playfair text-[22px] font-extrabold leading-none tracking-[4px]">
-            OBL
-          </span>
-          <span className="font-inter text-[8.5px] font-light uppercase leading-none tracking-[3.2px] text-white/70">
-            Prime Imóveis
-          </span>
-        </div>
+        <Image
+          src="/logo-lucia.png"
+          alt="Lucía Rodríguez"
+          width={120}
+          height={60}
+          style={{ objectFit: 'contain' }}
+          priority
+        />
       </a>
 
       <ul className="relative z-[1] flex list-none gap-9">
