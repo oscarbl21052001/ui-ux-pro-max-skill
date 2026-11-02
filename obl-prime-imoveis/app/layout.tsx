@@ -16,13 +16,11 @@ const geistMono = Geist_Mono({
 const playfair = Playfair_Display({
   variable: "--font-playfair-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
@@ -34,7 +32,6 @@ const jakarta = Plus_Jakarta_Sans({
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["400", "500"],
 });
 
 const cardo = Cardo({
