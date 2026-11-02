@@ -29,8 +29,8 @@ export default function Navbar() {
         <Image
           src="/logo-lucia.png"
           alt="Lucía Rodríguez"
-          width={120}
-          height={60}
+          width={155}
+          height={78}
           style={{ objectFit: 'contain' }}
           priority
         />
