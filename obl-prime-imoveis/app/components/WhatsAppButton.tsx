@@ -2,7 +2,7 @@
 
 export default function WhatsAppButton() {
   const phone = '5547991376652';
-  const message = encodeURIComponent('Olá! Tenho interesse em imóveis em Bombinhas. Poderia me ajudar?');
+  const message = encodeURIComponent('¡Hola! Estoy interesado/a en propiedades en Bombinhas. ¿Podrías ayudarme?');
 
   return (
     <a
