@@ -37,7 +37,7 @@ export default function Navbar() {
       </a>
 
       <ul className="relative z-[1] flex list-none gap-9">
-        {['Bombinhas', 'Proyectos', 'Nosotros', 'Blog', 'Contacto'].map(
+        {['Bombinhas', 'Proyectos', 'Nosotros', 'Contacto'].map(
           (label, i) => (
             <li key={label}>
               <a
