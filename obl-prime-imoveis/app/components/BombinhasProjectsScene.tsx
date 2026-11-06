@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import ProjectShowcase from './ProjectShowcase';
 
 // ── Carousel data (Phase 2 — Fundamentos del Mercado) ────────────────────────
 const CARDS = [
@@ -198,46 +197,32 @@ export default function BombinhasProjectsScene() {
     offset: ['start start', 'end end'],
   });
 
-  // h-[550vh] → 450vh sticky scroll budget (all phases keep same absolute vh distances)
-  // Phase 1 (Bombinhas):  [0.00 → 0.25] = ~112vh
-  //   Fade-in  [0.00 → 0.05]: 22vh — opacity 0→1, no blur
-  //   Plateau  [0.05 → 0.19]: 63vh — full opacity, no blur
-  //   Blur-out [0.19 → 0.25]: 27vh — opacity 1→0, blur 0→20px
-  // Phase 2 (Carousel):   [0.25 → 0.63] = ~171vh
-  //   Zoom-in  [0.25 → 0.35]: 45vh — scale 0.7→1, opacity 0→1, blur 10→0
-  //   Plateau  [0.35 → 0.53]: 81vh — full opacity, scale 1, no blur
-  //   Blur-out [0.53 → 0.63]: 45vh — opacity 1→0, blur 0→20px
-  // Phase 3 (Proyectos):  [0.63 → 1.00] = ~167vh
-  //   Zoom-in  [0.63 → 0.70]: 31vh — scale 0.7→1, opacity 0→1, blur 10→0
-  //   Plateau  [0.70 → 0.87]: 76vh — full opacity, scale 1, no blur
-  //   Blur-out [0.87 → 0.97]: 45vh — opacity 1→0, blur 0→20px
+  // h-[380vh] → 280vh sticky scroll budget (2 phases)
+  // Phase 1 (Bombinhas):  [0.00 → 0.37] = ~104vh
+  //   Fade-in  [0.00 → 0.07]: 20vh — opacity 0→1
+  //   Plateau  [0.07 → 0.28]: 59vh — full opacity
+  //   Blur-out [0.28 → 0.37]: 25vh — opacity 1→0, blur 0→20px
+  // Phase 2 (Carousel):   [0.37 → 1.00] = ~176vh
+  //   Zoom-in  [0.37 → 0.50]: 36vh — scale 0.7→1, opacity 0→1
+  //   Plateau  [0.50 → 0.78]: 78vh — full opacity, scale 1
+  //   Blur-out [0.78 → 0.95]: 48vh — opacity 1→0, blur 0→20px
 
   // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
-  const bombOpacity = useTransform(scrollYProgress, [0, 0.05, 0.19, 0.25], [0, 1, 1, 0]);
-  const bombBlurPx  = useTransform(scrollYProgress, [0, 0.19, 0.25], [0, 0, 20]);
+  const bombOpacity = useTransform(scrollYProgress, [0, 0.07, 0.28, 0.37], [0, 1, 1, 0]);
+  const bombBlurPx  = useTransform(scrollYProgress, [0, 0.28, 0.37], [0, 0, 20]);
   const bombFilter  = useTransform(bombBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
-  // Only capture pointer events while Phase 1 is visible
-  const bombCardPE  = useTransform(scrollYProgress, (p) => p <= 0.26 ? 'auto' : 'none');
+  const bombCardPE  = useTransform(scrollYProgress, (p) => p <= 0.38 ? 'auto' : 'none');
 
   // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
-  // No filter here — any CSS filter on an ancestor flattens preserve-3d and
-  // breaks Z-depth hit testing for the 3D carousel cards.
-  const projOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [0, 1, 1, 0]);
-  const projScale   = useTransform(scrollYProgress, [0.25, 0.35], [0.7, 1]);
+  const projOpacity = useTransform(scrollYProgress, [0.37, 0.50, 0.78, 0.95], [0, 1, 1, 0]);
+  const projScale   = useTransform(scrollYProgress, [0.37, 0.50], [0.7, 1]);
 
-  // ── Phase 3: Proyectos ─────────────────────────────────────────────────────
-  const statsOpacity = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [0, 1, 1, 0]);
-  const statsScale   = useTransform(scrollYProgress, [0.63, 0.70], [0.7, 1]);
-  const statsBlurPx  = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [10, 0, 0, 20]);
-  const statsFilter  = useTransform(statsBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
-  // Only capture pointer events while Phase 3 is visible
-  const statsCardPE  = useTransform(scrollYProgress, (p) => p >= 0.62 ? 'auto' : 'none');
 
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
 
   return (
-    <div ref={containerRef} id="bombinhas" className="relative h-[550vh]">
+    <div ref={containerRef} id="bombinhas" className="relative h-[380vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
 
         {/* ── Phase 1: Bombinhas glassmorphic card ───────────────────── */}
@@ -332,17 +317,8 @@ export default function BombinhasProjectsScene() {
           </div>
         </motion.div>
 
-        {/* ── Phase 3: Proyectos — interactive project showcase ──────── */}
-        <motion.div
-          className="absolute inset-0"
-          style={{ opacity: statsOpacity, scale: statsScale, filter: statsFilter, willChange: 'opacity, filter, transform', pointerEvents: 'none' }}
-        >
-          <ProjectShowcase cardPointerEvents={statsCardPE} />
-        </motion.div>
 
       </div>
-      {/* Anchor for SectionBackground video fade-out phase */}
-      <div id="proyectos" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
     </div>
   );
 }
