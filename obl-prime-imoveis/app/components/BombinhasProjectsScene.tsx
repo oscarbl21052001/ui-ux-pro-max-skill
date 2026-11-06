@@ -2,18 +2,8 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import ProjectCarousel from './ProjectCarousel';
 
-// ── Projects data (Phase 3 — Proyectos) ──────────────────────────────────────
-const PROJECTS = [
-  { slug: 'spot-335',         name: 'SPOT 335',           typology: 'Apartamentos · 1 dorm.', distance: '450 m del mar',          img: '/projects/spot335-1.jpg'          },
-  { slug: 'villa-bellagio',   name: 'VILLA BELLAGIO',     typology: 'Lofts · Rooftop',        distance: '300 m del mar',          img: '/projects/villa-bellagio-1.jpg'   },
-  { slug: 'bombas-home-club', name: 'BOMBAS HOME CLUB',   typology: 'Aptos · 2 suites',       distance: 'A pasos del mar',        img: '/projects/bombas-home-club-1.jpg' },
-  { slug: 'vogue-apartments', name: 'VOGUE APARTMENTS',   typology: 'Alto padrón · Rooftop',  distance: '250 m del mar',          img: '/projects/vogue-apartments-1.jpg' },
-  { slug: 'solaia',           name: 'SOLAIA RESIDENCE',   typology: 'Aptos · 1 dormitorio',   distance: 'Frente a la bahía',      img: '/projects/solaia-1.jpg'           },
-  { slug: 'enedina-mercedes', name: 'ENEDINA MERCEDES',   typology: 'Residence · 36 unidades',distance: '250 m del mar · Centro', img: '/projects/enedina-mercedes-1.jpg' },
-];
 
 // ── Carousel data (Phase 2 — Fundamentos del Mercado) ────────────────────────
 const CARDS = [
@@ -164,7 +154,6 @@ function CarouselCard({
 export default function BombinhasProjectsScene() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ringRef      = useRef<HTMLDivElement>(null);
-  const router       = useRouter();
   const [scale, setScale]           = useState(1);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const pausedRef    = useRef(false);
@@ -339,86 +328,24 @@ export default function BombinhasProjectsScene() {
           </div>
         </motion.div>
 
-        {/* ── Phase 3: Proyectos grid ─────────────────────────────────── */}
+        {/* ── Phase 3: Proyectos carousel ──────────────────────────────── */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center px-5 md:px-8"
+          className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-10"
           style={{ opacity: statsOpacity, scale: statsScale, willChange: 'opacity, transform', pointerEvents: statsCardPE }}
         >
           {/* Heading */}
-          <div className="text-center mb-5 md:mb-7 shrink-0">
-            <p style={{ color: '#C9A24B', fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', marginBottom: '0.5rem' }}>
+          <div className="text-center mb-4 shrink-0">
+            <p style={{ color: '#C9A24B', fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', marginBottom: '0.4rem' }}>
               EMPRENDIMIENTOS
             </p>
-            <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.6rem, 3vw, 2.6rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
               PROYECTOS
             </h2>
           </div>
 
-          {/* 3×2 bento grid — compact, fits 100vh */}
-          <div
-            style={{
-              width: '100%', maxWidth: 1120,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 10,
-              /* explicit height so rows get real pixel values */
-              height: 'calc(100vh - 190px)',
-              minHeight: 320,
-              maxHeight: 640,
-            }}
-          >
-            {PROJECTS.map((p, i) => (
-              <div
-                key={p.slug}
-                onClick={() => router.push(`/proyectos/${p.slug}`)}
-                style={{
-                  position: 'relative',
-                  borderRadius: 14,
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  gridColumn: (i === 0 || i === 3) ? 'span 2' : 'span 1',
-                  /* each cell takes half the grid height */
-                  height: 'calc((100vh - 210px) / 2)',
-                  minHeight: 150,
-                  maxHeight: 310,
-                }}
-                className="group"
-              >
-                <Image
-                  src={p.img}
-                  alt={p.name}
-                  fill
-                  quality={85}
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                {/* gradient */}
-                <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.15) 55%, transparent 100%)' }} />
-                {/* hover tint */}
-                <div aria-hidden className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                {/* text */}
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px 14px' }}>
-                  <p style={{ color: '#C9A24B', fontSize: '0.55rem', letterSpacing: '0.18em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', margin: '0 0 3px' }}>
-                    {p.distance}
-                  </p>
-                  <h3 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(0.75rem, 1.4vw, 1.05rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.2 }}>
-                    {p.name}
-                  </h3>
-                  <p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.6rem', color: 'rgba(255,255,255,0.5)', margin: '2px 0 0', letterSpacing: '0.05em' }}>
-                    {p.typology}
-                  </p>
-                </div>
-                {/* top-right arrow */}
-                <div
-                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-1 group-hover:translate-x-0"
-                  style={{ width: 28, height: 28, background: 'rgba(201,162,75,0.15)', backdropFilter: 'blur(8px)', borderRadius: '50%', border: '1px solid rgba(201,162,75,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                    <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#C9A24B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-            ))}
+          {/* Carousel */}
+          <div style={{ width: '100%', flex: 1, minHeight: 0 }}>
+            <ProjectCarousel />
           </div>
         </motion.div>
 
