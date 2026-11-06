@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
   if (isRateLimited(ip)) {
     return NextResponse.json({ error: 'Demasiados intentos. Inténtalo más tarde.' }, { status: 429 });
   }
-
   const { nombre, telefono } = await req.json();
 
   if (
