@@ -3,24 +3,34 @@ import ProjectPage from '../_components/ProjectPage';
 export default function VogueApartments() {
   return (
     <ProjectPage
-      name="Vogue Apartments"
-      location="Bombas · Bombinhas · SC"
-      typology="Apartamentos de alto padrón"
-      distance="250 m de la Playa de Bombas"
-      description="Un proyecto de alto padrón a 250 metros del mar, con fachada artística exclusiva y accesos digitales con biometría facial. Diseñado para rentabilizar desde la primera temporada, con rooftop, piscina y solárium con vista al mar."
+      name="VOGUE APARTMENTS"
+      location="Rua Cardeal, 262 · Bombas, Bombinhas · SC"
+      typology="1 e 2 dormitórios · 38 unidades · 8 pavimentos"
+      distance="250 m da Praia de Bombas"
+      description="A 250 metros da Praia de Bombas, o Vogue Apartments reúne estilo e praticidade em 38 unidades distribuídas em 8 pavimentos. Com opções de 1 e 2 dormitórios — incluindo variantes com jacuzzi e sacada descoberta — o empreendimento se destaca pelo design arrojado, pela fachada em pastilha cerâmica e vidros reflecta, e por um rooftop com piscina e solarium com vista para o mar. Dez espaços de lazer completos, Mini Market 24h, Espaço Net e Espaço Game fazem do Vogue um endereço pensado para quem quer viver com personalidade em Bombinhas."
       amenities={[
-        'Piscina rooftop con vista al mar',
-        'Solárium',
-        'Fachada artística exclusiva',
-        'Accesos digitales y biometría facial',
-        'Alto padrón de terminaciones',
+        'Piscina no Rooftop',
+        'Solarium',
+        'Salão de Festas',
+        'Academia',
+        'Mini Market 24h',
+        'Lavanderia compartilhada OMO',
+        'Espaço Net',
+        'Espaço Leitura',
+        'Espaço Game',
+        'Vaga de garagem individual e privativa',
+        'Estação de recarga para carro elétrico',
+        'Portão e porteiro eletrônico',
+        'Elevador',
+        'Isolamento acústico',
+        'Hall de entrada decorado',
       ]}
       images={[
         '/projects/vogue-apartments-1.jpg',
         '/projects/vogue-apartments-p-2.jpg',
         '/projects/vogue-apartments-p-3.jpg',
       ]}
-      delivery="Oct 2026"
+      delivery="Out 2026"
     />
   );
 }
