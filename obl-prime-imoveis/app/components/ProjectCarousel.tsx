@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PROJECTS = [
-  { slug: 'spot-335',         name: 'SPOT 335',           typology: 'Apartamentos · 1 dormitorio', distance: '450 m del mar',          img: '/projects/spot335-1.jpg'          },
+  { slug: 'spot-335',         name: 'SPOT 335',           typology: 'Flats 35–55m² · 8 tipologías', distance: '450 m da Praia de Bombinhas', img: '/projects/spot335-1.jpg'          },
   { slug: 'villa-bellagio',   name: 'VILLA BELLAGIO',     typology: 'Lofts con sacada · Rooftop',  distance: '300 m del mar',          img: '/projects/villa-bellagio-1.jpg'   },
   { slug: 'bombas-home-club', name: 'BOMBAS HOME CLUB',   typology: 'Apartamentos de 2 suites',    distance: 'A pasos del mar',        img: '/projects/bombas-home-club-1.jpg' },
   { slug: 'vogue-apartments', name: 'VOGUE APARTMENTS',   typology: 'Alto padrón · Rooftop',       distance: '250 m del mar',          img: '/projects/vogue-apartments-1.jpg' },
