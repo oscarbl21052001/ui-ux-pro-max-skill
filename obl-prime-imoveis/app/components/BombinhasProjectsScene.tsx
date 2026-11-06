@@ -360,10 +360,11 @@ export default function BombinhasProjectsScene() {
               width: '100%', maxWidth: 1120,
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gridTemplateRows: 'repeat(2, 1fr)',
               gap: 10,
-              flex: '0 1 auto',
-              maxHeight: 'calc(100vh - 160px)',
+              /* explicit height so rows get real pixel values */
+              height: 'calc(100vh - 190px)',
+              minHeight: 320,
+              maxHeight: 640,
             }}
           >
             {PROJECTS.map((p, i) => (
@@ -376,7 +377,10 @@ export default function BombinhasProjectsScene() {
                   overflow: 'hidden',
                   cursor: 'pointer',
                   gridColumn: (i === 0 || i === 3) ? 'span 2' : 'span 1',
-                  minHeight: 0,
+                  /* each cell takes half the grid height */
+                  height: 'calc((100vh - 210px) / 2)',
+                  minHeight: 150,
+                  maxHeight: 310,
                 }}
                 className="group"
               >
