@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar />
       <ScrollHero />
       <BombinhasProjectsScene />
-<AboutSection />
+      <AboutSection />
       <GlobeSection />
     </>
   );
