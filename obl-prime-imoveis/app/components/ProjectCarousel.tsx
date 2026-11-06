@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PROJECTS = [
   { slug: 'spot-335',         name: 'SPOT 335',           typology: 'Flats 35–55m² · 8 tipologías', distance: '450 m da Praia de Bombinhas', img: '/projects/spot335-1.jpg'          },
   { slug: 'villa-di-trento',  name: 'VILLA DI TRENTO',    typology: 'Residence · Entre dois mares', distance: 'Canto Grande · Bombinhas', img: '/projects/villa-di-trento-1.jpg'  },
-  { slug: 'bombas-home-club', name: 'BOMBAS HOME CLUB',   typology: 'Apartamentos de 2 suites',    distance: 'A pasos del mar',        img: '/projects/bombas-home-club-1.jpg' },
+  { slug: 'bombas-home-club', name: 'BOMBAS HOME CLUB',   typology: '2 Suítes · 87–93 m² · Rooftop', distance: '500 m da Praia de Bombas', img: '/projects/bombas-home-club-1.jpg' },
   { slug: 'vogue-apartments', name: 'VOGUE APARTMENTS',   typology: 'Alto padrón · Rooftop',       distance: '250 m del mar',          img: '/projects/vogue-apartments-1.jpg' },
   { slug: 'solaia',           name: 'SOLAIA RESIDENCE',   typology: 'Apartamentos · 1 dormitorio', distance: 'Frente a la bahía · Zimbros', img: '/projects/solaia-1.jpg'      },
   { slug: 'enedina-mercedes', name: 'ENEDINA MERCEDES',   typology: 'Residence · 36 unidades',     distance: '250 m del mar · Centro', img: '/projects/enedina-mercedes-1.jpg' },
