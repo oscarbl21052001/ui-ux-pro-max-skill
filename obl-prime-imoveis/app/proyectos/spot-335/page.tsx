@@ -3,19 +3,19 @@ import ProjectPage from '../_components/ProjectPage';
 export default function Spot335() {
   return (
     <ProjectPage
-      name="Spot 335"
-      location="Bombinhas · SC"
-      typology="Apartamentos de 1 dormitorio"
-      distance="450 m de la Praia de Bombinhas"
-      description="Un emprendimiento moderno en el corazón de Bombinhas, a solo 450 metros de la playa más famosa de Santa Catarina. Departamentos de diseño contemporáneo con amplias terrazas y vistas privilegiadas a la naturaleza."
+      name="SPOT 335"
+      location="Rua Peixe Rei, 335 · Bombinhas · Santa Catarina"
+      typology="Flats de 35m² a 38m² · Unidades diferenciadas de 55m²"
+      distance="450 m da Praia de Bombinhas"
+      description="A 450 metros da Praia de Bombinhas, o SPOT 335 traduz a essência da natureza local em arquitetura. Madeira, luz natural e linhas orgânicas constroem um empreendimento que conversa com a paisagem — sem competir com ela. Os flats foram pensados para unir praticidade e conforto máximos: layouts funcionais com integração total dos ambientes, ideais para morar ou investir em um dos destinos turísticos mais valorizados do Brasil."
       amenities={[
         'Piscina adulto e infantil',
         'Academia equipada',
-        'Sala de juegos',
-        'Salón de fiestas y espacio gourmet',
-        'Terraza exterior',
+        'Sala de jogos',
+        'Salão de Festas Gourmet',
+        'Terraço Externo',
         'Coworking',
-        'Lavandería',
+        'Lavanderia compartilhada',
         'Brinquedoteca',
       ]}
       images={[
