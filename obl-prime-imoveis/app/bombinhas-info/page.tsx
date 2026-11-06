@@ -313,7 +313,7 @@ export default function BombinhasInfoPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h2 className="text-4xl md:text-5xl tracking-tight mb-4 pb-2 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
-            Rentabilidad por Tipología
+            Rentabilidad y Revalorización
           </h2>
           <p className="text-center text-neutral-400 text-sm mb-16 font-inter">
             Datos reales de mercado — VivaReal · ZAP Imóveis · Bombinhas, SC (2026)

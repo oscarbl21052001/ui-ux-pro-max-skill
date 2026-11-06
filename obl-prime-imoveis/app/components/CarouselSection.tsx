@@ -3,14 +3,14 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
 const CARDS = [
-  { id: 1, title: 'Valorización Anual',  value: '+18%',   sub: 'Promedio histórico en SC',    chart: 'bars-up'    },
-  { id: 2, title: 'Ocupación Turística', value: '87%',    sub: 'En temporada alta',           chart: 'arc'        },
-  { id: 3, title: 'Rentabilidad Bruta',  value: '8–25%',  sub: 'Por alquiler vacacional',     chart: 'line-up'    },
-  { id: 4, title: 'Turistas / Año',      value: '2M+',    sub: 'Demanda creciente',           chart: 'bars-grow'  },
-  { id: 5, title: 'Valor m² Centro',     value: 'R$12k',  sub: 'Supera Florianópolis',        chart: 'arrow-up'   },
-  { id: 6, title: 'Crecimiento Pob.',    value: '+75%',   sub: 'En 12 años',                  chart: 'area'       },
-  { id: 7, title: 'Suelo Protegido',     value: '67%',    sub: 'Inedificable por ley',        chart: 'donut'      },
-  { id: 8, title: 'Rendimiento Acum.',   value: '+340%',  sub: 'En los últimos 10 años',      chart: 'line-steep' },
+  { id: 1, title: 'Valorización Anual',    value: '+14,3%',   sub: 'Líder nacional — FipeZap 2025',           chart: 'bars-up'    },
+  { id: 2, title: 'Ocupación Turística',   value: '90%',      sub: 'Alta temporada dic–feb',                  chart: 'arc'        },
+  { id: 3, title: 'Retorno Total Anual',   value: '~20%',     sub: 'Alquiler 5,8% + valorización 14,3%',      chart: 'line-up'    },
+  { id: 4, title: 'Turistas / Temporada',  value: '1,9M',     sub: 'Visitantes — Temporada 2024',             chart: 'bars-grow'  },
+  { id: 5, title: 'Valor m² Centro',       value: 'R$12.157', sub: 'Supera Florianópolis — 2024',             chart: 'arrow-up'   },
+  { id: 6, title: 'Crecimiento Pob.',      value: '+75%',     sub: '2010–2022 — IBGE Censo',                  chart: 'area'       },
+  { id: 7, title: 'Suelo Protegido',       value: '67%',      sub: 'Área verde — Municipio oficial',          chart: 'donut'      },
+  { id: 8, title: 'Destino Internacional', value: 'Top 6',    sub: '6º más buscado por extranjeros en Brasil', chart: 'line-steep' },
 ];
 
 const N      = CARDS.length;

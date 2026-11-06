@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Calculator } from 'lucide-react';
 
 interface ServiceCard {
   title: string;
@@ -12,61 +11,19 @@ interface ServiceCard {
 
 const LEFT_SERVICES: ServiceCard[] = [
   {
-    title: 'Interior Design',
-    description: 'Diseño de interiores exclusivo con materiales nobles y acabados de alta costura.',
+    title: 'Asesoría personalizada',
+    description: 'Acompañamiento a medida desde la selección del inmueble hasta el cierre de la operación.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-        <polyline points="9 22 9 12 15 12 15 22" />
+        <circle cx="9" cy="8" r="4" />
+        <path d="M3 20c0-3.3 2.7-6 6-6" />
+        <path d="M16 13h5a1 1 0 011 1v4a1 1 0 01-1 1h-5l-2 2v-2h-1a1 1 0 01-1-1v-4a1 1 0 011-1z" />
       </svg>
     ),
   },
   {
-    title: 'Orientación Fiscal',
-    description: 'Información clara + el asesor colegiado que necesitas para tu caso',
-    icon: <Calculator className="w-5 h-5" strokeWidth={1.5} />,
-  },
-  {
-    title: 'Planning',
-    description: 'Planificación de obra y flujos técnicos con cronogramas de precisión milimétrica.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-        <rect x="3" y="4" width="18" height="18" rx="2" />
-        <line x1="16" y1="2" x2="16" y2="6" />
-        <line x1="8" y1="2" x2="8" y2="6" />
-        <line x1="3" y1="10" x2="21" y2="10" />
-      </svg>
-    ),
-  },
-];
-
-const RIGHT_SERVICES: ServiceCard[] = [
-  {
-    title: 'Exterior Architecture',
-    description: 'Proyección de fachadas y volúmenes que dialogan con el entorno natural.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-        <path d="M2 20h20M5 20V8l7-5 7 5v12" />
-        <path d="M9 20v-4h6v4" />
-        <line x1="9" y1="12" x2="9" y2="12.01" />
-        <line x1="15" y1="12" x2="15" y2="12.01" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Decoration & Styling',
-    description: 'Curaduría de mobiliario, textiles e iluminación para ambientes memorables.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5" />
-        <path d="M2 12l10 5 10-5" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Execution',
-    description: 'Dirección meticulosa de obra y entrega llave en mano sin compromisos.',
+    title: 'Gestión integral',
+    description: 'Coordinamos los aspectos legales y fiscales para que solo tengas que decidir.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
         <polyline points="9 11 12 14 22 4" />
@@ -76,9 +33,35 @@ const RIGHT_SERVICES: ServiceCard[] = [
   },
 ];
 
-function ServiceCardItem({ card }: { card: ServiceCard }) {
-  const [hovered, setHovered] = useState(false);
+const RIGHT_SERVICES: ServiceCard[] = [
+  {
+    title: 'Seguimiento de obra',
+    description: 'Supervisión técnica en cada fase de la construcción para garantizar calidad y plazos.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <line x1="6" y1="2" x2="6" y2="22" />
+        <line x1="6" y1="4" x2="20" y2="4" />
+        <line x1="20" y1="4" x2="20" y2="10" />
+        <line x1="6" y1="4" x2="20" y2="10" />
+        <line x1="13" y1="4" x2="6" y2="10" />
+        <line x1="20" y1="10" x2="20" y2="14" />
+        <rect x="17" y="14" width="6" height="4" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Proyectos de amueblamiento',
+    description: 'Selección y coordinación de mobiliario, textiles e iluminación para crear espacios con identidad propia.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <path d="M2 9a2 2 0 012-2h16a2 2 0 012 2v2a2 2 0 00-2 2v3H4v-3a2 2 0 00-2-2V9z" />
+        <path d="M4 14v3M20 14v3M7 17h10" />
+      </svg>
+    ),
+  },
+];
 
+function ServiceCardItem({ card }: { card: ServiceCard }) {
   return (
     <motion.div
       className="relative rounded-xl p-5 cursor-pointer"
@@ -91,8 +74,6 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
         transform: 'translateZ(0)',
         isolation: 'isolate',
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       whileHover={{
         borderColor: 'rgba(201,162,75,0.50)',
         boxShadow: '0 10px 36px -6px rgba(0,0,0,0.70), 0 0 24px 4px rgba(201,162,75,0.10), inset 0 1px 0 rgba(255,255,255,0.09)',
@@ -113,16 +94,6 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
           <p className="mt-1 font-inter text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.62)' }}>
             {card.description}
           </p>
-          <span
-            className="mt-2 inline-block font-inter text-xs font-medium transition-all duration-300"
-            style={{
-              color: '#C9A24B',
-              opacity: hovered ? 1 : 0,
-              transform: hovered ? 'translateX(0)' : 'translateX(-6px)',
-            }}
-          >
-            Saber más →
-          </span>
         </div>
       </div>
     </motion.div>
@@ -196,11 +167,10 @@ export default function AboutSection() {
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-slate-800 px-6">
-            Combinamos experiencia en el mercado inmobiliario español con un análisis riguroso
-            del litoral brasileño para estructurar inversiones seguras y de alto potencial.
-            Nuestro compromiso es guiar cada paso con transparencia, asegurando no solo una
-            excelente rentabilidad, sino también la tranquilidad y el estilo de vida excepcional
-            que mereces en Bombinhas
+            Combinamos la perspectiva del inversor extranjero con un análisis riguroso del litoral
+            brasileño para estructurar inversiones seguras y rentables. Nuestro compromiso es
+            acompañarte durante todo el proceso con total transparencia, asegurando la solidez
+            de tu patrimonio y el estilo de vida excepcional de Bombinhas
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 max-w-7xl mx-auto w-full px-6 mt-12 items-center">
@@ -228,7 +198,7 @@ export default function AboutSection() {
                 >
                   <source src={PORTFOLIO_VIDEO} type="video/mp4" />
                 </video>
-                <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40 pointer-events-none" />
+                <div className="absolute inset-0 pointer-events-none" />
               </div>
             </div>
 
