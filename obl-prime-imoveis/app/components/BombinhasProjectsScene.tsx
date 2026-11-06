@@ -332,16 +332,15 @@ export default function BombinhasProjectsScene() {
 
         {/* ── Phase 3: Proyectos carousel ──────────────────────────────── */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center px-4 md:px-10"
+          className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-10"
           style={{
             opacity: statsOpacity, scale: statsScale,
             willChange: 'opacity, transform', pointerEvents: statsCardPE,
-            paddingTop: 'max(5vh, 32px)',
-            paddingBottom: 'max(3vh, 20px)',
+            gap: '1.4vh',
           }}
         >
           {/* Heading */}
-          <div className="text-center shrink-0" style={{ marginBottom: '1.2vh' }}>
+          <div className="text-center shrink-0">
             <p style={{ color: '#C9A24B', fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', marginBottom: '0.35rem' }}>
               EMPRENDIMIENTOS
             </p>
@@ -351,17 +350,27 @@ export default function BombinhasProjectsScene() {
           </div>
 
           {/* Carousel — fixed height so it doesn't overflow */}
-          <div style={{ width: '100%', height: 'min(55vh, 460px)', flexShrink: 0 }}>
+          <div style={{ width: '100%', height: 'min(52vh, 440px)', flexShrink: 0 }}>
             <ProjectCarousel />
           </div>
 
-          {/* Bottom: +27 proyectos + CTA */}
-          <div className="shrink-0 flex flex-col items-center" style={{ marginTop: '2vh', gap: '1.1vh' }}>
+          {/* Bottom: +27 proyectos + CTA — frosted so legible on any bg */}
+          <div
+            className="shrink-0 flex flex-col items-center"
+            style={{
+              gap: '0.9vh',
+              background: 'rgba(5,7,12,0.52)',
+              backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
+              borderRadius: 40,
+              padding: '0.7rem 1.6rem',
+              border: '1px solid rgba(255,255,255,0.07)',
+            }}
+          >
             <p style={{
               fontFamily: 'var(--font-inter)',
-              fontSize: '0.65rem',
-              color: 'rgba(255,255,255,0.40)',
-              letterSpacing: '0.12em',
+              fontSize: '0.6rem',
+              color: 'rgba(255,255,255,0.65)',
+              letterSpacing: '0.14em',
               textTransform: 'uppercase',
               margin: 0,
             }}>
@@ -369,18 +378,18 @@ export default function BombinhasProjectsScene() {
             </p>
             <motion.button
               onClick={() => setContactOpen(true)}
-              whileHover={{ background: 'rgba(201,162,75,0.14)', borderColor: 'rgba(201,162,75,0.9)', boxShadow: '0 0 28px 6px rgba(201,162,75,0.18)' }}
+              whileHover={{ background: 'rgba(201,162,75,0.18)', borderColor: 'rgba(201,162,75,1)', boxShadow: '0 0 28px 6px rgba(201,162,75,0.2)' }}
               whileTap={{ scale: 0.96 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.25 }}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '0.6rem 1.8rem',
-                background: 'transparent',
-                border: '1px solid rgba(201,162,75,0.5)',
+                padding: '0.5rem 1.5rem',
+                background: 'rgba(201,162,75,0.08)',
+                border: '1px solid rgba(201,162,75,0.7)',
                 borderRadius: 50,
-                color: '#C9A24B',
+                color: '#E3C174',
                 fontFamily: 'var(--font-inter)',
-                fontSize: '0.7rem',
+                fontSize: '0.68rem',
                 fontWeight: 600,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
@@ -388,8 +397,8 @@ export default function BombinhasProjectsScene() {
               }}
             >
               Recibir más información
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#C9A24B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#E3C174" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </motion.button>
           </div>
