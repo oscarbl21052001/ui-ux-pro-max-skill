@@ -3,18 +3,19 @@ import ProjectPage from '../_components/ProjectPage';
 export default function EnedinaMercedes() {
   return (
     <ProjectPage
-      name="Enedina Mercedes Residence"
-      location="Centro · Bombinhas · SC"
-      typology="Residence · 36 unidades"
-      distance="250 m del mar · 150 m de la avenida principal"
-      description="Un edificio residencial de 36 unidades en el centro de Bombinhas, a 250 metros de la playa y a pasos de cafés, boutiques y restaurantes. Diseño contemporáneo con área de ocio completa en el rooftop, pensado para quienes quieren vivir o invertir en el corazón de Bombinhas."
+      name="ENEDINA MERCEDES"
+      location="Centro de Bombinhas · Santa Catarina"
+      typology="Residence · 36 unidades · Alto padrão"
+      distance="250 m da Praia de Bombinhas · Centro"
+      description="A apenas 250 metros da praia e do movimentado centro de Bombinhas, o Enedina Mercedes Residence oferece o equilíbrio perfeito entre a tranquilidade à beira-mar e a conveniência de ter cafés, boutiques e restaurantes a poucos passos de casa. Com 36 unidades de alto padrão distribuídas em 7 pavimentos, o empreendimento se destaca pela arquitetura contemporânea, pelo hall de entrada mobiliado e pelo rooftop com piscina de borda infinita e vista para a cidade — ideal para morar ou investir no coração de Bombinhas."
       amenities={[
-        'Rooftop con piscina y solarium',
-        'Salón de fiestas',
-        'Gimnasio',
-        'Sala de juegos',
-        'Hall de entrada amueblado y decorado',
-        'Punto de recarga para auto eléctrico',
+        'Piscina no Rooftop',
+        'Solarium',
+        'Salão de Festas',
+        'Sala de Jogos',
+        'Academia',
+        'Hall de entrada mobiliado e decorado',
+        'Alto padrão de acabamento',
       ]}
       images={[
         '/projects/enedina-mercedes-1.jpg',
