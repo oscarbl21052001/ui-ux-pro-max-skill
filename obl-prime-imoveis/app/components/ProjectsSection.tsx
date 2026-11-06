@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import ProjectsGrid from './ProjectsGrid';
 
 const STATS = [
   {
@@ -102,38 +103,7 @@ export default function ProjectsSection() {
           PROYECTOS
         </motion.h2>
 
-        <div className="min-h-[30vh] md:min-h-[40vh] w-full max-w-7xl mx-auto px-6 mb-16" />
-
-        <div className="w-full max-w-7xl mx-auto px-4 pb-12 overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {STATS.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-8 text-center cursor-default"
-                initial={{ opacity: 0, x: i < 2 ? -100 : 100 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-                whileHover={{
-                  y: -8,
-                  scale: 1.02,
-                  boxShadow: '0 20px 40px -15px rgba(201, 162, 75, 0.18)',
-                }}
-                whileTap={{ scale: 0.98 }}
-                style={{ transition: 'box-shadow 0.3s ease' }}
-              >
-                {stat.icon}
-                <p className="font-extrabold text-4xl text-white font-inter mb-2">
-                  {stat.value}
-                </p>
-                <p className="text-neutral-400 text-sm tracking-wide font-inter uppercase">
-                  {stat.label}
-                </p>
-                <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-[#C9A24B]/40 to-transparent" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        <ProjectsGrid />
       </div>
     </section>
   );
