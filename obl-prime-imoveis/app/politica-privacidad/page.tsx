@@ -15,6 +15,7 @@ export default function PoliticaPrivacidad() {
           Última actualización: noviembre de 2026
         </p>
 
+        {/* AVISO LEGAL */}
         <h2 style={{ color: '#C9A24B', fontSize: '1.1rem', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '1rem' }}>
           1. Aviso Legal
         </h2>
@@ -33,6 +34,7 @@ export default function PoliticaPrivacidad() {
 
         <hr style={{ borderColor: 'rgba(255,255,255,0.08)', margin: '2.5rem 0' }} />
 
+        {/* PRIVACIDAD */}
         <h2 style={{ color: '#C9A24B', fontSize: '1.1rem', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '1rem' }}>
           2. Política de Privacidad
         </h2>
@@ -87,6 +89,7 @@ export default function PoliticaPrivacidad() {
 
         <hr style={{ borderColor: 'rgba(255,255,255,0.08)', margin: '2.5rem 0' }} />
 
+        {/* COOKIES */}
         <h2 style={{ color: '#C9A24B', fontSize: '1.1rem', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '1rem' }}>
           3. Política de Cookies
         </h2>
