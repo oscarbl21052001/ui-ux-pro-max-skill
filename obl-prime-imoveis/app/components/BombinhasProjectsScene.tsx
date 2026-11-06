@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ProjectCarousel from './ProjectCarousel';
+import ContactModal from './ContactModal';
 
 
 // ── Carousel data (Phase 2 — Fundamentos del Mercado) ────────────────────────
@@ -156,6 +157,7 @@ export default function BombinhasProjectsScene() {
   const ringRef      = useRef<HTMLDivElement>(null);
   const [scale, setScale]           = useState(1);
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [contactOpen, setContactOpen] = useState(false);
   const pausedRef    = useRef(false);
   const ringAngleRef = useRef(0);
 
@@ -330,24 +332,71 @@ export default function BombinhasProjectsScene() {
 
         {/* ── Phase 3: Proyectos carousel ──────────────────────────────── */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-10"
-          style={{ opacity: statsOpacity, scale: statsScale, willChange: 'opacity, transform', pointerEvents: statsCardPE }}
+          className="absolute inset-0 flex flex-col items-center px-4 md:px-10"
+          style={{
+            opacity: statsOpacity, scale: statsScale,
+            willChange: 'opacity, transform', pointerEvents: statsCardPE,
+            paddingTop: 'max(5vh, 32px)',
+            paddingBottom: 'max(3vh, 20px)',
+          }}
         >
           {/* Heading */}
-          <div className="text-center mb-4 shrink-0">
-            <p style={{ color: '#C9A24B', fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', marginBottom: '0.4rem' }}>
+          <div className="text-center shrink-0" style={{ marginBottom: '1.2vh' }}>
+            <p style={{ color: '#C9A24B', fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', marginBottom: '0.35rem' }}>
               EMPRENDIMIENTOS
             </p>
-            <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.6rem, 3vw, 2.6rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
               PROYECTOS
             </h2>
           </div>
 
-          {/* Carousel */}
-          <div style={{ width: '100%', flex: 1, minHeight: 0 }}>
+          {/* Carousel — fixed height so it doesn't overflow */}
+          <div style={{ width: '100%', height: 'min(55vh, 460px)', flexShrink: 0 }}>
             <ProjectCarousel />
           </div>
+
+          {/* Bottom: +27 proyectos + CTA */}
+          <div className="shrink-0 flex flex-col items-center" style={{ marginTop: '2vh', gap: '1.1vh' }}>
+            <p style={{
+              fontFamily: 'var(--font-inter)',
+              fontSize: '0.65rem',
+              color: 'rgba(255,255,255,0.40)',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}>
+              + 27 proyectos más disponibles bajo consulta
+            </p>
+            <motion.button
+              onClick={() => setContactOpen(true)}
+              whileHover={{ background: 'rgba(201,162,75,0.14)', borderColor: 'rgba(201,162,75,0.9)', boxShadow: '0 0 28px 6px rgba(201,162,75,0.18)' }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '0.6rem 1.8rem',
+                background: 'transparent',
+                border: '1px solid rgba(201,162,75,0.5)',
+                borderRadius: 50,
+                color: '#C9A24B',
+                fontFamily: 'var(--font-inter)',
+                fontSize: '0.7rem',
+                fontWeight: 600,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+              }}
+            >
+              Recibir más información
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#C9A24B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.button>
+          </div>
         </motion.div>
+
+        {/* Contact modal — always rendered, outside scroll phase */}
+        <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
 
       </div>
     </div>
