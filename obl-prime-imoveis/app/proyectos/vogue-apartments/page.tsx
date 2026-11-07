@@ -5,24 +5,24 @@ export default function VogueApartments() {
     <ProjectPage
       name="VOGUE APARTMENTS"
       location="Rua Cardeal, 262 · Bombas, Bombinhas · SC"
-      typology="1 e 2 dormitórios · 38 unidades · 8 pavimentos"
-      distance="250 m da Praia de Bombas"
-      description="A 250 metros da Praia de Bombas, o Vogue Apartments reúne estilo e praticidade em 38 unidades distribuídas em 8 pavimentos. Com opções de 1 e 2 dormitórios — incluindo variantes com jacuzzi e sacada descoberta — o empreendimento se destaca pelo design arrojado, pela fachada em pastilha cerâmica e vidros reflecta, e por um rooftop com piscina e solarium com vista para o mar. Dez espaços de lazer completos, Mini Market 24h, Espaço Net e Espaço Game fazem do Vogue um endereço pensado para quem quer viver com personalidade em Bombinhas."
+      typology="1 y 2 dormitorios · 38 unidades · 8 pisos"
+      distance="250 m de la Playa de Bombas"
+      description="A 250 metros de la Playa de Bombas, el Vogue Apartments reúne estilo y practicidad en 38 unidades distribuidas en 8 pisos. Con opciones de 1 y 2 dormitorios — incluyendo variantes con jacuzzi y balcón descubierto — el emprendimiento se destaca por su diseño audaz, fachada en pastilla cerámica y vidrios reflectantes, y un rooftop con piscina y solarium con vista al mar. Diez espacios de ocio completos, Mini Market 24h, Espacio Net y Espacio Game hacen del Vogue una dirección pensada para quienes quieren vivir con personalidad en Bombinhas."
       amenities={[
-        'Piscina no Rooftop',
+        'Piscina en el Rooftop',
         'Solarium',
-        'Salão de Festas',
-        'Academia',
+        'Salón de Fiestas',
+        'Gimnasio',
         'Mini Market 24h',
-        'Lavanderia compartilhada OMO',
-        'Espaço Net',
-        'Espaço Leitura',
-        'Espaço Game',
-        'Vaga de garagem individual e privativa',
-        'Estação de recarga para carro elétrico',
-        'Portão e porteiro eletrônico',
-        'Elevador',
-        'Isolamento acústico',
+        'Lavandería compartida OMO',
+        'Espacio Net',
+        'Espacio de Lectura',
+        'Espacio Game',
+        'Cochera individual y privativa',
+        'Estación de carga para auto eléctrico',
+        'Portón y portero electrónico',
+        'Ascensor',
+        'Aislamiento acústico',
         'Hall de entrada decorado',
       ]}
       images={[
