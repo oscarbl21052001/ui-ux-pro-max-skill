@@ -5,11 +5,11 @@ export default function VillaDiTrento() {
     <ProjectPage
       name="VILLA DI TRENTO"
       location="Rua Ipê Roxo · Canto Grande / Mariscal · Bombinhas · SC"
-      typology="1 e 2 dormitórios · 7 pavimentos · Rooftop"
-      distance="Entre o Mar de Fora e o Mar de Dentro · Canto Grande"
-      description="Localizado na Rua Ipê Roxo, no coração de Canto Grande em Bombinhas, o Villa Di Trento Residence ocupa uma posição privilegiada entre o Mar de Fora e o Mar de Dentro — com vistas para os dois oceanos em um único endereço. Com 7 pavimentos e um rooftop integralmente dedicado ao lazer, o empreendimento reúne apartamentos de 1 e 2 dormitórios com acabamentos de alto padrão, fachada em venecitas, piso vinílico nos dormitórios e tecnologia integrada em cada detalhe. O 7° Piso transforma o cotidiano: piscina de adultos com deck elevado de 55 m², spa, sauna, academia com balcón, espaço gourmet, salão de festas com vista para a baía, ludoteca, sala de jogos, fogón e mais de 129 m² de amenities ao ar livre. Um endereço raro, entre duas mares, em Bombinhas."
+      typology="1 y 2 dormitorios · 7 pisos · Rooftop"
+      distance="Entre el Mar de Afuera y el Mar de Adentro · Canto Grande"
+      description="Ubicado en la Rua Ipê Roxo, en el corazón de Canto Grande en Bombinhas, el Villa Di Trento Residence ocupa una posición privilegiada entre el Mar de Afuera y el Mar de Adentro — con vistas a los dos océanos desde un único domicilio. Con 7 pisos y un rooftop íntegramente dedicado al ocio, el emprendimiento reúne apartamentos de 1 y 2 dormitorios con terminaciones de alto estándar, fachada en venecitas, piso vinílico en los dormitorios y tecnología integrada en cada detalle. El 7° Piso transforma el día a día: piscina de adultos con deck elevado de 55 m², spa, sauna, gimnasio con balcón, espacio gourmet, salón de fiestas con vista a la bahía, ludoteca, sala de juegos, fogón y más de 129 m² de amenities al aire libre. Una dirección única, entre dos mares, en Bombinhas."
       amenities={[
-        'Piscina de Adultos no Rooftop',
+        'Piscina de Adultos en el Rooftop',
         'Spa / Piscina Infantil',
         'Playa Húmeda',
         'Deck Elevado (55 m²)',
