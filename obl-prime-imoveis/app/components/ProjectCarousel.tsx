@@ -85,10 +85,10 @@ export default function ProjectCarousel() {
               src={p.img}
               alt={p.name}
               fill
-              quality={90}
+              quality={80}
               className="object-cover pointer-events-none"
               sizes="(max-width: 860px) 100vw, 860px"
-              priority
+              loading="lazy"
             />
             {/* gradient */}
             <div

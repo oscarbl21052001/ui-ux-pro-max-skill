@@ -1,9 +1,8 @@
 import Navbar from "./components/Navbar";
 import SectionBackground from "./components/SectionBackground";
 import ScrollHero from "./components/ScrollHero";
-import BombinhasProjectsScene from "./components/BombinhasProjectsScene";
-import AboutSection from "./components/AboutSection";
-import GlobeSection from "./components/GlobeSection";
+import LazyPageSections from "./components/LazyPageSections";
+
 export default function Home() {
   return (
     <>
@@ -11,9 +10,7 @@ export default function Home() {
       <SectionBackground />
       <Navbar />
       <ScrollHero />
-      <BombinhasProjectsScene />
-      <AboutSection />
-      <GlobeSection />
+      <LazyPageSections />
     </>
   );
 }

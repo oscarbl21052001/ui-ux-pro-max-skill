@@ -176,8 +176,16 @@ export default function BombinhasProjectsScene() {
     const DEG_PER_MS = 360 / 18000; // 18s revolution
     let raf: number;
     let lastT: number | null = null;
+    let visible = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { visible = entry.isIntersecting; },
+      { threshold: 0.01 },
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+
     const spin = (t: number) => {
-      if (lastT !== null && !pausedRef.current) {
+      if (visible && lastT !== null && !pausedRef.current) {
         ringAngleRef.current = (ringAngleRef.current + DEG_PER_MS * (t - lastT)) % 360;
         if (ringRef.current) {
           ringRef.current.style.transform = `rotateY(${ringAngleRef.current}deg)`;
@@ -187,7 +195,7 @@ export default function BombinhasProjectsScene() {
       raf = requestAnimationFrame(spin);
     };
     raf = requestAnimationFrame(spin);
-    return () => cancelAnimationFrame(raf);
+    return () => { cancelAnimationFrame(raf); observer.disconnect(); };
   }, []);
 
   const pause  = useCallback(() => { pausedRef.current = true;  }, []);

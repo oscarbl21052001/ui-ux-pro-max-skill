@@ -13,27 +13,30 @@ export default function ScrollHero() {
     const textBlock = textRef.current;
     if (!container || !textBlock) return;
 
-    const onScroll = () => {
+    let rafPending = false;
+
+    const update = () => {
+      rafPending = false;
       const rect        = container.getBoundingClientRect();
       const scrollableH = rect.height - window.innerHeight;
       if (scrollableH <= 0) return;
-      progressRef.current = Math.max(-rect.top / scrollableH, 0);
-    };
+      const p = Math.min(Math.max(-rect.top / scrollableH, 0), 1);
 
-    const tick = () => {
-      const p = Math.min(progressRef.current, 1);
-
-      // Hero headline: full opacity until 60% scroll, then fades out over 30%
       const fadeStart = 0.60;
       const fadeLen   = 0.30;
-      textBlock.style.opacity = String(Math.max(1 - Math.max(p - fadeStart, 0) / fadeLen, 0));
+      const opacity   = Math.max(1 - Math.max(p - fadeStart, 0) / fadeLen, 0);
+      textBlock.style.opacity = opacity.toFixed(3);
+    };
 
-      rafRef.current = requestAnimationFrame(tick);
+    const onScroll = () => {
+      if (!rafPending) {
+        rafPending = true;
+        rafRef.current = requestAnimationFrame(update);
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    rafRef.current = requestAnimationFrame(tick);
-    onScroll();
+    update(); // initial render
 
     return () => {
       window.removeEventListener('scroll', onScroll);
