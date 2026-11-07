@@ -25,7 +25,7 @@ export default function WhatsAppButton() {
         aria-label="Contactar por WhatsApp"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="hidden sm:flex fixed bottom-6 right-6 z-[200] animate-whatsapp-pulse"
+        className="hidden sm:fixed sm:bottom-6 sm:right-6 sm:z-[200] sm:flex animate-whatsapp-pulse"
         style={{
           height: 60,
           borderRadius: 30,
@@ -36,35 +36,38 @@ export default function WhatsAppButton() {
           textDecoration: 'none',
           transition: 'width 0.38s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.25s',
           width: hovered ? 240 : 60,
-          overflow: 'hidden',
           alignItems: 'center',
-          justifyContent: 'center',
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
         }}
       >
-        {/* Contenedor interno centrado */}
+        {/* Ícono siempre visible, centrado en los primeros 60px */}
         <span style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 10,
-          width: hovered ? 240 : 60,
-          transition: 'width 0.38s cubic-bezier(0.34,1.4,0.64,1)',
-          paddingLeft: hovered ? 18 : 0,
-          paddingRight: hovered ? 22 : 0,
+          width: 60,
+          height: 60,
+          flexShrink: 0,
         }}>
           <WaIcon size={32} />
-          <span style={{
-            color: 'white',
-            fontFamily: 'var(--font-inter)',
-            fontSize: '0.82rem',
-            fontWeight: 700,
-            letterSpacing: '0.03em',
-            whiteSpace: 'nowrap',
-            opacity: hovered ? 1 : 0,
-            transition: 'opacity 0.18s',
-          }}>
-            ¿Hablamos? Escribinos
-          </span>
+        </span>
+        {/* Texto que aparece al expandir */}
+        <span style={{
+          color: 'white',
+          fontFamily: 'var(--font-inter)',
+          fontSize: '0.82rem',
+          fontWeight: 700,
+          letterSpacing: '0.03em',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          maxWidth: hovered ? 180 : 0,
+          opacity: hovered ? 1 : 0,
+          transition: 'max-width 0.38s cubic-bezier(0.34,1.4,0.64,1), opacity 0.2s',
+          paddingRight: hovered ? 20 : 0,
+        }}>
+          ¿Hablamos? Escríbenos
         </span>
       </a>
 
