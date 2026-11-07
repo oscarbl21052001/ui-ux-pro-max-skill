@@ -24,10 +24,17 @@ export default function SectionBackground() {
     heroVid.pause();
     bombVid.pause();
 
-    const LERP = 0.45;
+    const LERP = 0.28;
     let heroTarget = 0, heroCurrent = 0;
     let raf: number;
     let rafPending = false;
+    // Only scrub once the browser has buffered enough — avoids stutter while loading
+    let videoReady = false;
+
+    const onCanPlay = () => { videoReady = true; };
+    heroVid.addEventListener('canplaythrough', onCanPlay, { once: true });
+    // If already buffered (cached), mark ready immediately
+    if (heroVid.readyState >= 4) videoReady = true;
 
     // Cache expensive DOM lookups — recompute only on resize
     let vH            = window.innerHeight;
@@ -73,9 +80,9 @@ export default function SectionBackground() {
         container.style.opacity = '1';
       }
 
-      // LERP scrub — only write to video when delta is meaningful
+      // LERP scrub — only write to video once fully buffered to avoid decode stutter
       heroCurrent += (heroTarget - heroCurrent) * LERP;
-      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.02) {
+      if (videoReady && Math.abs(heroCurrent - heroVid.currentTime) > 0.015) {
         heroVid.currentTime = heroCurrent;
       }
     };
@@ -95,6 +102,7 @@ export default function SectionBackground() {
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', refreshLayout);
+      heroVid.removeEventListener('canplaythrough', onCanPlay);
       cancelAnimationFrame(raf);
     };
   }, []);
