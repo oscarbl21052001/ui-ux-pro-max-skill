@@ -24,7 +24,7 @@ export default function SectionBackground() {
     heroVid.pause();
     bombVid.pause();
 
-    const LERP = 0.28;
+    const LERP = 0.45;
     let heroTarget = 0, heroCurrent = 0;
     let raf: number;
     let rafPending = false;
@@ -75,7 +75,7 @@ export default function SectionBackground() {
 
       // LERP scrub — only write to video when delta is meaningful
       heroCurrent += (heroTarget - heroCurrent) * LERP;
-      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.015) {
+      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.02) {
         heroVid.currentTime = heroCurrent;
       }
     };
@@ -124,7 +124,10 @@ export default function SectionBackground() {
         position: 'fixed',
         inset: 0,
         zIndex: -1,
-        backgroundColor: '#FDFBF7',
+        backgroundColor: '#0a0c10',
+        backgroundImage: 'url(/hero-poster.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         overflow: 'hidden',
         transform: 'translateZ(0)',
         willChange: 'opacity',
@@ -136,6 +139,7 @@ export default function SectionBackground() {
         muted
         playsInline
         preload="auto"
+        poster="/hero-poster.jpg"
         style={videoStyle}
       >
         {/* webm first — smallest (2 MB vs 20 MB mp4); Chrome/Firefox pick it */}
