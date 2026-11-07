@@ -10,12 +10,12 @@ export default function Solaia() {
       description="Un emprendimiento único frente a la tranquila bahía de Zimbros, en Bombinhas. Solaia Residence combina la serenidad de esta playa paradisíaca con un diseño moderno de alto padrón, cerca del Molhe de Zimbros y la Arena Comper."
       amenities={[
         'Hall de entrada amueblado con sonido ambiente',
-        'Wi-Fi en áreas comunes',
-        'Porcelanato en áreas sociales',
+        'Wi-Fi en zonas comunes',
+        'Suelo de porcelánico en áreas sociales',
         'Interfono con reconocimiento facial',
         'Salón de fiestas equipado con piscina',
-        'Cochera privativa',
-        'Alto padrón de terminaciones',
+        'Plaza de garaje privativa',
+        'Acabados de alto estándar',
       ]}
       images={[
         '/projects/solaia-1.jpg',

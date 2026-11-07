@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import ContactModal from '../../components/ContactModal';
 
 interface ProjectPageProps {
@@ -28,26 +28,50 @@ export default function ProjectPage({
   delivery,
 }: ProjectPageProps) {
   const [activeImg, setActiveImg] = useState(0);
+  const [dir, setDir]             = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const go = (d: 1 | -1) => {
+    setDir(d);
+    setActiveImg(i => (i + d + images.length) % images.length);
+  };
 
   return (
     <main style={{ background: '#080a0e', minHeight: '100vh', fontFamily: 'var(--font-inter)' }}>
 
-      {/* Hero */}
-      <section className="relative w-full" style={{ height: '70vh', minHeight: 400 }}>
-        <Image
-          src={images[activeImg]}
-          alt={name}
-          fill
-          quality={90}
-          className="object-cover"
-          priority
-        />
+      {/* Hero carousel */}
+      <section className="relative w-full overflow-hidden" style={{ height: '70vh', minHeight: 400 }}>
+
+        {/* Images — one at a time */}
+        <AnimatePresence initial={false} custom={dir} mode="sync">
+          <motion.div
+            key={activeImg}
+            custom={dir}
+            initial={{ x: dir > 0 ? '100%' : '-100%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: dir > 0 ? '-100%' : '100%', opacity: 0 }}
+            transition={{ duration: 0.42, ease: [0.32, 0, 0.18, 1] }}
+            style={{ position: 'absolute', inset: 0 }}
+          >
+            <Image
+              src={images[activeImg]}
+              alt={name}
+              fill
+              quality={90}
+              className="object-cover"
+              priority={activeImg === 0}
+              loading={activeImg === 0 ? 'eager' : 'lazy'}
+            />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Gradient overlay */}
         <div
           aria-hidden
           style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to bottom, rgba(8,10,14,0.35) 0%, rgba(8,10,14,0.10) 40%, rgba(8,10,14,0.80) 100%)',
+            position: 'absolute', inset: 0, zIndex: 1,
+            background: 'linear-gradient(to bottom, rgba(8,10,14,0.35) 0%, rgba(8,10,14,0.05) 40%, rgba(8,10,14,0.82) 100%)',
+            pointerEvents: 'none',
           }}
         />
 
@@ -55,7 +79,7 @@ export default function ProjectPage({
         <Link
           href="/#proyectos"
           style={{
-            position: 'absolute', top: 24, left: 24,
+            position: 'absolute', top: 24, left: 24, zIndex: 10,
             display: 'flex', alignItems: 'center', gap: '0.5rem',
             color: 'rgba(255,255,255,0.75)',
             fontSize: '0.72rem',
@@ -67,27 +91,63 @@ export default function ProjectPage({
             padding: '0.5rem 1rem',
             borderRadius: 8,
             border: '1px solid rgba(255,255,255,0.1)',
-            transition: 'color 0.2s',
-            zIndex: 10,
           }}
         >
           ← Proyectos
         </Link>
 
-        {/* Hero text */}
-        <div style={{ position: 'absolute', bottom: 40, left: 0, right: 0, padding: '0 2rem' }}>
+        {/* Prev / Next arrows */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={() => go(-1)}
+              aria-label="Imagen anterior"
+              style={{
+                position: 'absolute', left: 20, top: '50%',
+                transform: 'translateY(-50%)', zIndex: 10,
+                width: 44, height: 44,
+                background: 'rgba(0,0,0,0.42)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M11 4L6 9L11 14" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <button
+              onClick={() => go(1)}
+              aria-label="Imagen siguiente"
+              style={{
+                position: 'absolute', right: 20, top: '50%',
+                transform: 'translateY(-50%)', zIndex: 10,
+                width: 44, height: 44,
+                background: 'rgba(0,0,0,0.42)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M7 4L12 9L7 14" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </>
+        )}
+
+        {/* Hero text + dot indicators */}
+        <div style={{ position: 'absolute', bottom: 32, left: 0, right: 0, padding: '0 2rem', zIndex: 10 }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              style={{
-                color: '#C9A24B',
-                fontSize: '0.65rem',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                marginBottom: '0.5rem',
-              }}
+              style={{ color: '#C9A24B', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '0.5rem' }}
             >
               {location}
             </motion.p>
@@ -98,44 +158,34 @@ export default function ProjectPage({
               style={{
                 fontFamily: 'var(--font-playfair-display)',
                 fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                fontWeight: 700,
-                color: '#fff',
-                margin: 0,
-                lineHeight: 1.1,
+                fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1,
               }}
             >
               {name}
             </motion.h1>
+
+            {/* Dot indicators */}
+            {images.length > 1 && (
+              <div style={{ display: 'flex', gap: 7, marginTop: 18 }}>
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setDir(i > activeImg ? 1 : -1); setActiveImg(i); }}
+                    aria-label={`Foto ${i + 1}`}
+                    style={{
+                      width: i === activeImg ? 20 : 7, height: 7,
+                      borderRadius: 4,
+                      background: i === activeImg ? '#C9A24B' : 'rgba(255,255,255,0.35)',
+                      border: 'none', cursor: 'pointer', padding: 0,
+                      transition: 'width 0.3s ease, background 0.3s ease',
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
-
-      {/* Thumbnail strip */}
-      {images.length > 1 && (
-        <div style={{ background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto', padding: '0.75rem 2rem', display: 'flex', gap: '0.5rem' }}>
-            {images.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveImg(i)}
-                style={{
-                  width: 64, height: 44,
-                  position: 'relative',
-                  borderRadius: 6,
-                  overflow: 'hidden',
-                  border: `1.5px solid ${activeImg === i ? '#C9A24B' : 'rgba(255,255,255,0.1)'}`,
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'border-color 0.2s',
-                  flexShrink: 0,
-                }}
-              >
-                <Image src={img} alt="" fill className="object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Content */}
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '3rem 2rem 5rem' }}>
