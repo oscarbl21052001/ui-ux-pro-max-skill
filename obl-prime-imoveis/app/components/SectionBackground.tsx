@@ -7,7 +7,7 @@ const HERO_VIDEO_MP4  = '/hero.mp4';
 const HERO_VIDEO_WEBM = '/hero.webm';
 const BOMB_VIDEO_SRC  = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260715_142322_a3f9c067-a8d3-465c-9075-ebd055f69007.mp4';
 
-// Hero section occupies 200vh → scrollable budget = 100vh
+// Hero occupies 200vh → scrollable budget = 100vh
 const HERO_VH = 200;
 
 export default function SectionBackground() {
@@ -24,8 +24,12 @@ export default function SectionBackground() {
     heroVid.pause();
     bombVid.pause();
 
+    const LERP = 0.28;
+    let heroTarget = 0, heroCurrent = 0;
     let raf: number;
-    let rafId = 0;
+    let rafPending = false;
+
+    // Cache expensive DOM lookups — recompute only on resize
     let vH            = window.innerHeight;
     let bombEl: HTMLElement | null = null;
     let bombAbsTop    = 0;
@@ -45,19 +49,15 @@ export default function SectionBackground() {
     window.addEventListener('resize', refreshLayout, { passive: true });
 
     const tick = () => {
+      rafPending = false;
       const scrollY = window.scrollY;
 
-      let p: number;
       if (bombEl) {
-        p = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
+        const totalP = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
+        heroTarget   = totalP * (heroVid.duration || 30);
       } else {
         const heroScrollMax = (HERO_VH / 100 - 1) * vH;
-        p = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
-      }
-
-      const target = p * (heroVid.duration || 10);
-      if (Math.abs(target - heroVid.currentTime) > 0.02) {
-        heroVid.currentTime = target;
+        heroTarget = Math.min(Math.max(scrollY / heroScrollMax, 0), 1) * (heroVid.duration || 30);
       }
 
       heroVid.style.opacity = '1';
@@ -72,15 +72,25 @@ export default function SectionBackground() {
       } else {
         container.style.opacity = '1';
       }
+
+      // LERP scrub — only write to video when delta is meaningful
+      heroCurrent += (heroTarget - heroCurrent) * LERP;
+      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.015) {
+        heroVid.currentTime = heroCurrent;
+      }
     };
 
+    // Run one rAF per scroll event instead of a constant loop
     const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(tick);
+      if (!rafPending) {
+        rafPending = true;
+        raf = requestAnimationFrame(tick);
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    requestAnimationFrame(tick);
+    // Run once on mount to set initial state
+    raf = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -96,9 +106,14 @@ export default function SectionBackground() {
     height: '100%',
     objectFit: 'cover',
     objectPosition: 'center center',
+    // Force GPU compositing so the browser scales on the GPU rather than
+    // the CPU — avoids the blurry bilinear upscale that software rendering applies.
     transform: 'translateZ(0)',
     backfaceVisibility: 'hidden',
+    // Explicitly clear any inherited filter and let the browser decode at
+    // native quality with no post-process sharpening or blurring.
     filter: 'none',
+    willChange: 'opacity',
   };
 
   return (
@@ -109,29 +124,27 @@ export default function SectionBackground() {
         position: 'fixed',
         inset: 0,
         zIndex: -1,
-        backgroundColor: '#0a0c10',
-        backgroundImage: 'url(/hero-poster.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundColor: '#FDFBF7',
         overflow: 'hidden',
         transform: 'translateZ(0)',
+        willChange: 'opacity',
       }}
     >
-      {/* Hero video — scrubbed by scroll position */}
+      {/* Hero video — full-screen, scrubbed by scroll */}
       <video
         ref={heroRef}
         muted
         playsInline
         preload="auto"
-        poster="/hero-poster.jpg"
         style={videoStyle}
       >
+        {/* webm first — smallest (2 MB vs 20 MB mp4); Chrome/Firefox pick it */}
         <source src={HERO_VIDEO_WEBM} type="video/webm" />
         <source src={HERO_VIDEO_MP4}  type="video/mp4" />
         <source src={HERO_VIDEO_MOV}  type="video/quicktime" />
       </video>
 
-      {/* Bombinhas video — hidden, reserved for future use */}
+      {/* Bombinhas video — always opacity:0 in current design; preload="none" */}
       <video
         ref={bombRef}
         muted
@@ -143,7 +156,7 @@ export default function SectionBackground() {
         <source src={BOMB_VIDEO_SRC} type="video/mp4" />
       </video>
 
-      {/* Subtle overlay */}
+      {/* Subtle overlay — keeps both videos legible and on-brand */}
       <div
         style={{
           position: 'absolute',
