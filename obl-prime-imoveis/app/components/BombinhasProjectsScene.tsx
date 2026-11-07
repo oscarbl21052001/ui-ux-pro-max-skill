@@ -355,46 +355,46 @@ export default function BombinhasProjectsScene() {
           <div
             className="shrink-0 flex flex-col items-center"
             style={{
-              gap: '0.9vh',
-              background: 'rgba(5,7,12,0.52)',
-              backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
-              borderRadius: 40,
-              padding: '0.7rem 1.6rem',
-              border: '1px solid rgba(255,255,255,0.07)',
+              gap: '1.2vh',
+              background: 'rgba(5,7,12,0.60)',
+              backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+              borderRadius: 44,
+              padding: '1.1rem 2rem',
+              border: '1px solid rgba(255,255,255,0.09)',
             }}
           >
             <p style={{
               fontFamily: 'var(--font-inter)',
-              fontSize: '0.6rem',
-              color: 'rgba(255,255,255,0.65)',
-              letterSpacing: '0.14em',
+              fontSize: '0.55rem',
+              color: 'rgba(255,255,255,0.45)',
+              letterSpacing: '0.18em',
               textTransform: 'uppercase',
               margin: 0,
             }}>
-              + 27 proyectos más disponibles bajo consulta
+              + 27 proyectos disponibles
             </p>
             <motion.button
               onClick={() => setContactOpen(true)}
-              whileHover={{ background: 'rgba(201,162,75,0.18)', borderColor: 'rgba(201,162,75,1)', boxShadow: '0 0 28px 6px rgba(201,162,75,0.2)' }}
+              whileHover={{ background: 'rgba(201,162,75,0.2)', borderColor: 'rgba(201,162,75,1)', boxShadow: '0 0 32px 8px rgba(201,162,75,0.22)' }}
               whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.25 }}
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '0.5rem 1.5rem',
-                background: 'rgba(201,162,75,0.08)',
-                border: '1px solid rgba(201,162,75,0.7)',
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                padding: '0.65rem 1.9rem',
+                background: 'rgba(201,162,75,0.10)',
+                border: '1px solid rgba(201,162,75,0.75)',
                 borderRadius: 50,
                 color: '#E3C174',
                 fontFamily: 'var(--font-inter)',
-                fontSize: '0.68rem',
-                fontWeight: 600,
+                fontSize: '0.75rem',
+                fontWeight: 700,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
                 cursor: 'pointer',
               }}
             >
               Recibir más información
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
                 <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#E3C174" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </motion.button>
