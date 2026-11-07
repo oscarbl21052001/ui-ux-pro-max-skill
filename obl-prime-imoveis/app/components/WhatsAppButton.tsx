@@ -25,24 +25,34 @@ export default function WhatsAppButton() {
         aria-label="Contactar por WhatsApp"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="hidden sm:flex fixed bottom-6 right-6 z-[200] items-center animate-whatsapp-pulse"
+        className="hidden sm:flex fixed bottom-6 right-6 z-[200] items-center justify-center animate-whatsapp-pulse"
         style={{
-          height: 56,
-          borderRadius: 28,
+          height: 60,
+          borderRadius: 30,
           background: '#25D366',
           boxShadow: hovered
             ? '0 8px 32px rgba(37,211,102,0.5)'
             : '0 4px 20px rgba(37,211,102,0.35)',
           textDecoration: 'none',
-          transition: 'width 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s',
-          width: hovered ? 220 : 56,
-          paddingLeft: hovered ? 16 : 14,
-          paddingRight: hovered ? 20 : 14,
-          gap: 10,
+          transition: 'width 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s, border-radius 0.35s',
+          width: hovered ? 230 : 60,
+          paddingLeft: hovered ? 18 : 0,
+          paddingRight: hovered ? 22 : 0,
+          gap: hovered ? 10 : 0,
           whiteSpace: 'nowrap',
+          overflow: 'hidden',
         }}
       >
-        <WaIcon size={28} />
+        <span style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+          width: 60,
+          height: 60,
+        }}>
+          <WaIcon size={34} />
+        </span>
         <span style={{
           color: 'white',
           fontFamily: 'var(--font-inter)',
@@ -54,6 +64,7 @@ export default function WhatsAppButton() {
           overflow: 'hidden',
           transition: 'opacity 0.2s 0.1s, max-width 0.35s cubic-bezier(0.34,1.56,0.64,1)',
           pointerEvents: 'none',
+          flexShrink: 0,
         }}>
           ¿Hablamos? Escribinos
         </span>
