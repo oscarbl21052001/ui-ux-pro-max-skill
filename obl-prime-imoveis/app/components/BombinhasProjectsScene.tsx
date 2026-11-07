@@ -341,10 +341,7 @@ export default function BombinhasProjectsScene() {
         >
           {/* Heading */}
           <div className="text-center shrink-0">
-            <p style={{ color: '#C9A24B', fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'var(--font-inter)', marginBottom: '0.35rem' }}>
-              EMPRENDIMIENTOS
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.8rem, 3.4vw, 3rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
               PROYECTOS
             </h2>
           </div>
