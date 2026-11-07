@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 
 const PHONE   = '5547991376652';
 const WA_MSG  = encodeURIComponent('¡Hola! Estoy interesado/a en propiedades en Bombinhas. ¿Podrías ayudarme?');
-const IG_USER = 'lucia.corretorabrasil';
+const IG_USER = 'lucia.rodriguezimoveis';
 const EMAIL   = 'lucia.corretorabrasil@gmail.com';
 const EMAIL_SUBJECT = encodeURIComponent('Consulta sobre propiedades en Bombinhas');
 const EMAIL_BODY    = encodeURIComponent('¡Hola Lucía! Me interesa recibir más información sobre las propiedades disponibles en Bombinhas.');
@@ -120,7 +120,7 @@ export default function ContactLinksModal({ open, onClose }: Props) {
                 Hablemos
               </h3>
               <p style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-inter)', fontSize: '0.78rem', margin: '0 0 1.75rem', lineHeight: 1.5 }}>
-                Elegí el canal que prefieras y te respondemos a la brevedad.
+                Elige el canal que prefieras y te respondemos a la brevedad.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

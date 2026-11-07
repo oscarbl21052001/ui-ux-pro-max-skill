@@ -110,7 +110,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
                     Solicitar información
                   </h3>
                   <p style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-inter)', fontSize: '0.8rem', margin: '0 0 2rem', lineHeight: 1.5 }}>
-                    Déjanos tus datos y te contactamos con los proyectos disponibles en Bombinhas.
+                    Déjanos tus datos y nos ponemos en contacto contigo con los proyectos disponibles en Bombinhas.
                   </p>
 
                   {[
