@@ -7,7 +7,7 @@ const HERO_VIDEO_MP4  = '/hero.mp4';
 const HERO_VIDEO_WEBM = '/hero.webm';
 const BOMB_VIDEO_SRC  = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260715_142322_a3f9c067-a8d3-465c-9075-ebd055f69007.mp4';
 
-// Hero section occupies 200vh → scrollable budget = 100vh
+// Hero occupies 200vh → scrollable budget = 100vh
 const HERO_VH = 200;
 
 export default function SectionBackground() {
@@ -16,53 +16,44 @@ export default function SectionBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const heroVid   = heroRef.current;
-    const bombVid   = bombRef.current;
+    const heroVid  = heroRef.current;
+    const bombVid  = bombRef.current;
     const container = containerRef.current;
     if (!heroVid || !bombVid || !container) return;
 
     heroVid.pause();
     bombVid.pause();
 
+    const LERP = 0.28;
+    let heroTarget = 0, heroCurrent = 0;
     let raf: number;
-    let rafId = 0;
-    let vH            = window.innerHeight;
-    let bombEl: HTMLElement | null = null;
-    let bombAbsTop    = 0;
-    let scrubEnd      = 0;
-    let nosotrosExitEl: HTMLElement | null = null;
-
-    const refreshLayout = () => {
-      vH            = window.innerHeight;
-      bombEl        = document.getElementById('bombinhas');
-      nosotrosExitEl = document.getElementById('nosotros-exit');
-      if (bombEl) {
-        bombAbsTop = bombEl.getBoundingClientRect().top + window.scrollY;
-        scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
-      }
-    };
-    refreshLayout();
-    window.addEventListener('resize', refreshLayout, { passive: true });
 
     const tick = () => {
       const scrollY = window.scrollY;
+      const vH     = window.innerHeight;
+      // ── Single video scrub: hero-web.mov covers page-top → end of Phase 3 ──
+      // Phase 3 (Proyectos) exits at scrollYProgress ≈ 0.97 within
+      // BombinhasProjectsScene (scroll budget = offsetHeight − vH).
+      // We map video 0→duration to scrollY 0→scrubEnd so the white final
+      // frame lands exactly when Phase 3's blur-out animation completes.
+      const bombEl = document.getElementById('bombinhas');
 
-      let p: number;
       if (bombEl) {
-        p = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
+        const bombAbsTop = bombEl.getBoundingClientRect().top + scrollY; // constant
+        const scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
+        const totalP     = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
+        heroTarget = totalP * (heroVid.duration || 30);
       } else {
         const heroScrollMax = (HERO_VH / 100 - 1) * vH;
-        p = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
+        heroTarget = Math.min(Math.max(scrollY / heroScrollMax, 0), 1) * (heroVid.duration || 30);
       }
 
-      const target = p * (heroVid.duration || 10);
-      if (Math.abs(target - heroVid.currentTime) > 0.02) {
-        heroVid.currentTime = target;
-      }
-
+      // Hero stays at full opacity throughout — no crossfade needed
       heroVid.style.opacity = '1';
       bombVid.style.opacity = '0';
 
+      // ── Phase C: fade canvas as Sobre Nosotros exits viewport ───────────
+      const nosotrosExitEl = document.getElementById('nosotros-exit');
       if (nosotrosExitEl) {
         const rect      = nosotrosExitEl.getBoundingClientRect();
         const fadeRange = vH * 0.40;
@@ -72,21 +63,18 @@ export default function SectionBackground() {
       } else {
         container.style.opacity = '1';
       }
-    };
 
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
+      // ── LERP scrub ────────────────────────────────────────────────────────
+      heroCurrent += (heroTarget - heroCurrent) * LERP;
+      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.01) {
+        heroVid.currentTime = heroCurrent;
+      }
+
       raf = requestAnimationFrame(tick);
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', refreshLayout);
-      cancelAnimationFrame(raf);
-    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   const videoStyle: React.CSSProperties = {
@@ -96,9 +84,14 @@ export default function SectionBackground() {
     height: '100%',
     objectFit: 'cover',
     objectPosition: 'center center',
+    // Force GPU compositing so the browser scales on the GPU rather than
+    // the CPU — avoids the blurry bilinear upscale that software rendering applies.
     transform: 'translateZ(0)',
     backfaceVisibility: 'hidden',
+    // Explicitly clear any inherited filter and let the browser decode at
+    // native quality with no post-process sharpening or blurring.
     filter: 'none',
+    willChange: 'opacity',
   };
 
   return (
@@ -109,41 +102,38 @@ export default function SectionBackground() {
         position: 'fixed',
         inset: 0,
         zIndex: -1,
-        backgroundColor: '#0a0c10',
-        backgroundImage: 'url(/hero-poster.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundColor: '#FDFBF7',
         overflow: 'hidden',
         transform: 'translateZ(0)',
+        willChange: 'opacity',
       }}
     >
-      {/* Hero video — scrubbed by scroll position */}
+      {/* Hero video — full-screen, scrubbed by scroll */}
       <video
         ref={heroRef}
         muted
         playsInline
         preload="auto"
-        poster="/hero-poster.jpg"
         style={videoStyle}
       >
-        <source src={HERO_VIDEO_WEBM} type="video/webm" />
-        <source src={HERO_VIDEO_MP4}  type="video/mp4" />
         <source src={HERO_VIDEO_MOV}  type="video/quicktime" />
+        <source src={HERO_VIDEO_MP4}  type="video/mp4" />
+        <source src={HERO_VIDEO_WEBM} type="video/webm" />
       </video>
 
-      {/* Bombinhas video — hidden, reserved for future use */}
+      {/* Bombinhas video — cross-fades in as hero exits */}
       <video
         ref={bombRef}
         muted
         playsInline
-        preload="none"
+        preload="auto"
         crossOrigin="anonymous"
         style={{ ...videoStyle, opacity: 0 }}
       >
         <source src={BOMB_VIDEO_SRC} type="video/mp4" />
       </video>
 
-      {/* Subtle overlay */}
+      {/* Subtle overlay — keeps both videos legible and on-brand */}
       <div
         style={{
           position: 'absolute',
