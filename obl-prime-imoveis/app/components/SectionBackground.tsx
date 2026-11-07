@@ -7,43 +7,80 @@ const HERO_VIDEO_MP4  = '/hero.mp4';
 const HERO_VIDEO_WEBM = '/hero.webm';
 const BOMB_VIDEO_SRC  = 'https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260715_142322_a3f9c067-a8d3-465c-9075-ebd055f69007.mp4';
 
+// Hero section occupies 200vh → scrollable budget = 100vh
+const HERO_VH = 200;
+
 export default function SectionBackground() {
+  const heroRef      = useRef<HTMLVideoElement>(null);
+  const bombRef      = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const heroVid   = heroRef.current;
+    const bombVid   = bombRef.current;
     const container = containerRef.current;
-    if (!container) return;
+    if (!heroVid || !bombVid || !container) return;
 
-    let rafPending = false;
+    heroVid.pause();
+    bombVid.pause();
+
     let raf: number;
-    let vH = window.innerHeight;
+    let rafId = 0;
+    let vH            = window.innerHeight;
+    let bombEl: HTMLElement | null = null;
+    let bombAbsTop    = 0;
+    let scrubEnd      = 0;
     let nosotrosExitEl: HTMLElement | null = null;
 
     const refreshLayout = () => {
-      vH = window.innerHeight;
+      vH            = window.innerHeight;
+      bombEl        = document.getElementById('bombinhas');
       nosotrosExitEl = document.getElementById('nosotros-exit');
+      if (bombEl) {
+        bombAbsTop = bombEl.getBoundingClientRect().top + window.scrollY;
+        scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
+      }
     };
     refreshLayout();
     window.addEventListener('resize', refreshLayout, { passive: true });
 
     const tick = () => {
-      rafPending = false;
-      if (!nosotrosExitEl) return;
-      const rect      = nosotrosExitEl.getBoundingClientRect();
-      const fadeRange = vH * 0.40;
-      const exiting   = fadeRange - rect.bottom;
-      const t         = Math.min(Math.max(exiting / fadeRange, 0), 1);
-      container.style.opacity = String(1 - t);
-    };
+      const scrollY = window.scrollY;
 
-    const onScroll = () => {
-      if (!rafPending) {
-        rafPending = true;
-        raf = requestAnimationFrame(tick);
+      let p: number;
+      if (bombEl) {
+        p = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
+      } else {
+        const heroScrollMax = (HERO_VH / 100 - 1) * vH;
+        p = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
+      }
+
+      const target = p * (heroVid.duration || 10);
+      if (Math.abs(target - heroVid.currentTime) > 0.02) {
+        heroVid.currentTime = target;
+      }
+
+      heroVid.style.opacity = '1';
+      bombVid.style.opacity = '0';
+
+      if (nosotrosExitEl) {
+        const rect      = nosotrosExitEl.getBoundingClientRect();
+        const fadeRange = vH * 0.40;
+        const exiting   = fadeRange - rect.bottom;
+        const t         = Math.min(Math.max(exiting / fadeRange, 0), 1);
+        container.style.opacity = String(1 - t);
+      } else {
+        container.style.opacity = '1';
       }
     };
 
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(tick);
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -80,10 +117,9 @@ export default function SectionBackground() {
         transform: 'translateZ(0)',
       }}
     >
-      {/* Hero video — autoPlay loop, no scrubbing = perfectly smooth */}
+      {/* Hero video — scrubbed by scroll position */}
       <video
-        autoPlay
-        loop
+        ref={heroRef}
         muted
         playsInline
         preload="auto"
@@ -95,13 +131,14 @@ export default function SectionBackground() {
         <source src={HERO_VIDEO_MOV}  type="video/quicktime" />
       </video>
 
-      {/* Bombinhas video — reserved for future use, hidden */}
+      {/* Bombinhas video — hidden, reserved for future use */}
       <video
+        ref={bombRef}
         muted
         playsInline
         preload="none"
         crossOrigin="anonymous"
-        style={{ ...videoStyle, opacity: 0, display: 'none' }}
+        style={{ ...videoStyle, opacity: 0 }}
       >
         <source src={BOMB_VIDEO_SRC} type="video/mp4" />
       </video>
