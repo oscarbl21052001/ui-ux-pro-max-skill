@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useContact } from './ContactProvider';
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
+  const { openContact } = useContact();
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -49,7 +51,10 @@ export default function Navbar() {
                   e.preventDefault();
                   const key = label.toLowerCase();
 
-                  if (key === 'bombinhas') {
+                  if (key === 'contacto') {
+                    openContact();
+                    return;
+                  } else if (key === 'bombinhas') {
                     const el = document.getElementById('bombinhas');
                     if (!el) return;
                     const range = el.offsetHeight - window.innerHeight;

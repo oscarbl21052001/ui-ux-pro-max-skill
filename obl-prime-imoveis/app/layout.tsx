@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Playfair_Display, Inter, Plus_Jakarta_Sans, DM_Sans, Cardo } from "next/font/google";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Footer from "./components/Footer";
+import ContactProvider from "./components/ContactProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -59,9 +60,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${jakarta.variable} ${dmSans.variable} ${cardo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
-        <Footer />
-        <WhatsAppButton />
+        <ContactProvider>
+          {children}
+          <Footer />
+          <WhatsAppButton />
+        </ContactProvider>
       </body>
     </html>
   );
