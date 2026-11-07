@@ -25,7 +25,7 @@ export default function WhatsAppButton() {
         aria-label="Contactar por WhatsApp"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="hidden sm:flex fixed bottom-6 right-6 z-[200] items-center overflow-hidden animate-whatsapp-pulse"
+        className="hidden sm:flex fixed bottom-6 right-6 z-[200] items-center animate-whatsapp-pulse"
         style={{
           height: 56,
           borderRadius: 28,
@@ -50,7 +50,9 @@ export default function WhatsAppButton() {
           fontWeight: 700,
           letterSpacing: '0.03em',
           opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.2s 0.1s',
+          maxWidth: hovered ? 160 : 0,
+          overflow: 'hidden',
+          transition: 'opacity 0.2s 0.1s, max-width 0.35s cubic-bezier(0.34,1.56,0.64,1)',
           pointerEvents: 'none',
         }}>
           ¿Hablamos? Escribinos
