@@ -117,6 +117,13 @@ function GlobeCanvas() {
     ctx.scale(DPR, DPR);
 
     let animId: number;
+    let isVisible = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0.01 },
+    );
+    observer.observe(canvas);
 
     const img = new Image();
     img.onload = () => {
@@ -141,6 +148,7 @@ function GlobeCanvas() {
       const marker3D = MARKERS.map(m => latLngTo3D(m.location[0], -m.location[1]));
 
       function render() {
+        if (!isVisible) { animId = requestAnimationFrame(render); return; }
         if (!isPaused.current) phiRef.current += 0.006;
         const phi   = phiRef.current + phiOffset.current + phiDrag.current;
         const theta = Math.max(-1.2, Math.min(1.2, thetaOffset.current + thetaDrag.current));
@@ -209,7 +217,7 @@ function GlobeCanvas() {
     };
     img.src = WORLD_MAP_B64;
 
-    return () => { if (animId) cancelAnimationFrame(animId); };
+    return () => { if (animId) cancelAnimationFrame(animId); observer.disconnect(); };
   }, []);
 
   return (
@@ -276,13 +284,13 @@ export default function GlobeSection() {
     <div ref={containerRef} id="presencia-global" className="relative h-[200vh]">
       <motion.div
         style={{
-          position: 'fixed',
-          inset: 0,
+          position: 'sticky',
+          top: 0,
+          height: '100vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          paddingBottom: '0',
           overflow: 'hidden',
           backgroundColor: '#FDFBF7',
           opacity,
