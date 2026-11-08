@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useCallback } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface ServiceCard {
   title: string;
@@ -103,25 +103,7 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
 const PORTFOLIO_VIDEO = '/portfolio-preview.mp4';
 
 export default function AboutSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef     = useRef<HTMLVideoElement>(null);
-
-  // Full-range tracking: ['start end','end start'] spans 300vh for a 200vh section.
-  // Sticky pins from progress ≈ 0.33 to ≈ 0.67 (100vh of hold).
-  //   Fade-in  : 0.15 → 0.32  starts 55vh before sticky, overlapping Proyectos tail
-  //              (Phase 3 already transparent by then — no visual conflict)
-  //   Hold     : 0.32 → 0.55  fully visible, pinned
-  //   Fade-out : 0.55 → 0.67  dissolves in place before sticky releases
-  //   Silent   : outside range → clamped to opacity 0
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.32], [0, 1]);
-  const contentFilter  = useTransform(scrollYProgress, [0.15, 0.32], ['blur(8px)', 'blur(0px)']);
-  const contentScale   = useTransform(scrollYProgress, [0.15, 0.32], [0.96, 1]);
-  const contentPointerEvents = useTransform(scrollYProgress, (p) =>
-    p > 0.30 ? 'auto' : 'none');
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -135,25 +117,19 @@ export default function AboutSection() {
   }, []);
 
   return (
-    // 200vh scroll budget — content stays sticky while background video holds its final frame
-    <div ref={containerRef} id="nosotros" className="relative h-[200vh]">
-      {/* SectionBackground Phase C watches this to know when to fade the canvas */}
-      <div id="nosotros-exit" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
-
+    <div id="nosotros" className="relative">
       <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
         style={{
-          position: 'fixed',
-          inset: 0,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          padding: '5rem 1.5rem 6rem',
           overflow: 'hidden',
-          opacity: contentOpacity,
-          filter: contentFilter,
-          scale: contentScale,
-          pointerEvents: contentPointerEvents,
-          zIndex: 5,
         }}
       >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
@@ -207,6 +183,8 @@ export default function AboutSection() {
             </div>
           </div>
       </motion.div>
+      {/* SectionBackground Phase C watches this to know when to fade the canvas */}
+      <div id="nosotros-exit" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
     </div>
   );
 }
