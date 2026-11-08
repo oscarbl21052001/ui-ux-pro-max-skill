@@ -60,7 +60,7 @@ export default function EquipoSection() {
         </p>
         <h2
           style={{
-            fontFamily: 'var(--font-perandory)',
+            fontFamily: 'var(--font-playfair-display)',
             color: '#FFFFFF',
             fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
             fontWeight: 700,

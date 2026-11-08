@@ -301,7 +301,7 @@ export default function GlobeSection() {
         }}
       >
         <div className="mb-3 text-center px-6">
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
             PRESENCIA GLOBAL
           </h2>
           <p className="mt-4 max-w-lg mx-auto text-base text-neutral-600 font-inter">

@@ -117,13 +117,11 @@ export default function AboutSection() {
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67], [0, 1, 1, 0]);
-  const contentFilter  = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
-    ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
-  const contentScale   = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
-    [0.94, 1, 1, 0.94]);
+  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.32], [0, 1]);
+  const contentFilter  = useTransform(scrollYProgress, [0.15, 0.32], ['blur(8px)', 'blur(0px)']);
+  const contentScale   = useTransform(scrollYProgress, [0.15, 0.32], [0.96, 1]);
   const contentPointerEvents = useTransform(scrollYProgress, (p) =>
-    p > 0.30 && p < 0.57 ? 'auto' : 'none');
+    p > 0.30 ? 'auto' : 'none');
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -158,7 +156,7 @@ export default function AboutSection() {
           zIndex: 5,
         }}
       >
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
             SOBRE NOSOTROS
           </h2>
 
