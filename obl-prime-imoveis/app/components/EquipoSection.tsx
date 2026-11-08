@@ -31,6 +31,7 @@ export default function EquipoSection() {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         position: 'relative',
+        zIndex: 3,
         padding: '7rem 1.5rem',
       }}
     >

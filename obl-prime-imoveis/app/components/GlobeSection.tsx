@@ -281,7 +281,7 @@ export default function GlobeSection() {
     (p) => p > 0.30 && p < 0.57 ? 'auto' : 'none');
 
   return (
-    <div ref={containerRef} id="presencia-global" className="relative h-[200vh]">
+    <div ref={containerRef} id="presencia-global" className="relative h-[200vh]" style={{ zIndex: 5 }}>
       <motion.div
         style={{
           position: 'sticky',
