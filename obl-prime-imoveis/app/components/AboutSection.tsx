@@ -110,10 +110,9 @@ export default function AboutSection() {
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  // Entrada igual que antes: fade-in + blur-in. Sin fade/blur de salida.
-  const contentOpacity = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
-  const contentFilter  = useTransform(scrollYProgress, [0.05, 0.22], ['blur(12px)', 'blur(0px)']);
-  const contentScale   = useTransform(scrollYProgress, [0.05, 0.22], [0.94, 1]);
+  const contentOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+  const contentFilter  = useTransform(scrollYProgress, [0.1, 0.3], ['blur(12px)', 'blur(0px)']);
+  const contentScale   = useTransform(scrollYProgress, [0.1, 0.3], [0.94, 1]);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -127,9 +126,12 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <div ref={containerRef} id="nosotros" className="relative">
+    <div ref={containerRef} id="nosotros" className="relative h-[200vh]">
       <motion.div
         style={{
+          position: 'sticky',
+          top: 0,
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
