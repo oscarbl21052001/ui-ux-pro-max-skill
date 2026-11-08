@@ -24,8 +24,6 @@ export default function SectionBackground() {
     heroVid.pause();
     bombVid.pause();
 
-    const LERP = 0.28;
-    let heroTarget = 0, heroCurrent = 0;
     let raf: number;
     let rafPending = false;
 
@@ -52,13 +50,14 @@ export default function SectionBackground() {
       rafPending = false;
       const scrollY = window.scrollY;
 
+      let p: number;
       if (bombEl) {
-        const totalP = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
-        heroTarget   = totalP * (heroVid.duration || 30);
+        p = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
       } else {
         const heroScrollMax = (HERO_VH / 100 - 1) * vH;
-        heroTarget = Math.min(Math.max(scrollY / heroScrollMax, 0), 1) * (heroVid.duration || 30);
+        p = Math.min(Math.max(scrollY / heroScrollMax, 0), 1);
       }
+      const target = p * (heroVid.duration || 30);
 
       heroVid.style.opacity = '1';
       bombVid.style.opacity = '0';
@@ -73,10 +72,8 @@ export default function SectionBackground() {
         container.style.opacity = '1';
       }
 
-      // LERP scrub — only write to video when delta is meaningful
-      heroCurrent += (heroTarget - heroCurrent) * LERP;
-      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.015) {
-        heroVid.currentTime = heroCurrent;
+      if (heroVid.readyState >= 2 && Math.abs(target - heroVid.currentTime) > 0.01) {
+        heroVid.currentTime = target;
       }
     };
 
