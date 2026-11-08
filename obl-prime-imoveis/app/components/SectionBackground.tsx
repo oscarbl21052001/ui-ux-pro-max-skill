@@ -16,8 +16,8 @@ export default function SectionBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const heroVid   = heroRef.current;
-    const bombVid   = bombRef.current;
+    const heroVid  = heroRef.current;
+    const bombVid  = bombRef.current;
     const container = containerRef.current;
     if (!heroVid || !bombVid || !container) return;
 
@@ -27,42 +27,33 @@ export default function SectionBackground() {
     const LERP = 0.28;
     let heroTarget = 0, heroCurrent = 0;
     let raf: number;
-    let rafPending = false;
-
-    // Cache expensive DOM lookups — recompute only on resize
-    let vH            = window.innerHeight;
-    let bombEl: HTMLElement | null = null;
-    let bombAbsTop    = 0;
-    let scrubEnd      = 0;
-    let nosotrosExitEl: HTMLElement | null = null;
-
-    const refreshLayout = () => {
-      vH            = window.innerHeight;
-      bombEl        = document.getElementById('bombinhas');
-      nosotrosExitEl = document.getElementById('nosotros-exit');
-      if (bombEl) {
-        bombAbsTop = bombEl.getBoundingClientRect().top + window.scrollY;
-        scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
-      }
-    };
-    refreshLayout();
-    window.addEventListener('resize', refreshLayout, { passive: true });
 
     const tick = () => {
-      rafPending = false;
       const scrollY = window.scrollY;
+      const vH     = window.innerHeight;
+      // ── Single video scrub: hero-web.mov covers page-top → end of Phase 3 ──
+      // Phase 3 (Proyectos) exits at scrollYProgress ≈ 0.97 within
+      // BombinhasProjectsScene (scroll budget = offsetHeight − vH).
+      // We map video 0→duration to scrollY 0→scrubEnd so the white final
+      // frame lands exactly when Phase 3's blur-out animation completes.
+      const bombEl = document.getElementById('bombinhas');
 
       if (bombEl) {
-        const totalP = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
-        heroTarget   = totalP * (heroVid.duration || 30);
+        const bombAbsTop = bombEl.getBoundingClientRect().top + scrollY; // constant
+        const scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
+        const totalP     = Math.min(Math.max(scrollY / Math.max(scrubEnd, 1), 0), 1);
+        heroTarget = totalP * (heroVid.duration || 30);
       } else {
         const heroScrollMax = (HERO_VH / 100 - 1) * vH;
         heroTarget = Math.min(Math.max(scrollY / heroScrollMax, 0), 1) * (heroVid.duration || 30);
       }
 
+      // Hero stays at full opacity throughout — no crossfade needed
       heroVid.style.opacity = '1';
       bombVid.style.opacity = '0';
 
+      // ── Phase C: fade canvas as Sobre Nosotros exits viewport ───────────
+      const nosotrosExitEl = document.getElementById('nosotros-exit');
       if (nosotrosExitEl) {
         const rect      = nosotrosExitEl.getBoundingClientRect();
         const fadeRange = vH * 0.40;
@@ -73,30 +64,17 @@ export default function SectionBackground() {
         container.style.opacity = '1';
       }
 
-      // LERP scrub — only write to video when delta is meaningful
+      // ── LERP scrub ────────────────────────────────────────────────────────
       heroCurrent += (heroTarget - heroCurrent) * LERP;
-      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.015) {
+      if (heroVid.readyState >= 2 && Math.abs(heroCurrent - heroVid.currentTime) > 0.01) {
         heroVid.currentTime = heroCurrent;
       }
+
+      raf = requestAnimationFrame(tick);
     };
 
-    // Run one rAF per scroll event instead of a constant loop
-    const onScroll = () => {
-      if (!rafPending) {
-        rafPending = true;
-        raf = requestAnimationFrame(tick);
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Run once on mount to set initial state
     raf = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', refreshLayout);
-      cancelAnimationFrame(raf);
-    };
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   const videoStyle: React.CSSProperties = {
@@ -138,18 +116,17 @@ export default function SectionBackground() {
         preload="auto"
         style={videoStyle}
       >
-        {/* webm first — smallest (2 MB vs 20 MB mp4); Chrome/Firefox pick it */}
-        <source src={HERO_VIDEO_WEBM} type="video/webm" />
-        <source src={HERO_VIDEO_MP4}  type="video/mp4" />
         <source src={HERO_VIDEO_MOV}  type="video/quicktime" />
+        <source src={HERO_VIDEO_MP4}  type="video/mp4" />
+        <source src={HERO_VIDEO_WEBM} type="video/webm" />
       </video>
 
-      {/* Bombinhas video — always opacity:0 in current design; preload="none" */}
+      {/* Bombinhas video — cross-fades in as hero exits */}
       <video
         ref={bombRef}
         muted
         playsInline
-        preload="none"
+        preload="auto"
         crossOrigin="anonymous"
         style={{ ...videoStyle, opacity: 0 }}
       >
