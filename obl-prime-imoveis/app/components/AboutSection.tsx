@@ -114,8 +114,8 @@ export default function AboutSection() {
   const contentOpacity = useTransform(scrollYProgress, [0.1, 0.28], [0, 1]);
   const contentFilter  = useTransform(scrollYProgress, [0.1, 0.28], ['blur(12px)', 'blur(0px)']);
   const contentScale   = useTransform(scrollYProgress, [0.1, 0.28], [0.94, 1]);
-  // Salida: desliza hacia arriba — termina justo cuando EquipoSection entra por abajo
-  const contentY       = useTransform(scrollYProgress, [0.42, 0.60], ['0vh', '-120vh']);
+  // Salida: sincronizada con la subida de EquipoSection — cero hueco
+  const contentY       = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -129,7 +129,7 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <div ref={containerRef} id="nosotros" className="relative h-[150vh]">
+    <div ref={containerRef} id="nosotros" className="relative h-[120vh]">
       <motion.div
         style={{
           position: 'fixed',
