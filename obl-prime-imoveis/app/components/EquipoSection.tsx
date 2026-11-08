@@ -23,7 +23,6 @@ const MEMBERS = [
 
 export default function EquipoSection() {
   return (
-    <div style={{ position: 'relative', zIndex: 3 }}>
     <section
       style={{
         backgroundImage: 'url(/equipo-bg.jpg)',
@@ -95,7 +94,6 @@ export default function EquipoSection() {
         </div>
       </div>
     </section>
-    </div>
   );
 }
 

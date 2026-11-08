@@ -115,7 +115,7 @@ export default function AboutSection() {
   const contentFilter  = useTransform(scrollYProgress, [0.1, 0.28], ['blur(12px)', 'blur(0px)']);
   const contentScale   = useTransform(scrollYProgress, [0.1, 0.28], [0.94, 1]);
   // Salida: sincronizada con la subida de EquipoSection — cero hueco
-  const contentY       = useTransform(scrollYProgress, [0.545, 0.90], ['0vh', '-78vh']);
+  const contentY       = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
