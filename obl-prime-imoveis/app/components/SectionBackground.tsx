@@ -40,7 +40,7 @@ export default function SectionBackground() {
       nosotrosExitEl = document.getElementById('nosotros-exit');
       if (bombEl) {
         bombAbsTop = bombEl.getBoundingClientRect().top + window.scrollY;
-        scrubEnd   = bombAbsTop + 0.97 * (bombEl.offsetHeight - vH);
+        scrubEnd   = bombAbsTop + bombEl.offsetHeight;
       }
     };
     refreshLayout();
