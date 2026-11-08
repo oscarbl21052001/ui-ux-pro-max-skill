@@ -106,24 +106,16 @@ export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef     = useRef<HTMLVideoElement>(null);
 
-  // Full-range tracking: ['start end','end start'] spans 300vh for a 200vh section.
-  // Sticky pins from progress ≈ 0.33 to ≈ 0.67 (100vh of hold).
-  //   Fade-in  : 0.15 → 0.32  starts 55vh before sticky, overlapping Proyectos tail
-  //              (Phase 3 already transparent by then — no visual conflict)
-  //   Hold     : 0.32 → 0.55  fully visible, pinned
-  //   Fade-out : 0.55 → 0.67  dissolves in place before sticky releases
-  //   Silent   : outside range → clamped to opacity 0
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67], [0, 1, 1, 0]);
-  const contentFilter  = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
-    ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
-  const contentScale   = useTransform(scrollYProgress, [0.15, 0.32, 0.55, 0.67],
-    [0.94, 1, 1, 0.94]);
-  const contentPointerEvents = useTransform(scrollYProgress, (p) =>
-    p > 0.30 && p < 0.57 ? 'auto' : 'none');
+  // Entrada: materializa desde el centro con blur
+  const contentOpacity = useTransform(scrollYProgress, [0.1, 0.28], [0, 1]);
+  const contentFilter  = useTransform(scrollYProgress, [0.1, 0.28], ['blur(12px)', 'blur(0px)']);
+  const contentScale   = useTransform(scrollYProgress, [0.1, 0.28], [0.94, 1]);
+  // Salida: sincronizada con la subida de EquipoSection — cero hueco
+  const contentY       = useTransform(scrollYProgress, [0.60, 1.00], ['0vh', '-100vh']);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -137,28 +129,25 @@ export default function AboutSection() {
   }, []);
 
   return (
-    // 200vh scroll budget — content stays sticky while background video holds its final frame
-    <div ref={containerRef} id="nosotros" className="relative h-[200vh]">
-      {/* SectionBackground Phase C watches this to know when to fade the canvas */}
-      <div id="nosotros-exit" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
-
+    <div ref={containerRef} id="nosotros" className="relative h-[150vh]">
       <motion.div
         style={{
           position: 'fixed',
           inset: 0,
+          zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          overflow: 'hidden',
+          padding: '5rem 1.5rem 6rem',
+          overflowY: 'auto',
           opacity: contentOpacity,
           filter: contentFilter,
           scale: contentScale,
-          pointerEvents: contentPointerEvents,
-          zIndex: 5,
+          y: contentY,
         }}
       >
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4">
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
             SOBRE NOSOTROS
           </h2>
 
@@ -209,6 +198,8 @@ export default function AboutSection() {
             </div>
           </div>
       </motion.div>
+      {/* SectionBackground Phase C watches this to know when to fade the canvas */}
+      <div id="nosotros-exit" aria-hidden style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1 }} />
     </div>
   );
 }
