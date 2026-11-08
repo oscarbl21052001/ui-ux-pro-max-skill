@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface ServiceCard {
   title: string;
@@ -103,7 +103,17 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
 const PORTFOLIO_VIDEO = '/portfolio-preview.mp4';
 
 export default function AboutSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef     = useRef<HTMLVideoElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  });
+  // Entrada igual que antes: fade-in + blur-in. Sin fade/blur de salida.
+  const contentOpacity = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
+  const contentFilter  = useTransform(scrollYProgress, [0.05, 0.22], ['blur(12px)', 'blur(0px)']);
+  const contentScale   = useTransform(scrollYProgress, [0.05, 0.22], [0.94, 1]);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -117,12 +127,8 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <div id="nosotros" className="relative">
+    <div ref={containerRef} id="nosotros" className="relative">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -130,6 +136,9 @@ export default function AboutSection() {
           justifyContent: 'center',
           padding: '5rem 1.5rem 6rem',
           overflow: 'hidden',
+          opacity: contentOpacity,
+          filter: contentFilter,
+          scale: contentScale,
         }}
       >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
