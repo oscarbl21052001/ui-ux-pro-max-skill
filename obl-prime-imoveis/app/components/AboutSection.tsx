@@ -110,10 +110,12 @@ export default function AboutSection() {
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  // Entrada igual que antes: fade-in + blur-in. Sin fade/blur de salida.
-  const contentOpacity = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
-  const contentFilter  = useTransform(scrollYProgress, [0.05, 0.22], ['blur(12px)', 'blur(0px)']);
-  const contentScale   = useTransform(scrollYProgress, [0.05, 0.22], [0.94, 1]);
+  // Entrada: materializa desde el centro con blur (como el original)
+  const contentOpacity = useTransform(scrollYProgress, [0.15, 0.32], [0, 1]);
+  const contentFilter  = useTransform(scrollYProgress, [0.15, 0.32], ['blur(12px)', 'blur(0px)']);
+  const contentScale   = useTransform(scrollYProgress, [0.15, 0.32], [0.94, 1]);
+  // Salida: desliza hacia arriba antes de que llegue EquipoSection
+  const contentY       = useTransform(scrollYProgress, [0.45, 0.65], ['0vh', '-120vh']);
 
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
@@ -127,18 +129,22 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <div ref={containerRef} id="nosotros" className="relative">
+    <div ref={containerRef} id="nosotros" className="relative h-[200vh]">
       <motion.div
         style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           padding: '5rem 1.5rem 6rem',
-          overflow: 'hidden',
+          overflowY: 'auto',
           opacity: contentOpacity,
           filter: contentFilter,
           scale: contentScale,
+          y: contentY,
         }}
       >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
