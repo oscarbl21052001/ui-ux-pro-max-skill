@@ -6,7 +6,7 @@ import ProjectCarousel from './ProjectCarousel';
 import ContactModal from './ContactModal';
 
 
-// ── Carousel data (Phase 2 — Fundamentos del Mercado) ─────────────────────────────────────
+// ── Carousel data (Phase 2 — Fundamentos del Mercado) ────────────────────────
 const CARDS = [
   { id: 1, title: 'Valorización Anual',    value: '+14,3%',   sub: 'Líder nacional — FipeZap 2025',            chart: 'bars-up'    },
   { id: 2, title: 'Ocupación Turística',   value: '90%',      sub: 'Alta temporada dic–feb',                   chart: 'arc'        },
@@ -223,17 +223,17 @@ export default function BombinhasProjectsScene() {
   //   Plateau  [0.70 → 0.87]: 76vh — full opacity, scale 1
   //   Fade-out [0.87 → 0.97]: 45vh — opacity 1→0
 
-  // ── Phase 1: Bombinhas card ─────────────────────────────────────────────────────────────────────
+  // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
   const bombOpacity = useTransform(scrollYProgress, [0, 0.05, 0.19, 0.25], [0, 1, 1, 0]);
   const bombBlurPx  = useTransform(scrollYProgress, [0, 0.19, 0.25], [0, 0, 20]);
   const bombFilter  = useTransform(bombBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
   const bombCardPE  = useTransform(scrollYProgress, (p) => p <= 0.26 ? 'auto' : 'none');
 
-  // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────────────────────────────
+  // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
   const projOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [0, 1, 1, 0]);
   const projScale   = useTransform(scrollYProgress, [0.25, 0.35], [0.7, 1]);
 
-  // ── Phase 3: Proyectos grid ────────────────────────────────────────────────────────────────────────────
+  // ── Phase 3: Proyectos grid ────────────────────────────────────────────────
   const statsOpacity = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [0, 1, 1, 0]);
   const statsScale   = useTransform(scrollYProgress, [0.63, 0.70], [0.88, 1]);
   const statsCardPE  = useTransform(scrollYProgress, (p) => p >= 0.62 ? 'auto' : 'none');
@@ -247,10 +247,12 @@ export default function BombinhasProjectsScene() {
       <div id="proyectos" className="sticky top-0 h-screen overflow-hidden">
 
         {/* ── Phase 1: Bombinhas glassmorphic card ───────────────────── */}
+        {/* Wrapper is always pointer-events:none — it's a fullscreen overlay and must NEVER absorb clicks */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center px-6"
-          style={{ opacity: bombOpacity, filter: bombFilter, willChange: 'opacity, filter', pointerEvents: bombCardPE }}
+          style={{ opacity: bombOpacity, filter: bombFilter, willChange: 'opacity, filter', pointerEvents: 'none' }}
         >
+          {/* Only the glass card itself gets bombCardPE so clicks pass through when it's invisible */}
           <motion.div
             className="mx-auto max-w-4xl w-full space-y-8 rounded-3xl px-10 py-10 md:px-14 md:py-12 text-center"
             style={{
