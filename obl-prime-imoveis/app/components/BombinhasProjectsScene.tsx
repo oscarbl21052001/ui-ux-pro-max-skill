@@ -103,7 +103,6 @@ function CarouselCard({
   card: typeof CARDS[0]; index: number; isActive: boolean; onPress: () => void; onRelease: () => void;
 }) {
   return (
-    // Outer: pure 3D positioner — no hit area (pointer-events: none)
     <div
       aria-hidden
       style={{
@@ -113,7 +112,6 @@ function CarouselCard({
         pointerEvents: 'none',
       }}
     >
-      {/* Inner: the actual visible card — sole hit target */}
       <div
         style={{
           width: CARD_W, height: CARD_H,
@@ -171,9 +169,8 @@ export default function BombinhasProjectsScene() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // JS-driven rotation: keeps hit-testing in sync with the compositor
   useEffect(() => {
-    const DEG_PER_MS = 360 / 18000; // 18s revolution
+    const DEG_PER_MS = 360 / 18000;
     let raf: number;
     let lastT: number | null = null;
     let visible = false;
@@ -203,31 +200,15 @@ export default function BombinhasProjectsScene() {
   const handlePress   = useCallback((id: number) => { setActiveCard(id); pause();  }, [pause]);
   const handleRelease = useCallback(() =>           { setActiveCard(null); resume(); }, [resume]);
 
-  // scrollYProgress: 0 = container top at viewport top, 1 = container bottom at viewport bottom
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // h-[550vh] → 450vh sticky scroll budget (3 phases)
-  // Phase 1 (Bombinhas):  [0.00 → 0.25] = ~112vh
-  //   Fade-in  [0.00 → 0.05]: 22vh — opacity 0→1
-  //   Plateau  [0.05 → 0.19]: 63vh — full opacity
-  //   Blur-out [0.19 → 0.25]: 27vh — opacity 1→0, blur 0→20px
-  // Phase 2 (Carousel):   [0.25 → 0.63] = ~171vh
-  //   Zoom-in  [0.25 → 0.35]: 45vh — scale 0.7→1, opacity 0→1
-  //   Plateau  [0.35 → 0.53]: 81vh — full opacity, scale 1
-  //   Blur-out [0.53 → 0.63]: 45vh — opacity 1→0, blur 0→20px
-  // Phase 3 (Proyectos):  [0.63 → 1.00] = ~167vh
-  //   Zoom-in  [0.63 → 0.70]: 31vh — scale 0.7→1, opacity 0→1
-  //   Plateau  [0.70 → 0.87]: 76vh — full opacity, scale 1
-  //   Fade-out [0.87 → 0.97]: 45vh — opacity 1→0
-
   // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
   const bombOpacity = useTransform(scrollYProgress, [0, 0.05, 0.19, 0.25], [0, 1, 1, 0]);
   const bombBlurPx  = useTransform(scrollYProgress, [0, 0.19, 0.25], [0, 0, 20]);
   const bombFilter  = useTransform(bombBlurPx, (v) => `blur(${v.toFixed(1)}px)`);
-  const bombCardPE  = useTransform(scrollYProgress, (p) => p <= 0.26 ? 'auto' : 'none');
 
   // ── Phase 2: Fundamentos del Mercado carousel ──────────────────────────────
   const projOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.53, 0.63], [0, 1, 1, 0]);
@@ -238,7 +219,6 @@ export default function BombinhasProjectsScene() {
   const statsScale   = useTransform(scrollYProgress, [0.63, 0.70], [0.88, 1]);
   const statsCardPE  = useTransform(scrollYProgress, (p) => p >= 0.62 ? 'auto' : 'none');
 
-
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
 
@@ -247,12 +227,12 @@ export default function BombinhasProjectsScene() {
       <div id="proyectos" className="sticky top-0 h-screen overflow-hidden">
 
         {/* ── Phase 1: Bombinhas glassmorphic card ───────────────────── */}
-        {/* Wrapper is always pointer-events:none — it's a fullscreen overlay and must NEVER absorb clicks */}
+        {/* Outer wrapper: always pointer-events:none — covers full viewport, must never absorb clicks */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center px-6"
           style={{ opacity: bombOpacity, filter: bombFilter, willChange: 'opacity, filter', pointerEvents: 'none' }}
         >
-          {/* Only the glass card itself gets bombCardPE so clicks pass through when it's invisible */}
+          {/* Inner glass card: plain 'auto' — MotionValue on pointer-events is unreliable in Framer Motion */}
           <motion.div
             className="mx-auto max-w-4xl w-full space-y-8 rounded-3xl px-10 py-10 md:px-14 md:py-12 text-center"
             style={{
@@ -260,7 +240,7 @@ export default function BombinhasProjectsScene() {
               backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.10)',
               boxShadow: '0 8px 48px -8px rgba(0,0,0,0.70), inset 0 1px 0 rgba(255,255,255,0.07)',
-              transform: 'translateZ(0)', isolation: 'isolate', pointerEvents: bombCardPE,
+              transform: 'translateZ(0)', isolation: 'isolate', pointerEvents: 'auto',
             }}
           >
             <div className="space-y-6">
@@ -306,12 +286,10 @@ export default function BombinhasProjectsScene() {
         </motion.div>
 
         {/* ── Phase 2: Fundamentos del Mercado — 3D carousel ─────────────── */}
-        {/* No filter on this wrapper — CSS filter flattens preserve-3d and breaks hit testing */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
           style={{ opacity: projOpacity, scale: projScale, willChange: 'opacity, transform', pointerEvents: 'none' }}
         >
-          {/* Stage: pointer-events none on all containers, auto only on card elements */}
           <div style={{ height: visualH, position: 'relative', width: '100%', pointerEvents: 'none' }}>
             <div
               style={{
@@ -349,19 +327,16 @@ export default function BombinhasProjectsScene() {
             gap: '1.4vh',
           }}
         >
-          {/* Heading */}
           <div className="text-center shrink-0">
             <h2 style={{ fontFamily: 'var(--font-playfair-display)', fontSize: 'clamp(1.8rem, 3.4vw, 3rem)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.1 }}>
               PROYECTOS
             </h2>
           </div>
 
-          {/* Carousel — fixed height so it doesn't overflow */}
           <div style={{ width: '100%', height: 'min(52vh, 440px)', flexShrink: 0 }}>
             <ProjectCarousel />
           </div>
 
-          {/* Bottom: +27 proyectos + CTA — frosted so legible on any bg */}
           <div
             className="shrink-0 flex flex-col items-center"
             style={{
@@ -411,7 +386,6 @@ export default function BombinhasProjectsScene() {
           </div>
         </motion.div>
 
-        {/* Contact modal — always rendered, outside scroll phase */}
         <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
 
       </div>
