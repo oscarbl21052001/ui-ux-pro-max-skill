@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import ProjectCarousel from './ProjectCarousel';
 import ContactModal from './ContactModal';
 
@@ -158,6 +158,8 @@ export default function BombinhasProjectsScene() {
   const [contactOpen, setContactOpen] = useState(false);
   const pausedRef    = useRef(false);
   const ringAngleRef = useRef(0);
+  // React state for pointer-events — MotionValues are unreliable on non-animatable CSS props
+  const [phase3PE, setPhase3PE] = useState<'auto' | 'none'>('none');
 
   useEffect(() => {
     const update = () => {
@@ -205,6 +207,11 @@ export default function BombinhasProjectsScene() {
     offset: ['start start', 'end end'],
   });
 
+  // Sync phase3 pointer-events via React state (reliable, unlike MotionValue on pointer-events)
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    setPhase3PE(p >= 0.62 ? 'auto' : 'none');
+  });
+
   // ── Phase 1: Bombinhas card ────────────────────────────────────────────────
   const bombOpacity = useTransform(scrollYProgress, [0, 0.05, 0.19, 0.25], [0, 1, 1, 0]);
   const bombBlurPx  = useTransform(scrollYProgress, [0, 0.19, 0.25], [0, 0, 20]);
@@ -217,7 +224,6 @@ export default function BombinhasProjectsScene() {
   // ── Phase 3: Proyectos grid ────────────────────────────────────────────────
   const statsOpacity = useTransform(scrollYProgress, [0.63, 0.70, 0.87, 0.97], [0, 1, 1, 0]);
   const statsScale   = useTransform(scrollYProgress, [0.63, 0.70], [0.88, 1]);
-  const statsCardPE  = useTransform(scrollYProgress, (p) => p >= 0.62 ? 'auto' : 'none');
 
   const stageH  = 360;
   const visualH = Math.round(stageH * scale);
@@ -227,12 +233,12 @@ export default function BombinhasProjectsScene() {
       <div id="proyectos" className="sticky top-0 h-screen overflow-hidden">
 
         {/* ── Phase 1: Bombinhas glassmorphic card ───────────────────── */}
-        {/* Outer wrapper: always pointer-events:none — covers full viewport, must never absorb clicks */}
+        {/* Outer wrapper: always pointer-events:none — fullscreen, must never absorb clicks */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center px-6"
           style={{ opacity: bombOpacity, filter: bombFilter, willChange: 'opacity, filter', pointerEvents: 'none' }}
         >
-          {/* Inner glass card: plain 'auto' — MotionValue on pointer-events is unreliable in Framer Motion */}
+          {/* Inner glass card: plain 'auto' string — safe, never fullscreen */}
           <motion.div
             className="mx-auto max-w-4xl w-full space-y-8 rounded-3xl px-10 py-10 md:px-14 md:py-12 text-center"
             style={{
@@ -286,6 +292,7 @@ export default function BombinhasProjectsScene() {
         </motion.div>
 
         {/* ── Phase 2: Fundamentos del Mercado — 3D carousel ─────────────── */}
+        {/* Wrapper always pointer-events:none; only carousel card divs get auto */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
           style={{ opacity: projOpacity, scale: projScale, willChange: 'opacity, transform', pointerEvents: 'none' }}
@@ -319,11 +326,13 @@ export default function BombinhasProjectsScene() {
         </motion.div>
 
         {/* ── Phase 3: Proyectos carousel ──────────────────────────────────── */}
+        {/* pointer-events driven by React state (not MotionValue) for reliability */}
         <motion.div
           className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-10"
           style={{
             opacity: statsOpacity, scale: statsScale,
-            willChange: 'opacity, transform', pointerEvents: statsCardPE,
+            willChange: 'opacity, transform',
+            pointerEvents: phase3PE,
             gap: '1.4vh',
           }}
         >
