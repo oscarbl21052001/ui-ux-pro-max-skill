@@ -21,7 +21,7 @@ export default function BombinhasInfoPage() {
     <div style={{ background: BG_COLOR }}>
 
       {/* ── HERO: Tipografía pura ── */}
-      <section className="relative flex flex-col justify-center items-center min-h-screen px-6 text-center overflow-hidden">
+      <section className="relative flex flex-col justify-center items-center px-6 pt-32 pb-12 text-center overflow-hidden">
 
         {/* Noise grain */}
         <div
@@ -101,17 +101,10 @@ export default function BombinhasInfoPage() {
           </motion.div>
         </motion.div>
 
-        {/* Bottom fade into content */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-32 pointer-events-none"
-          style={{
-            background: `linear-gradient(to bottom, transparent, ${BG_COLOR})`,
-          }}
-        />
       </section>
 
       {/* ── INTRO: Geografía y Turismo ── */}
-      <section className="relative py-20 md:py-28 px-6">
+      <section className="relative pt-6 pb-16 md:pb-24 px-6">
         <div className="mx-auto max-w-4xl space-y-20">
 
           <motion.div
