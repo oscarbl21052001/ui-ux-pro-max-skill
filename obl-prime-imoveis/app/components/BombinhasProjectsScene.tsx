@@ -289,9 +289,9 @@ export default function BombinhasProjectsScene() {
                 La belleza de Bombinhas está legalmente obligada a permanecer intacta. Tu inversión, también.
               </p>
               <motion.a
-                href="/bombinhas-info" target="_blank" rel="noopener noreferrer"
+                href="/bombinhas-info"
                 className="group inline-flex items-center gap-2 rounded-full font-inter font-semibold"
-                style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(201,162,75,0.50)', color: '#C9A24B', background: 'transparent', padding: '0.75rem 2rem', fontSize: '0.875rem', letterSpacing: '0.03em', boxShadow: '0 0 0 0 rgba(201,162,75,0)' }}
+                style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(201,162,75,0.50)', color: '#C9A24B', background: 'transparent', padding: '0.75rem 2rem', fontSize: '0.875rem', letterSpacing: '0.03em', boxShadow: '0 0 0 0 rgba(201,162,75,0)', pointerEvents: 'auto', cursor: 'pointer' }}
                 whileHover={{ borderColor: 'rgba(212,175,55,1)', color: '#F5E6A8', background: 'rgba(201,162,75,0.10)', boxShadow: '0 0 36px 10px rgba(212,175,55,0.18), 0 0 0 1px rgba(212,175,55,0.85)' }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
