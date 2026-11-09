@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useCallback, useState } from 'react';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 
 interface ServiceCard {
   title: string;
@@ -117,6 +117,13 @@ export default function AboutSection() {
   // Salida: sincronizada con la subida de EquipoSection — cero hueco
   const contentY       = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
 
+  // pointer-events must be 'none' while this section is off-screen (scrollYProgress < ~0.08)
+  // so the fixed div doesn't intercept clicks on sections scrolled above it (e.g. BombinhasProjectsScene)
+  const [aboutPE, setAboutPE] = useState<'auto' | 'none'>('none');
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    setAboutPE(p >= 0.08 ? 'auto' : 'none');
+  });
+
   const handleMouseEnter = useCallback(() => {
     try { videoRef.current?.play().catch(() => {}); } catch {}
   }, []);
@@ -145,6 +152,7 @@ export default function AboutSection() {
           filter: contentFilter,
           scale: contentScale,
           y: contentY,
+          pointerEvents: aboutPE,
         }}
       >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
