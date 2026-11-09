@@ -1,185 +1,168 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-
-const HIGGSFIELD_VIDEO_URL =
-  "https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260628_114621_a95448e0-4fdc-465b-9bb7-c5688f4fd3b4.mp4";
 
 const BG_COLOR = "#0E1418";
 
 const HIGGSFIELD_IMAGE_URL =
   "https://d8j0ntlcm91z4.cloudfront.net/user_34Wo0fE26eVHkrHbFysLp2mW5xd/hf_20260628_221735_efacfff4-2258-4a66-b71e-1fcd47fb9493.png";
 
+const STAGGER = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.2 } },
+};
+const FADE_UP = (delay = 0) => ({
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay } },
+});
+
 export default function BombinhasInfoPage() {
-  const heroContainerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const block1Ref = useRef<HTMLDivElement>(null);
-  const block2Ref = useRef<HTMLDivElement>(null);
-  const targetTimeRef = useRef(0);
-  const progressRef = useRef(0);
-  const heroRafRef = useRef<number>(0);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-
-    const video = videoRef.current;
-    const heroContainer = heroContainerRef.current;
-    const b1 = block1Ref.current;
-    const b2 = block2Ref.current;
-    if (!video || !heroContainer || !b1 || !b2) return;
-
-    video.pause();
-
-    const onScroll = () => {
-      const rect = heroContainer.getBoundingClientRect();
-      const scrollableHeight = rect.height - window.innerHeight;
-      if (scrollableHeight <= 0) return;
-      const progress = Math.min(Math.max(-rect.top / scrollableHeight, 0), 1);
-      progressRef.current = progress;
-      targetTimeRef.current = progress * (video.duration || 0);
-    };
-
-    const LERP_FACTOR = 0.22;
-    let currentTime = 0;
-
-    const clamp = (v: number) => Math.min(Math.max(v, 0), 1);
-
-    const tick = () => {
-      const target = targetTimeRef.current;
-      currentTime += (target - currentTime) * LERP_FACTOR;
-      if (
-        video.readyState >= 2 &&
-        Math.abs(currentTime - video.currentTime) > 0.01
-      ) {
-        video.currentTime = currentTime;
-      }
-
-      const p = progressRef.current;
-
-      const b1Opacity = p <= 0.45 ? 1 : clamp(1 - (p - 0.45) / 0.05);
-      const b1Blur = p <= 0.45 ? 0 : (1 - b1Opacity) * 12;
-      b1.style.opacity = String(b1Opacity);
-      b1.style.filter = `blur(${b1Blur}px)`;
-
-      const b2Raw = p <= 0.55 ? 0 : clamp((p - 0.55) / 0.1);
-      const b2Blur = (1 - b2Raw) * 12;
-      const b2Y = (1 - b2Raw) * 20;
-      b2.style.opacity = String(b2Raw);
-      b2.style.filter = `blur(${b2Blur}px)`;
-      b2.style.transform = `translateY(${b2Y}px)`;
-
-      heroRafRef.current = requestAnimationFrame(tick);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    heroRafRef.current = requestAnimationFrame(tick);
-    onScroll();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(heroRafRef.current);
-    };
-  }, []);
-
   return (
     <div style={{ background: BG_COLOR }}>
-      {/* ── SECTION 1: Scroll-Driven Video Header ── */}
-      <div ref={heroContainerRef} className="relative h-[300vh]">
-        <div className="sticky top-0 h-screen overflow-hidden">
-          <video
-            ref={videoRef}
-            muted
-            playsInline
-            preload="auto"
-            crossOrigin="anonymous"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-              mounted ? "opacity-100" : "opacity-0"
-            }`}
+
+      {/* ── HERO: Tipografía pura ── */}
+      <section className="relative flex flex-col justify-center items-center min-h-screen px-6 text-center overflow-hidden">
+
+        {/* Noise grain */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "300px 300px",
+          }}
+        />
+
+        {/* Radial gold glow */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 55%, rgba(201,162,75,0.09) 0%, transparent 70%)",
+          }}
+        />
+
+        <motion.div
+          className="relative z-10 mx-auto max-w-4xl"
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER}
+        >
+          {/* Location badge */}
+          <motion.div variants={FADE_UP(0)}>
+            <span
+              className="inline-flex items-center gap-2 mb-8 px-5 py-1.5 rounded-full font-inter"
+              style={{
+                border: "1px solid rgba(201,162,75,0.35)",
+                color: "#C9A24B",
+                background: "rgba(201,162,75,0.07)",
+                fontSize: "0.68rem",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+              }}
+            >
+              Bombinhas · Santa Catarina · Brasil
+            </span>
+          </motion.div>
+
+          {/* Main title */}
+          <motion.h1
+            variants={FADE_UP(0)}
+            className="text-4xl md:text-6xl tracking-tight mb-6 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+            style={{ lineHeight: 1.15 }}
           >
-            <source src={HIGGSFIELD_VIDEO_URL} type="video/mp4" />
-          </video>
+            Un Destino Exclusivo con Restricción Estructural de Oferta
+          </motion.h1>
 
-          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-
-          <div
-            className="absolute inset-0 z-10 pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 60%, transparent 100%)",
-              backdropFilter: "blur(2px)",
-            }}
-          />
-
-          <div
-            ref={block1Ref}
-            className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none"
+          {/* Stat chips */}
+          <motion.div
+            variants={FADE_UP(0)}
+            className="flex flex-wrap justify-center gap-3 mt-8"
           >
-            <div className="mx-auto max-w-5xl">
-              <h1 className="text-4xl md:text-5xl tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
-                Un Destino Exclusivo con Restricción Estructural de Oferta
-              </h1>
-              <p className="text-base md:text-xl text-white leading-loose font-cardo">
-                Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
-                centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
-                Atlántico, con solo 35,9 km² de superficie total, de los cuales
-                el <strong className="text-[#E3C174]">67% está bajo protección ambiental</strong>.
-                Esta limitación geográfica y legal genera
-                una <strong className="text-[#E3C174]">escasez real y permanente de suelo edificable</strong>,
-                lo que sostiene la valorización a largo plazo. La ciudad cuenta con 39 playas,
-                5 de ellas con la certificación
-                internacional <strong className="text-[#E3C174]">Bandeira Azul</strong> (un
-                sello de calidad que garantiza aguas limpias, gestión ambiental excelente,
-                seguridad y servicios sostenibles). Además, implementa desde 2013
-                la <strong className="text-[#E3C174]">Taxa de Preservación Ambiental (TPA)</strong>,
-                que regula el acceso vehicular en temporada alta para preservar el entorno.
-              </p>
-            </div>
-          </div>
+            {[
+              "35,9 km² de superficie",
+              "67% protección ambiental",
+              "39 playas",
+              "5× Bandeira Azul",
+            ].map((stat) => (
+              <span
+                key={stat}
+                className="font-inter text-xs px-4 py-1.5 rounded-full"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.65)",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                {stat}
+              </span>
+            ))}
+          </motion.div>
+        </motion.div>
 
-          <div
-            ref={block2Ref}
-            className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center pointer-events-none"
-            style={{ opacity: 0 }}
+        {/* Bottom fade into content */}
+        <div
+          className="absolute bottom-0 left-0 w-full h-32 pointer-events-none"
+          style={{
+            background: `linear-gradient(to bottom, transparent, ${BG_COLOR})`,
+          }}
+        />
+      </section>
+
+      {/* ── INTRO: Geografía y Turismo ── */}
+      <section className="relative py-20 md:py-28 px-6">
+        <div className="mx-auto max-w-4xl space-y-20">
+
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="mx-auto max-w-5xl">
-              <h2 className="text-4xl md:text-5xl tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
-                Turismo Potente y Demanda Constante
-              </h2>
-              <p className="text-base md:text-xl text-white leading-loose font-cardo">
-                Según datos del IBGE (Instituto Brasileño de Geografía y Estadística),
-                Bombinhas tiene
-                aproximadamente <strong className="text-[#E3C174]">25.058 habitantes permanentes</strong>.
-                Sin embargo, recibe
-                entre <strong className="text-[#E3C174]">1,9 y 2,3 millones de turistas</strong> por
-                temporada de verano, <strong className="text-[#E3C174]">multiplicando su población
-                hasta 92 veces</strong> en los meses pico. Es reconocida como
-                la <strong className="text-[#E3C174]">Capital Nacional del Buceo Ecológico</strong> y
-                atrae turismo nacional e internacional de nivel medio-alto.
-              </p>
-            </div>
-          </div>
+            <p className="text-base md:text-xl text-white leading-loose font-cardo">
+              Bombinhas es un municipio ubicado en el estado de Santa Catarina, en el litoral
+              centro-norte de Brasil. Se trata de una península que avanza hacia el Océano
+              Atlántico, con solo 35,9 km² de superficie total, de los cuales
+              el <strong className="text-[#E3C174]">67% está bajo protección ambiental</strong>.
+              Esta limitación geográfica y legal genera
+              una <strong className="text-[#E3C174]">escasez real y permanente de suelo edificable</strong>,
+              lo que sostiene la valorización a largo plazo. La ciudad cuenta con 39 playas,
+              5 de ellas con la certificación
+              internacional <strong className="text-[#E3C174]">Bandeira Azul</strong> (un
+              sello de calidad que garantiza aguas limpias, gestión ambiental excelente,
+              seguridad y servicios sostenibles). Además, implementa desde 2013
+              la <strong className="text-[#E3C174]">Taxa de Preservación Ambiental (TPA)</strong>,
+              que regula el acceso vehicular en temporada alta para preservar el entorno.
+            </p>
+          </motion.div>
 
-          <div
-            className="absolute bottom-0 left-0 w-full h-[50%] pointer-events-none"
-            style={{
-              background: `linear-gradient(to bottom, transparent 0%, ${BG_COLOR}33 30%, ${BG_COLOR}99 60%, ${BG_COLOR} 100%)`,
-              zIndex: 25,
-            }}
-          />
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <h2 className="text-4xl md:text-5xl tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
+              Turismo Potente y Demanda Constante
+            </h2>
+            <p className="text-base md:text-xl text-white leading-loose font-cardo">
+              Según datos del IBGE (Instituto Brasileño de Geografía y Estadística),
+              Bombinhas tiene
+              aproximadamente <strong className="text-[#E3C174]">25.058 habitantes permanentes</strong>.
+              Sin embargo, recibe
+              entre <strong className="text-[#E3C174]">1,9 y 2,3 millones de turistas</strong> por
+              temporada de verano, <strong className="text-[#E3C174]">multiplicando su población
+              hasta 92 veces</strong> en los meses pico. Es reconocida como
+              la <strong className="text-[#E3C174]">Capital Nacional del Buceo Ecológico</strong> y
+              atrae turismo nacional e internacional de nivel medio-alto.
+            </p>
+          </motion.div>
 
-          <div
-            className="absolute bottom-0 left-0 w-full h-[30%] pointer-events-none"
-            style={{
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              maskImage: "linear-gradient(to bottom, transparent, black)",
-              WebkitMaskImage: "linear-gradient(to bottom, transparent, black)",
-              zIndex: 26,
-            }}
-          />
         </div>
-      </div>
+      </section>
 
       {/* ── SECTION 2: Valorización Inmobiliaria ── */}
       <section className="relative -mt-1 py-24 md:py-32 px-6">
