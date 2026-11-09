@@ -77,7 +77,7 @@ export default function ProjectCarousel() {
               const delta = info.offset.x;
               if (Math.abs(delta) > 60) go(delta < 0 ? 1 : -1);
             }}
-            style={{ position: 'absolute', inset: 0, cursor: 'grab' }}
+            style={{ position: 'absolute', inset: 0, cursor: 'pointer' }}
             whileDrag={{ cursor: 'grabbing' }}
             onClick={() => router.push(`/proyectos/${p.slug}`)}
           >
