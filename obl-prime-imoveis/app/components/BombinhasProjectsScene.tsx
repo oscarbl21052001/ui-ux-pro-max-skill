@@ -198,6 +198,26 @@ export default function BombinhasProjectsScene() {
     return () => { cancelAnimationFrame(raf); observer.disconnect(); };
   }, []);
 
+  // After browser back-navigation, the browser restores scroll position asynchronously.
+  // Framer-motion's useScroll MotionValues are computed once at mount (scrollYProgress≈0),
+  // then only update on the next real scroll event. Without this, Phase 1 stays stuck
+  // at opacity=1/blur=0 until the user scrolls, making the page appear frozen/blurry.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+      }
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
+
   const pause  = useCallback(() => { pausedRef.current = true;  }, []);
   const resume = useCallback(() => { pausedRef.current = false; }, []);
   const handlePress   = useCallback((id: number) => { setActiveCard(id); pause();  }, [pause]);
