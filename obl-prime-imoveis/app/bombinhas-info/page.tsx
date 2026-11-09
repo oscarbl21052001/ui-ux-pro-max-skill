@@ -13,7 +13,7 @@ const STAGGER = {
 };
 const FADE_UP = (delay = 0) => ({
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const, delay } },
 });
 
 export default function BombinhasInfoPage() {
