@@ -197,6 +197,22 @@ export default function BombinhasProjectsScene() {
     return () => { cancelAnimationFrame(raf); observer.disconnect(); };
   }, []);
 
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+      }
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
+
   const pause  = useCallback(() => { pausedRef.current = true;  }, []);
   const resume = useCallback(() => { pausedRef.current = false; }, []);
   const handlePress   = useCallback((id: number) => { setActiveCard(id); pause();  }, [pause]);

@@ -23,11 +23,6 @@ const MARKERS: GlobeMarker[] = [
   { location: [-27.1472, -48.5161], size: 12, color: '#F3C63F', highlight: true },
 ];
 
-// Viewing elevation: ~20° above the equator.
-// Without this, all land masses sit in a flat equatorial band (±45° lat),
-// making the sphere look squished even though the circle boundary is perfect.
-// Adding theta makes both poles partially visible, which restores the full
-// vertical extent of the sphere and eliminates the perceptual flattening.
 const THETA = 0.35;
 const SIZE  = 400;
 
@@ -41,20 +36,15 @@ function latLngTo3D(lat: number, lng: number): [number, number, number] {
   ];
 }
 
-// Full two-axis rotation: Y (azimuth φ) then X (elevation θ).
-// Without θ the globe is viewed from the equatorial plane; land masses
-// only fill ~70% of the vertical sphere extent → perceptual squish.
 function project(
   x: number, y: number, z: number,
   phi: number, theta: number,
 ): [number, number, number] {
-  // Rotate around Y by phi
   const cp = Math.cos(phi), sp = Math.sin(phi);
   const x1 = cp * x + sp * z;
   const y1 = y;
   const z1 = -sp * x + cp * z;
 
-  // Rotate around X by theta (tilt upward toward viewer)
   const ct = Math.cos(theta), st = Math.sin(theta);
   return [x1, ct * y1 - st * z1, st * y1 + ct * z1];
 }
@@ -159,7 +149,6 @@ function GlobeCanvas() {
         const cy = SIZE / 2;
         const R  = SIZE / 2 - 3;
 
-        // Perfect sphere base — ctx.arc guarantees a circle
         const bg = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.28, R * 0.04, cx, cy, R);
         bg.addColorStop(0,   '#f5f2ed');
         bg.addColorStop(0.7, '#e8e3db');
@@ -169,7 +158,6 @@ function GlobeCanvas() {
         ctx.fillStyle = bg;
         ctx.fill();
 
-        // Land dots with full two-axis projection
         for (const [px, py, pz] of dots) {
           const [rx, ry, rz] = project(px, py, pz, phi, theta);
           if (rz <= 0) continue;
@@ -179,14 +167,12 @@ function GlobeCanvas() {
           ctx.fill();
         }
 
-        // Subtle sphere edge highlight
         ctx.beginPath();
         ctx.arc(cx, cy, R, 0, 2 * Math.PI);
         ctx.strokeStyle = 'rgba(180,165,140,0.35)';
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Atmosphere glow
         const glow = ctx.createRadialGradient(cx, cy, R * 0.87, cx, cy, R + 22);
         glow.addColorStop(0, 'rgba(235,225,200,0)');
         glow.addColorStop(1, 'rgba(201,162,75,0.14)');
@@ -195,7 +181,6 @@ function GlobeCanvas() {
         ctx.fillStyle = glow;
         ctx.fill();
 
-        // Markers
         MARKERS.forEach((m, i) => {
           const [rx, ry, rz] = project(marker3D[i][0], marker3D[i][1], marker3D[i][2], phi, theta);
           const el = markerEls.current[i];
