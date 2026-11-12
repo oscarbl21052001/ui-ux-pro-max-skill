@@ -42,7 +42,7 @@ const PROJECTS = [
     name: 'SOLAIA RESIDENCE',
     typology: 'Apartamentos · 1 dormitorio',
     distance: 'Frente a la bahía · Zimbros',
-    img: '/projects/solaia-1.jpg',
+    img: '/projects/solaia-p-2.jpg',
     span: 'col-span-1',
   },
   {
