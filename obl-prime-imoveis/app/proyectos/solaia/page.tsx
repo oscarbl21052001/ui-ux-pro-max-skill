@@ -18,8 +18,8 @@ export default function Solaia() {
         'Acabados de alto estándar',
       ]}
       images={[
-        '/projects/solaia-1.jpg',
         '/projects/solaia-p-2.jpg',
+        '/projects/solaia-1.jpg',
         '/projects/solaia-p-3.jpg',
       ]}
       delivery="Abr 2030"
