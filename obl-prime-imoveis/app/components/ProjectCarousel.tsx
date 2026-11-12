@@ -10,7 +10,7 @@ const PROJECTS = [
   { slug: 'villa-di-trento',  name: 'VILLA DI TRENTO',    typology: 'Residence · Entre dos mares', distance: 'Canto Grande · Bombinhas', img: '/projects/villa-di-trento-1.jpg'  },
   { slug: 'bombas-home-club', name: 'BOMBAS HOME CLUB',   typology: '2 Suites · 87–93 m² · Rooftop', distance: '500 m de la Playa de Bombas', img: '/projects/bombas-home-club-1.jpg' },
   { slug: 'vogue-apartments', name: 'VOGUE APARTMENTS',   typology: 'Alto padrón · Rooftop',       distance: '250 m del mar',          img: '/projects/vogue-apartments-1.jpg' },
-  { slug: 'solaia',           name: 'SOLAIA RESIDENCE',   typology: 'Apartamentos · 1 dormitorio', distance: 'Frente a la bahía · Zimbros', img: '/projects/solaia-1.jpg'      },
+  { slug: 'solaia',           name: 'SOLAIA RESIDENCE',   typology: 'Apartamentos · 1 dormitorio', distance: 'Frente a la bahía · Zimbros', img: '/projects/solaia-p-2.jpg'      },
   { slug: 'enedina-mercedes', name: 'ENEDINA MERCEDES',   typology: 'Residence · 36 unidades',     distance: '250 m del mar · Centro', img: '/projects/enedina-mercedes-1.jpg' },
 ];
 
