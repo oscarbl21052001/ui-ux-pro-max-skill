@@ -2,9 +2,9 @@
 
 const MEMBERS = [
   {
-    name: 'Nombre Integrante 1',
-    role: 'Director General',
-    bio: 'Descripción breve del integrante y su papel en la inmobiliaria OBL Prime.',
+    name: 'Lucía',
+    role: 'Directora General',
+    bio: 'Fundadora y directora de OBL Prime Imóveis. Especializada en inversión inmobiliaria en el litoral sur de Brasil.',
     image: '/team_1.jpg',
   },
   {
