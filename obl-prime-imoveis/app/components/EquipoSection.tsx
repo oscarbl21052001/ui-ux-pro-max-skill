@@ -3,7 +3,7 @@
 const MEMBERS = [
   {
     name: 'Lucía',
-    role: 'Directora General',
+    role: 'Directora General · Asesora Inmobiliaria',
     bio: 'Fundadora y directora de OBL Prime Imóveis. Especializada en inversión inmobiliaria en el litoral sur de Brasil.',
     image: '/team_1.jpg',
   },
