@@ -190,7 +190,7 @@ export default function AboutSection() {
                   playsInline
                   loop
                   controls={false}
-                  preload="auto"
+                  preload="none"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 >
                   <source src={PORTFOLIO_VIDEO} type="video/mp4" />

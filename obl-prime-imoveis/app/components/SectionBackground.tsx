@@ -113,7 +113,7 @@ export default function SectionBackground() {
         ref={heroRef}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         style={videoStyle}
       >
         <source src={HERO_VIDEO_MOV}  type="video/quicktime" />
@@ -126,7 +126,7 @@ export default function SectionBackground() {
         ref={bombRef}
         muted
         playsInline
-        preload="auto"
+        preload="none"
         crossOrigin="anonymous"
         style={{ ...videoStyle, opacity: 0 }}
       >

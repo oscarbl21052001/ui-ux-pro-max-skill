@@ -45,9 +45,7 @@ html {
   --font-mono: var(--font-geist-mono);
   --font-playfair: var(--font-playfair-display);
   --font-inter: var(--font-inter);
-  --font-jakarta: var(--font-jakarta);
   --font-outfit: var(--font-outfit);
-  --font-dmsans: var(--font-dm-sans);
   --font-cardo: var(--font-cardo);
   --font-perandory: 'Perandory', Georgia, serif;
 }
