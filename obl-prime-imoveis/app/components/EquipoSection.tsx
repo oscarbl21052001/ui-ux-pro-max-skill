@@ -139,7 +139,7 @@ function MemberCard({
         overflow: 'hidden',
         position: 'relative',
         cursor: 'pointer',
-        backgroundColor: '#07090e',
+        backgroundColor: photoOffset > 0 ? '#6C5743' : '#07090e',
         border: '1px solid rgba(201,162,75,0.22)',
         boxShadow: '0 8px 40px rgba(0,0,0,0.45)',
         transition: 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease, height 0.4s cubic-bezier(0.25,0.46,0.45,0.94)',
