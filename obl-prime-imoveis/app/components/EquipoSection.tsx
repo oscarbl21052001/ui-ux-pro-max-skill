@@ -148,17 +148,22 @@ function MemberCard({
     >
       {/* Photo — wrapped in offset div when needed to shift face down */}
       {photoOffset > 0 ? (
-        <div style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: photoOffset,
-          bottom: 0,
-          maskImage: 'linear-gradient(to bottom, transparent 0%, black 38%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 38%)',
-        }}>
-          {imgEl}
-        </div>
+        <>
+          {/* Gradient strip BEHIND the image — blends background color into the photo seam */}
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: photoOffset + 24,
+            background: 'linear-gradient(to bottom, #6C5743 0%, transparent 100%)',
+            zIndex: 0,
+          }} />
+          {/* Image sits above the gradient */}
+          <div style={{ position: 'absolute', left: 0, right: 0, top: photoOffset, bottom: 0, zIndex: 1 }}>
+            {imgEl}
+          </div>
+        </>
       ) : imgEl}
 
       {/* Always-visible gradient + name bar */}
