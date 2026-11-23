@@ -6,18 +6,21 @@ const MEMBERS = [
     role: 'Directora General · Asesora Inmobiliaria',
     bio: 'Fundadora y directora de OBL Prime Imóveis. Especializada en inversión inmobiliaria en el litoral sur de Brasil.',
     image: '/team_1.jpg',
+    objectPosition: 'center top',
   },
   {
     name: 'Óscar Batalla',
     role: 'Asesor Inmobiliario',
     bio: 'Asesor especializado en inversión inmobiliaria en el litoral sur de Brasil.',
     image: '/team_2.jpg',
+    objectPosition: 'center top',
   },
   {
     name: 'Bruno Adrián Lescano',
     role: 'Gestión de Alquileres',
     bio: 'Especializado en la gestión integral de alquileres en el litoral sur de Brasil.',
     image: '/team_3.jpg',
+    objectPosition: 'center 22%',
   },
 ];
 
@@ -102,11 +105,13 @@ function MemberCard({
   role,
   bio,
   image,
+  objectPosition = 'center top',
 }: {
   name: string;
   role: string;
   bio: string;
   image: string;
+  objectPosition?: string;
 }) {
   return (
     <div
@@ -132,7 +137,7 @@ function MemberCard({
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          objectPosition: 'center top',
+          objectPosition,
           transition: 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)',
           display: 'block',
         }}
