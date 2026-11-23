@@ -6,21 +6,21 @@ const MEMBERS = [
     role: 'Directora General · Asesora Inmobiliaria',
     bio: 'Fundadora y directora de OBL Prime Imóveis. Especializada en inversión inmobiliaria en el litoral sur de Brasil.',
     image: '/team_1.jpg',
-    objectPosition: 'center top',
+    photoOffset: 0,
   },
   {
     name: 'Óscar Batalla',
     role: 'Asesor Inmobiliario',
     bio: 'Asesor especializado en inversión inmobiliaria en el litoral sur de Brasil.',
     image: '/team_2.jpg',
-    objectPosition: 'center top',
+    photoOffset: 0,
   },
   {
     name: 'Bruno Adrián Lescano',
     role: 'Gestión de Alquileres',
     bio: 'Especializado en la gestión integral de alquileres en el litoral sur de Brasil.',
     image: '/team_3.jpg',
-    objectPosition: 'center top',
+    photoOffset: 42,
   },
 ];
 
@@ -105,14 +105,30 @@ function MemberCard({
   role,
   bio,
   image,
-  objectPosition = 'center top',
+  photoOffset = 0,
 }: {
   name: string;
   role: string;
   bio: string;
   image: string;
-  objectPosition?: string;
+  photoOffset?: number;
 }) {
+  const imgEl = (
+    <img
+      src={image}
+      alt={name}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center top',
+        transition: 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)',
+        display: 'block',
+      }}
+      className="equipo-card-img"
+    />
+  );
+
   return (
     <div
       className="equipo-card"
@@ -123,26 +139,19 @@ function MemberCard({
         overflow: 'hidden',
         position: 'relative',
         cursor: 'pointer',
+        backgroundColor: '#07090e',
         border: '1px solid rgba(201,162,75,0.22)',
         boxShadow: '0 8px 40px rgba(0,0,0,0.45)',
         transition: 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease, height 0.4s cubic-bezier(0.25,0.46,0.45,0.94)',
         flexShrink: 0,
       }}
     >
-      {/* Photo */}
-      <img
-        src={image}
-        alt={name}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition,
-          transition: 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)',
-          display: 'block',
-        }}
-        className="equipo-card-img"
-      />
+      {/* Photo — wrapped in offset div when needed to shift face down */}
+      {photoOffset > 0 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: photoOffset, bottom: 0 }}>
+          {imgEl}
+        </div>
+      ) : imgEl}
 
       {/* Always-visible gradient + name bar */}
       <div
