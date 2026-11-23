@@ -148,7 +148,15 @@ function MemberCard({
     >
       {/* Photo — wrapped in offset div when needed to shift face down */}
       {photoOffset > 0 ? (
-        <div style={{ position: 'absolute', left: 0, right: 0, top: photoOffset, bottom: 0 }}>
+        <div style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: photoOffset,
+          bottom: 0,
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 38%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 38%)',
+        }}>
           {imgEl}
         </div>
       ) : imgEl}
