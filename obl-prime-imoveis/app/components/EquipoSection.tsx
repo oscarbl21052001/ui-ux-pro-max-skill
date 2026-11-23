@@ -14,9 +14,9 @@ const MEMBERS = [
     image: '/team_2.jpg',
   },
   {
-    name: 'Nombre Integrante 3',
-    role: 'Directora de Marketing',
-    bio: 'Descripción breve del integrante y su papel en la inmobiliaria OBL Prime.',
+    name: 'Bruno Adrián Lescano',
+    role: 'Gestión de Alquileres',
+    bio: 'Especializado en la gestión integral de alquileres en el litoral sur de Brasil.',
     image: '/team_3.jpg',
   },
 ];
