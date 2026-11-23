@@ -20,7 +20,7 @@ const MEMBERS = [
     role: 'Gestión de Alquileres',
     bio: 'Especializado en la gestión integral de alquileres en el litoral sur de Brasil.',
     image: '/team_3.jpg',
-    objectPosition: 'center 22%',
+    objectPosition: 'center 40%',
   },
 ];
 
