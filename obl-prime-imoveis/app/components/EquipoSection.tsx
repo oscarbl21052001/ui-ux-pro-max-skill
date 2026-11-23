@@ -159,8 +159,17 @@ function MemberCard({
             background: 'linear-gradient(to bottom, #6C5743 0%, transparent 100%)',
             zIndex: 0,
           }} />
-          {/* Image sits above the gradient */}
-          <div style={{ position: 'absolute', left: 0, right: 0, top: photoOffset, bottom: 0, zIndex: 1 }}>
+          {/* Image sits above the gradient — 4% mask ≈ 13px, well above Bruno's head */}
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: photoOffset,
+            bottom: 0,
+            zIndex: 1,
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 4%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 4%)',
+          }}>
             {imgEl}
           </div>
         </>
