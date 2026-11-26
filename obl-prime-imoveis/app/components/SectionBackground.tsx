@@ -74,6 +74,18 @@ export default function SectionBackground() {
     };
 
     raf = requestAnimationFrame(tick);
+
+    // iOS ignores preload="auto" — force buffering on first user interaction
+    const isMobile = window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      const triggerBuffer = () => {
+        const p = heroVid.play();
+        if (p) p.then(() => { heroVid.pause(); }).catch(() => {});
+      };
+      window.addEventListener('touchstart', triggerBuffer, { once: true, passive: true });
+      window.addEventListener('scroll',     triggerBuffer, { once: true, passive: true });
+    }
+
     return () => cancelAnimationFrame(raf);
   }, []);
 

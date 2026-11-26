@@ -120,7 +120,10 @@ export default function AboutSection() {
   const contentFilter  = useTransform(scrollYProgress, [0.1, 0.28], ['blur(12px)', 'blur(0px)']);
   const contentScale   = useTransform(scrollYProgress, [0.1, 0.28], [0.94, 1]);
   // Salida: sincronizada con la subida de EquipoSection — cero hueco
-  const contentY       = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
+  const contentYDesktop = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
+  // Mobile: sale más tarde y recorre menos para que el título no se pierda
+  const contentYMobile  = useTransform(scrollYProgress, [0.80, 1.00], ['0vh', '-12vh']);
+  const contentY = isMobile ? contentYMobile : contentYDesktop;
 
   // pointer-events must be 'none' while this section is off-screen (scrollYProgress < ~0.08)
   // so the fixed div doesn't intercept clicks on sections scrolled above it (e.g. BombinhasProjectsScene)
