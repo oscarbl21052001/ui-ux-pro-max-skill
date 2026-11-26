@@ -119,11 +119,8 @@ export default function AboutSection() {
   const contentOpacity = useTransform(scrollYProgress, [0.1, 0.28], [0, 1]);
   const contentFilter  = useTransform(scrollYProgress, [0.1, 0.28], ['blur(12px)', 'blur(0px)']);
   const contentScale   = useTransform(scrollYProgress, [0.1, 0.28], [0.94, 1]);
-  // Salida: sincronizada con la subida de EquipoSection — cero hueco
+  // Salida: sincronizada con la subida de EquipoSection — cero hueco (solo desktop)
   const contentYDesktop = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
-  // Mobile: sale más tarde y recorre menos para que el título no se pierda
-  const contentYMobile  = useTransform(scrollYProgress, [0.80, 1.00], ['0vh', '-12vh']);
-  const contentY = isMobile ? contentYMobile : contentYDesktop;
 
   // pointer-events must be 'none' while this section is off-screen (scrollYProgress < ~0.08)
   // so the fixed div doesn't intercept clicks on sections scrolled above it (e.g. BombinhasProjectsScene)
@@ -135,20 +132,33 @@ export default function AboutSection() {
   return (
     <div ref={containerRef} id="nosotros" className="relative h-[120vh]">
       <motion.div
-        style={{
+        style={isMobile ? {
+          // Mobile: flujo normal, sin fixed, sin animaciones de scroll
+          position: 'sticky',
+          top: 0,
+          zIndex: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          padding: '4.5rem 1rem 2rem',
+          width: '100%',
+          minHeight: '100vh',
+        } : {
+          // Desktop: fixed con animaciones de scroll — sin cambios
           position: 'fixed',
           inset: 0,
           zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: isMobile ? 'flex-start' : 'center',
-          padding: isMobile ? '4.5rem 1rem 1.5rem' : '5rem 1.5rem 6rem',
+          justifyContent: 'center',
+          padding: '5rem 1.5rem 6rem',
           overflowY: 'auto',
           opacity: contentOpacity,
           filter: contentFilter,
           scale: contentScale,
-          y: contentY,
+          y: contentYDesktop,
           pointerEvents: aboutPE,
         }}
       >
@@ -168,13 +178,13 @@ export default function AboutSection() {
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-8 max-w-5xl mx-auto w-full px-4 md:px-6 mt-5 md:mt-12 items-center">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 md:gap-4">
               {LEFT_SERVICES.map((card) => (
                 <ServiceCardItem key={card.title} card={card} />
               ))}
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 md:gap-4">
               {RIGHT_SERVICES.map((card) => (
                 <ServiceCardItem key={card.title} card={card} />
               ))}
