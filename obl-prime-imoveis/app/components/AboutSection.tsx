@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 
 interface ServiceCard {
@@ -64,7 +64,7 @@ const RIGHT_SERVICES: ServiceCard[] = [
 function ServiceCardItem({ card }: { card: ServiceCard }) {
   return (
     <motion.div
-      className="relative rounded-xl p-5 cursor-pointer"
+      className="relative rounded-xl p-3 md:p-5 cursor-pointer"
       style={{
         background: 'rgba(10, 12, 16, 0.72)',
         backdropFilter: 'blur(24px)',
@@ -102,6 +102,14 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -131,8 +139,8 @@ export default function AboutSection() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          padding: '5rem 1.5rem 6rem',
+          justifyContent: isMobile ? 'flex-start' : 'center',
+          padding: isMobile ? '4.5rem 1rem 1.5rem' : '5rem 1.5rem 6rem',
           overflowY: 'auto',
           opacity: contentOpacity,
           filter: contentFilter,
@@ -145,18 +153,18 @@ export default function AboutSection() {
             SOBRE NOSOTROS
           </h2>
 
-          <p className="text-center font-inter text-xs font-semibold uppercase tracking-[4px] text-[#C9A24B]/70 mt-2">
+          <p className="text-center font-inter text-xs font-semibold uppercase tracking-[4px] text-[#C9A24B]/70 mt-1 md:mt-2">
             Nuestra visión y valores
           </p>
 
-          <p className="mx-auto mt-4 max-w-2xl text-center font-inter text-base leading-relaxed text-slate-800 px-6">
+          <p className="mx-auto mt-2 md:mt-4 max-w-2xl text-center font-inter text-sm md:text-base leading-relaxed text-slate-800 px-4 md:px-6">
             Combinamos la perspectiva del inversor extranjero con un análisis riguroso del litoral
             brasileño para estructurar inversiones seguras y rentables. Nuestro compromiso es
             acompañarte durante todo el proceso con total transparencia, asegurando la solidez
             de tu patrimonio y el estilo de vida excepcional de Bombinhas
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto w-full px-6 mt-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-8 max-w-5xl mx-auto w-full px-4 md:px-6 mt-5 md:mt-12 items-center">
             <div className="flex flex-col gap-4">
               {LEFT_SERVICES.map((card) => (
                 <ServiceCardItem key={card.title} card={card} />

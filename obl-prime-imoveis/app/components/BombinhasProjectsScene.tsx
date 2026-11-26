@@ -256,7 +256,7 @@ export default function BombinhasProjectsScene() {
         >
           {/* Inner glass card: plain 'auto' string — safe, never fullscreen */}
           <motion.div
-            className="mx-auto max-w-4xl w-full space-y-8 rounded-3xl px-10 py-10 md:px-14 md:py-12 text-center"
+            className="mx-auto max-w-4xl w-full space-y-4 md:space-y-8 rounded-3xl px-6 py-6 md:px-14 md:py-12 text-center"
             style={{
               background: 'rgba(10, 12, 16, 0.72)',
               backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
@@ -265,31 +265,31 @@ export default function BombinhasProjectsScene() {
               transform: 'translateZ(0)', isolation: 'isolate', pointerEvents: 'auto',
             }}
           >
-            <div className="space-y-6">
-              <p className="font-cardo italic" style={{ color: '#C9A24B', fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)', letterSpacing: '0.08em' }}>
+            <div className="space-y-3 md:space-y-6">
+              <p className="font-cardo italic" style={{ color: '#C9A24B', fontSize: 'clamp(0.75rem, 1.4vw, 1.05rem)', letterSpacing: '0.08em' }}>
                 ¿POR QUÉ DEBERÍA ELEGIR BOMBINHAS?
               </p>
-              <h2 className="font-bold text-white" style={{ fontFamily: 'var(--font-perandory)', fontSize: 'clamp(2rem, 4.5vw, 3.75rem)', lineHeight: 1.14 }}>
+              <h2 className="font-bold text-white" style={{ fontFamily: 'var(--font-perandory)', fontSize: 'clamp(1.55rem, 4.5vw, 3.75rem)', lineHeight: 1.14 }}>
                 <span className="block">NATURALEZA PRESERVADA</span>
                 <span className="block" style={{ color: 'rgba(201,162,75,0.78)' }}>CALIDAD DE VIDA</span>
                 <span className="block">POTENCIAL DE REVALORIZACIÓN</span>
               </h2>
             </div>
             <motion.div
-              className="rounded-lg px-6 py-5 space-y-2"
+              className="rounded-lg px-4 py-3 md:px-6 md:py-5 space-y-1 md:space-y-2"
               style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(201,162,75,0.32)', background: 'rgba(201,162,75,0.04)' }}
               whileHover={{ borderColor: 'rgba(201,162,75,0.82)', background: 'rgba(201,162,75,0.13)', boxShadow: '0 0 28px 6px rgba(212,175,55,0.15)' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
-              <p className="font-inter font-semibold uppercase leading-relaxed" style={{ color: '#C9A24B', fontSize: 'clamp(0.68rem, 1.1vw, 0.8rem)', letterSpacing: '0.14em' }}>
+              <p className="font-inter font-semibold uppercase leading-relaxed" style={{ color: '#C9A24B', fontSize: 'clamp(0.6rem, 1.1vw, 0.8rem)', letterSpacing: '0.12em' }}>
                 67% DEL TERRITORIO PROTEGIDO POR LEY&nbsp;&nbsp;<span style={{ opacity: 0.55 }}>•</span>&nbsp;&nbsp;100% PROTEGIDO DE LA SOBREOFERTA
               </p>
-              <p className="font-cardo italic" style={{ color: 'rgba(255,255,255,0.90)', fontSize: '1rem' }}>
+              <p className="font-cardo italic" style={{ color: 'rgba(255,255,255,0.90)', fontSize: 'clamp(0.85rem, 1.2vw, 1rem)' }}>
                 Un solo resultado: escasez permanente.
               </p>
             </motion.div>
-            <div className="space-y-10">
-              <p className="font-cardo leading-relaxed" style={{ color: 'rgba(255,255,255,0.68)', fontSize: 'clamp(1.1rem, 1.5vw, 1.25rem)' }}>
+            <div className="space-y-3 md:space-y-10">
+              <p className="font-cardo leading-relaxed" style={{ color: 'rgba(255,255,255,0.68)', fontSize: 'clamp(0.9rem, 1.5vw, 1.25rem)' }}>
                 La belleza de Bombinhas está legalmente obligada a permanecer intacta. Tu inversión, también.
               </p>
               <motion.a
