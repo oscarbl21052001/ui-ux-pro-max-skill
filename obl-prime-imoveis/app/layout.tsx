@@ -33,9 +33,23 @@ const cardo = Cardo({
 });
 
 export const metadata: Metadata = {
-  title: "OBL Prime Imóveis — Bombinhas, SC",
+  title: "Lucía Rodríguez Imóveis",
   description:
-    "Propiedades exclusivas frente al mar en Bombinhas, Santa Catarina, Brasil.",
+    "Propiedades exclusivas altamente rentables en Bombinhas, Santa Catarina, Brasil.",
+  openGraph: {
+    title: "Lucía Rodríguez Imóveis",
+    description:
+      "Propiedades exclusivas altamente rentables en Bombinhas, Santa Catarina, Brasil.",
+    siteName: "Lucía Rodríguez Imóveis",
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lucía Rodríguez Imóveis",
+    description:
+      "Propiedades exclusivas altamente rentables en Bombinhas, Santa Catarina, Brasil.",
+  },
 };
 
 export default function RootLayout({
