@@ -132,34 +132,23 @@ export default function AboutSection() {
   return (
     <div ref={containerRef} id="nosotros" className="relative h-[120vh]">
       <motion.div
-        style={isMobile ? {
-          // Mobile: flujo normal, sin fixed, sin animaciones de scroll
-          position: 'sticky',
-          top: 0,
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          padding: '4.5rem 1rem 2rem',
-          width: '100%',
-          minHeight: '100vh',
-        } : {
-          // Desktop: fixed con animaciones de scroll — sin cambios
+        style={{
           position: 'fixed',
           inset: 0,
           zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          padding: '5rem 1.5rem 6rem',
-          overflowY: 'auto',
+          justifyContent: isMobile ? 'flex-start' : 'center',
+          padding: isMobile ? '4.5rem 1rem 2rem' : '5rem 1.5rem 6rem',
+          overflow: 'hidden',
           opacity: contentOpacity,
           filter: contentFilter,
           scale: contentScale,
-          y: contentYDesktop,
-          pointerEvents: aboutPE,
+          y: isMobile ? 0 : contentYDesktop,
+          // Mobile: none → touch events llegan a la página y puede hacer scroll
+          // Desktop: controlado por scrollYProgress para no capturar clicks fuera de rango
+          pointerEvents: isMobile ? 'none' : aboutPE,
         }}
       >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent pb-4" style={{ fontFamily: 'var(--font-playfair-display)' }}>
