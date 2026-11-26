@@ -114,6 +114,7 @@ export default function SectionBackground() {
         muted
         playsInline
         preload="auto"
+        poster="/hero-poster.jpg"
         style={videoStyle}
       >
         <source src={HERO_VIDEO_MOV}  type="video/quicktime" />
