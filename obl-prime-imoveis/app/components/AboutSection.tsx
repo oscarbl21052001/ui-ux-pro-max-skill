@@ -116,10 +116,12 @@ export default function AboutSection() {
     offset: ['start end', 'end start'],
   });
   // Entrada: materializa desde el centro con blur
-  const contentOpacity = useTransform(scrollYProgress, [0.1, 0.28], [0, 1]);
+  const contentOpacityDesktop = useTransform(scrollYProgress, [0.10, 0.28], [0, 1]);
+  // Mobile: fade-in igual + fade-out antes de que entre EquipoSection
+  const contentOpacityMobile  = useTransform(scrollYProgress, [0.10, 0.25, 0.72, 0.88], [0, 1, 1, 0]);
   const contentFilter  = useTransform(scrollYProgress, [0.1, 0.28], ['blur(12px)', 'blur(0px)']);
   const contentScale   = useTransform(scrollYProgress, [0.1, 0.28], [0.94, 1]);
-  // Salida: sincronizada con la subida de EquipoSection — cero hueco (solo desktop)
+  // Salida desktop: sincronizada con la subida de EquipoSection — cero hueco
   const contentYDesktop = useTransform(scrollYProgress, [0.545, 1.00], ['0vh', '-100vh']);
 
   // pointer-events must be 'none' while this section is off-screen (scrollYProgress < ~0.08)
@@ -142,12 +144,12 @@ export default function AboutSection() {
           justifyContent: isMobile ? 'flex-start' : 'center',
           padding: isMobile ? '4.5rem 1rem 2rem' : '5rem 1.5rem 6rem',
           overflow: 'hidden',
-          opacity: contentOpacity,
+          opacity: isMobile ? contentOpacityMobile : contentOpacityDesktop,
           filter: contentFilter,
           scale: contentScale,
           y: isMobile ? 0 : contentYDesktop,
-          // Mobile: none → touch events llegan a la página y puede hacer scroll
-          // Desktop: controlado por scrollYProgress para no capturar clicks fuera de rango
+          // Mobile: none siempre → touch events pasan a la página, el scroll avanza
+          // Desktop: gestionado por scrollYProgress para no capturar clicks fuera de rango
           pointerEvents: isMobile ? 'none' : aboutPE,
         }}
       >
