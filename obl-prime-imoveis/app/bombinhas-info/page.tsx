@@ -157,39 +157,7 @@ export default function BombinhasInfoPage() {
         </div>
       </section>
 
-      {/* ── SECTION 2: Valorización Inmobiliaria ── */}
-      <section className="relative -mt-1 py-24 md:py-32 px-6">
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.h2
-            className="text-4xl md:text-5xl tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            Valorización Inmobiliaria
-          </motion.h2>
-          <motion.p
-            className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          >
-            Santa Catarina es uno de los estados líderes en valorización residencial según
-            el <strong className="text-[#C9A24B]">FipeZAP</strong> (el indicador más respetado
-            del mercado inmobiliario brasileño, que mide la evolución de precios de venta y
-            alquiler en decenas de ciudades). En Bombinhas,
-            la <strong className="text-[#C9A24B]">valorización anual histórica se sitúa entre
-            12% y 14%</strong> en años típicos, con <strong className="text-[#C9A24B]">picos
-            de hasta 25% en zonas premium</strong>. <strong className="text-[#C9A24B]">Nuestros
-            proyectos se encuentran precisamente en estas zonas premium</strong>, lo que permite
-            capturar un potencial de revalorización superior al promedio del municipio.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* ── SECTION 3: Parallax Window — Etapas de Construcción ── */}
+      {/* ── SECTION 2: Parallax Window — Etapas de Construcción ── */}
       <section className="relative min-h-[80vh] md:min-h-screen overflow-hidden">
         <div
           className="absolute inset-0"
@@ -279,74 +247,36 @@ export default function BombinhasInfoPage() {
         </div>
       </section>
 
-      {/* ── SECTION 4: Simulador de Rentabilidad por Tipología ── */}
-      <section className="relative py-24 md:py-32 px-6">
-        <motion.div
-          className="mx-auto max-w-6xl"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <h2 className="text-4xl md:text-5xl tracking-tight mb-4 pb-2 text-center font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent">
-            Rentabilidad y Revalorización
-          </h2>
-          <p className="text-center text-neutral-400 text-sm mb-16 font-inter">
-            Datos reales de mercado — VivaReal · ZAP Imóveis · Bombinhas, SC (2026)
-          </p>
-
-          {/* Tabla unificada */}
-          <div className="mb-10 overflow-x-auto w-full">
-            <table className="w-full border-collapse font-inter">
-              <thead>
-                <tr className="border-b border-neutral-700">
-                  <th className="p-4 text-left text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Tipología</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">Precio de Compra</th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-neutral-400 font-playfair whitespace-nowrap">Diária Baja<br/><span className="text-xs font-inter font-normal text-neutral-500">Mar – Nov</span></th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#E3C174] font-playfair whitespace-nowrap">Diária Alta<br/><span className="text-xs font-inter font-normal text-neutral-500">Dic – Feb · Carnaval</span></th>
-                  <th className="p-4 text-center text-sm md:text-base font-bold text-[#C9A24B] font-playfair whitespace-nowrap">ROI Bruto</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { tipo: "1 Dormitório",         precio: "R$ 790 – 900 k",   baja: "R$ 400 – 550",   alta: "R$ 800 – 1.500",  roi: "11 – 14 %" },
-                  { tipo: "2 Dormitórios",         precio: "R$ 910 k – 1,2 M", baja: "R$ 400 – 800",   alta: "R$ 825 – 1.150",  roi: "8 – 10 %"  },
-                  { tipo: "2 Dormitórios Premium", precio: "R$ 1,2 M – 1,4 M", baja: "R$ 600 – 790",   alta: "R$ 1.150 – 2.000", roi: "8 – 9 %"  },
-                  { tipo: "3 Dorm. / Cobertura",   precio: "R$ 1,3 M – 2,1 M", baja: "R$ 450 – 900",   alta: "R$ 1.290 – 2.650", roi: "7 – 9 %"  },
-                ].map((row, i) => (
-                  <tr key={i} className={`border-b border-neutral-800 transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? "bg-white/[0.015]" : ""}`}>
-                    <td className="p-4 text-left text-sm md:text-base font-semibold font-playfair text-[#C9A24B] whitespace-nowrap">{row.tipo}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-white whitespace-nowrap">{row.precio}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-neutral-400 whitespace-nowrap">{row.baja}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-cardo text-[#E3C174] whitespace-nowrap">{row.alta}</td>
-                    <td className="p-4 text-center text-sm md:text-base font-bold font-inter text-emerald-400 whitespace-nowrap">{row.roi}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Nota metodológica */}
-          <p className="text-center text-neutral-500 text-xs mb-12 font-inter">
-            * Precios de compra: VivaReal · ZAP Imóveis (oct. 2026). Diárias verificadas: Arlete Imóveis, VRM Imóveis, CasaFerias, Paraíso Bombinhas, roccoImob (temp. 2025/26–26/27). ROI bruto anual = ingresos totales / precio de compra. No incluye gestión (10–15%), IPTU ni mantenimiento.
-          </p>
-
-          {/* Bloque de revalorización */}
-          <div className="relative rounded-2xl border border-[#C9A24B]/20 bg-white/[0.02] px-8 py-8 md:px-12">
-            <div className="absolute -top-px left-12 right-12 h-px bg-gradient-to-r from-transparent via-[#C9A24B]/40 to-transparent" />
-            <p className="text-sm md:text-base font-inter text-neutral-300 leading-relaxed">
-              <span className="text-[#E3C174] font-semibold">Más allá de la renta, el capital también trabaja.</span>{" "}
-              Bombinhas lideró el ranking nacional de valorización con{" "}
-              <span className="text-white font-semibold">+14,3 % en 12 meses</span>{" "}
-              (FipeZap+, 2026), por encima de Balneário Camboriú e Itapema, y hasta un{" "}
-              <span className="text-white font-semibold">25 % anual</span>{" "}
-              en zonas prime como Mariscal. Con oferta estructuralmente limitada por su geografía de península y el 70 % de Mata Atlântica protegida,
-              el retorno total, renta más apreciación, se sitúa entre el{" "}
-              <span className="text-white font-semibold">18 y el 20 % anual</span>{" "}
-              <span className="text-neutral-500 text-xs">(FipeZap+ · AirDNA · ViveremSC, 2026)</span>.
-            </p>
-          </div>
-        </motion.div>
+      {/* ── SECTION 3 (última): Valorización Inmobiliaria ── */}
+      <section className="relative -mt-1 py-24 md:py-32 px-6">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.h2
+            className="text-4xl md:text-5xl tracking-tight mb-6 pb-2 font-playfair bg-gradient-to-r from-[#C9A24B] to-[#E3C174] bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            Valorización Inmobiliaria
+          </motion.h2>
+          <motion.p
+            className="text-base md:text-xl text-white leading-loose max-w-3xl mx-auto font-cardo"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+            Santa Catarina es uno de los estados líderes en valorización residencial según
+            el <strong className="text-[#C9A24B]">FipeZAP</strong> (el indicador más respetado
+            del mercado inmobiliario brasileño, que mide la evolución de precios de venta y
+            alquiler en decenas de ciudades). En Bombinhas,
+            la <strong className="text-[#C9A24B]">valorización anual histórica se sitúa entre
+            12% y 14%</strong> en años típicos, con <strong className="text-[#C9A24B]">picos
+            de hasta 25% en zonas premium</strong>. <strong className="text-[#C9A24B]">Nuestros
+            proyectos se encuentran precisamente en estas zonas premium</strong>, lo que permite
+            capturar un potencial de revalorización superior al promedio del municipio.
+          </motion.p>
+        </div>
       </section>
     </div>
   );
