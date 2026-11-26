@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 
 interface ServiceCard {
@@ -100,11 +100,8 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
   );
 }
 
-const PORTFOLIO_VIDEO = '/portfolio-preview.mp4';
-
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef     = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -123,17 +120,6 @@ export default function AboutSection() {
   useMotionValueEvent(scrollYProgress, 'change', (p) => {
     setAboutPE(p >= 0.08 ? 'auto' : 'none');
   });
-
-  const handleMouseEnter = useCallback(() => {
-    try { videoRef.current?.play().catch(() => {}); } catch {}
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  }, []);
 
   return (
     <div ref={containerRef} id="nosotros" className="relative h-[120vh]">
@@ -170,36 +156,14 @@ export default function AboutSection() {
             de tu patrimonio y el estilo de vida excepcional de Bombinhas
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 max-w-7xl mx-auto w-full px-6 mt-12 items-center">
-            <div className="lg:col-span-4 flex flex-col gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto w-full px-6 mt-12 items-center">
+            <div className="flex flex-col gap-4">
               {LEFT_SERVICES.map((card) => (
                 <ServiceCardItem key={card.title} card={card} />
               ))}
             </div>
 
-            <div className="lg:col-span-3 flex justify-center">
-              <div
-                className="group relative w-full max-w-[280px] overflow-hidden rounded-2xl border-2 border-[#C9A24B]/20 shadow-2xl"
-                style={{ aspectRatio: '3/4' }}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <video
-                  ref={videoRef}
-                  muted
-                  playsInline
-                  loop
-                  controls={false}
-                  preload="none"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                >
-                  <source src={PORTFOLIO_VIDEO} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 pointer-events-none" />
-              </div>
-            </div>
-
-            <div className="lg:col-span-4 flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {RIGHT_SERVICES.map((card) => (
                 <ServiceCardItem key={card.title} card={card} />
               ))}
