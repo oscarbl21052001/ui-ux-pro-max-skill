@@ -180,6 +180,7 @@ function MemberCard({
         style={{
           position: 'absolute',
           inset: 0,
+          zIndex: 2,
           background: 'linear-gradient(to top, rgba(4,6,10,0.92) 0%, rgba(4,6,10,0.45) 45%, transparent 100%)',
           display: 'flex',
           flexDirection: 'column',
