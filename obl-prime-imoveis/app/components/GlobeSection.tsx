@@ -290,7 +290,7 @@ export default function GlobeSection() {
             PRESENCIA GLOBAL
           </h2>
           <p className="mt-4 max-w-lg mx-auto text-base text-neutral-600 font-inter">
-            Inversores de todo el mundo confían en OBL Prime para acceder al mercado inmobiliario de Bombinhas.
+            Inversores de todo el mundo confían en Lucía Rodríguez Imóveis para acceder al mercado inmobiliario de Bombinhas.
           </p>
         </div>
 
