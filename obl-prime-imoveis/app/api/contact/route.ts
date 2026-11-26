@@ -26,20 +26,23 @@ export async function POST(req: NextRequest) {
   if (isRateLimited(ip)) {
     return NextResponse.json({ error: 'Demasiados intentos. Inténtalo más tarde.' }, { status: 429 });
   }
-  const { nombre, telefono } = await req.json();
+  const { nombre, telefono, origen } = await req.json();
 
   if (
     !nombre || !telefono ||
     typeof nombre !== 'string' || typeof telefono !== 'string' ||
-    nombre.length > 200 || telefono.length > 30
+    nombre.length > 200 || telefono.length > 30 ||
+    (origen !== undefined && (typeof origen !== 'string' || origen.length > 200))
   ) {
     return NextResponse.json({ error: 'Datos inválidos' }, { status: 400 });
   }
 
+  const origenLabel = origen ? esc(origen) : 'No especificado';
+
   await resend.emails.send({
     from: 'OBL Prime Imóveis <onboarding@resend.dev>',
     to: 'lucia.corretorabrasil@gmail.com',
-    subject: '🏠 Nueva solicitud de información — Bombinhas',
+    subject: `🏠 Nueva solicitud — ${origenLabel}`,
     html: `
       <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; background: #f9f9f9; border-radius: 8px;">
         <h2 style="color: #C9A24B; margin-top: 0;">Nueva solicitud de información</h2>
@@ -52,6 +55,10 @@ export async function POST(req: NextRequest) {
           <tr>
             <td style="padding: 10px 12px; background: #fff; border: 1px solid #eee; font-weight: bold; color: #555;">Teléfono</td>
             <td style="padding: 10px 12px; background: #fff; border: 1px solid #eee; color: #111;">${esc(telefono)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 12px; background: #fff; border: 1px solid #eee; font-weight: bold; color: #555;">Origen</td>
+            <td style="padding: 10px 12px; background: #fff; border: 1px solid #eee; color: #111;">${origenLabel}</td>
           </tr>
         </table>
         <p style="color: #999; font-size: 12px; margin-top: 24px;">OBL Prime Imóveis · Bombinhas, SC</p>

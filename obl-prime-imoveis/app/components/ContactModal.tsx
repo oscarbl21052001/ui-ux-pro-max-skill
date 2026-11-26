@@ -7,9 +7,10 @@ import { X } from 'lucide-react';
 interface ContactModalProps {
   open: boolean;
   onClose: () => void;
+  origen?: string;
 }
 
-export default function ContactModal({ open, onClose }: ContactModalProps) {
+export default function ContactModal({ open, onClose, origen }: ContactModalProps) {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
@@ -21,7 +22,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, telefono }),
+        body: JSON.stringify({ nombre, telefono, origen: origen ?? 'No especificado' }),
       });
       setStatus(res.ok ? 'ok' : 'error');
     } catch {

@@ -312,7 +312,7 @@ export default function ProjectPage({
         </motion.div>
       </div>
 
-      <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} origen={`Proyecto: ${name}`} />
     </main>
   );
 }

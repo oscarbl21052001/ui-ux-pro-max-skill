@@ -411,7 +411,7 @@ export default function BombinhasProjectsScene() {
           </div>
         </motion.div>
 
-        <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+        <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} origen="Sección Proyectos" />
 
       </div>
     </div>

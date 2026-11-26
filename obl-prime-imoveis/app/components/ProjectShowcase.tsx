@@ -236,7 +236,7 @@ export default function ProjectShowcase({ cardPointerEvents }: { cardPointerEven
         </div>
       </motion.div>
 
-      <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} origen="Showcase de Promotoras" />
 
       {/* Floating image card — follows cursor via LERP */}
       <div
