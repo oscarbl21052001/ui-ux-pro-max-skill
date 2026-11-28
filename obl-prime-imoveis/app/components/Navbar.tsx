@@ -72,7 +72,7 @@ export default function Navbar() {
           className={`relative z-[1] flex shrink-0 items-center no-underline nav-content ${
             visible ? 'nav-content-show' : ''
           }`}
-          aria-label="OBL Prime Imóveis — Inicio"
+          aria-label="Lucía Rodríguez Imóveis — Inicio"
         >
           <Image
             src="/logo-lucia.png"

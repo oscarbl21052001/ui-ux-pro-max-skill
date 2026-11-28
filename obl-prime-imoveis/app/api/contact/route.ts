@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
   const origenLabel = origen ? esc(origen) : 'No especificado';
 
   await resend.emails.send({
-    from: 'OBL Prime Imóveis <onboarding@resend.dev>',
+    from: 'Lucía Rodríguez Imóveis <onboarding@resend.dev>',
     to: 'lucia.corretorabrasil@gmail.com',
     subject: `🏠 Nueva solicitud — ${origenLabel}`,
     html: `
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
             <td style="padding: 10px 12px; background: #fff; border: 1px solid #eee; color: #111;">${origenLabel}</td>
           </tr>
         </table>
-        <p style="color: #999; font-size: 12px; margin-top: 24px;">OBL Prime Imóveis · Bombinhas, SC</p>
+        <p style="color: #999; font-size: 12px; margin-top: 24px;">Lucía Rodríguez Imóveis · Bombinhas, SC</p>
       </div>
     `,
   });
