@@ -93,7 +93,7 @@ export default function VivaBemPage() {
 
           {/* CTA */}
           <a
-            href="mailto:info@oblprime.com"
+            href="mailto:lucia.corretorabrasil@gmail.com"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
